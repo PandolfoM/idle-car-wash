@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 function Navigation() {
@@ -12,13 +12,13 @@ function Navigation() {
         minWidth: "fit-content",
         padding: 0,
         margin: 0,
-        // float: 'left',
         zIndex: "99999",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        bgcolor: "#444",
       }}>
-      <Box component={"div"} sx={{padding: "10px"}}>
+      <Box component={"div"} sx={{ padding: "0 10px", li: {margin: "10px 0"} }}>
         <Box
           component={"li"}
           sx={{
@@ -26,7 +26,11 @@ function Navigation() {
             border: "red 2px solid",
             borderRadius: "10px",
           }}>
-          Upgrades
+          <Button
+            sx={{ width: "100%", height: "100%", fontSize: "50px" }}
+            disableRipple>
+            Upgrades
+          </Button>
         </Box>
         <Box
           component={"li"}
@@ -35,7 +39,11 @@ function Navigation() {
             border: "blue 2px solid",
             borderRadius: "10px",
           }}>
-          Research
+          <Button
+            sx={{ width: "100%", height: "100%", fontSize: "50px" }}
+            disableRipple>
+            Research
+          </Button>
         </Box>
         <Box
           component={"li"}
@@ -44,7 +52,11 @@ function Navigation() {
             border: "orange 2px solid",
             borderRadius: "10px",
           }}>
-          Equipment
+          <Button
+            sx={{ width: "100%", height: "100%", fontSize: "50px" }}
+            disableRipple>
+            Equipment
+          </Button>
         </Box>
         <Box
           component={"li"}
@@ -53,12 +65,16 @@ function Navigation() {
             border: "black 2px solid",
             borderRadius: "10px",
           }}>
-          Store
+          <Button
+            sx={{ width: "100%", height: "100%", fontSize: "50px" }}
+            disableRipple>
+            Store
+          </Button>
         </Box>
       </Box>
-      <Box component={"div"}>
-        <SettingsIcon />
-      </Box>
+      <IconButton sx={{ width: "fit-content", margin: '0 0px 10px 10px' }} size="large">
+        <SettingsIcon sx={{width: "2em", height: "auto"}}/>
+      </IconButton>
     </Box>
   );
 }
