@@ -8,16 +8,17 @@ function Currency() {
     <Box
       sx={{
         bgcolor: "#444",
-        height: "5.5vh",
+        height: "6.5vh",
+        borderBottom: "#333 4px solid",
         width: "100%",
         display: "flex",
         alignItems: "center",
         div: {
           bgcolor: "#333",
-          boxShadow: "0 0 5px 1px black inset",
+          boxShadow: "0 0 4px 2px black inset",
           width: "max-content",
-          height: "max-content",
-          padding: "5px 15px",
+          height: "50%",
+          padding: "10px 15px",
           margin: "0 5px",
           display: "flex",
           alignItems: "center",
@@ -28,17 +29,18 @@ function Currency() {
           height: "1.5em",
         },
         h3: {
-          fontSize: "1.3em",
-          marginLeft: "5px"
+          fontSize: "1.2em",
+          marginLeft: "5px",
+          fontWeight: "bold",
         }
       }}>
       <Box>
         <img src={coin} alt="coin" />
-        <Typography variant="h3" component={"h3"}>1,000</Typography>
+        <Typography variant="h3" component={"h3"} color={"#EDC429"}>1,000</Typography>
       </Box>
       <Box>
         <img src={gem} alt="gem"></img>
-        <Typography variant="h3" component={"h3"}>1,000</Typography>
+        <Typography variant="h3" component={"h3"} color={"#477DE7"}>1,000</Typography>
       </Box>
     </Box>
   );
