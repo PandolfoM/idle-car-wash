@@ -1,8 +1,11 @@
-import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import React from "react";
+import { Box, Button, Chip, LinearProgress, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_CURRENT_MULTIPLIER } from "../../utils/actions";
+import useFitText from "use-fit-text"
 
 const UpgradesStyle = {
-  width: "95%",
+  width: "90%",
   borderRadius: "50px 10px 10px 50px",
   height: "4.7em",
   bgcolor: "#3c485e",
@@ -10,7 +13,7 @@ const UpgradesStyle = {
   marginTop: "15px",
   display: "flex",
   border: "black 2px solid",
-  "& .circle": {
+  "& .itemPic": {
     padding: "0px !important",
     borderRadius: "100%",
     bgcolor: "#242b37",
@@ -25,10 +28,9 @@ const UpgradesStyle = {
     border: "black 2px solid",
     boxShadow: "0 0 0px 3px #3c485e inset",
   },
-  "& .pill": {
+  "& .itemLvl": {
     width: "6em",
     height: "2.3em",
-    boxShadow: "0 0 5px 1px black inset",
     borderRadius: "30px",
     bgcolor: "#2b2d42",
     display: "flex",
@@ -36,70 +38,96 @@ const UpgradesStyle = {
     alignItems: "center",
     position: "relative",
     bottom: -2,
+    border: "2px solid black",
+    boxShadow: "0 0 0px 3px #3c485e inset",
   },
-  "& .pill>p": {
+  "& .itemLvl>p": {
     fontSize: "1.3em",
     fontWeight: "bold",
     color: "white",
     textShadow:
       "2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black",
     overflow: "hidden",
-    margin: "0 5px",
+  },
+  "& .itemControls": {
+    padding: "0px !important",
+    width: "80%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  "& .itemControls>span": {
+    width: "90%",
+    height: "1.7em",
+    borderRadius: "20px",
+    bottom: -5,
+    position: "relative",
+    border: "black 3px solid",
   },
   "& button": {
-    width: "90%",
+    // width: "90%",
     bottom: -15,
     position: "relative",
     textTransform: "none",
-    backgroundColor: "#70e000",
-    fontSize: "1.2em",
+    // fontSize: "1.3em",
     paddingTop: "0px !important",
     paddingBottom: "0px !important",
     border: "black 3px solid",
     borderRadius: "10px",
-    transition: "all 0.1s linear"
+    transition: "all 0.1s linear",
   },
   "& button:active": {
     transform: "scale(0.95)",
-    transition: "all 0.1s linear"
-  }
+  },
 };
 
 function Upgrades() {
+  const {fontSize, ref} = useFitText()
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { currentMultiplier } = state;
+
+  const handleMultiChange = () => {
+    let multiplier;
+
+    if (currentMultiplier === 1) {
+      multiplier = 2;
+    } else if (currentMultiplier === 2) {
+      multiplier = 10;
+    } else if (currentMultiplier === 10) {
+      multiplier = 100;
+    } else if (currentMultiplier === 100) {
+      multiplier = 1000;
+    } else if (currentMultiplier === 1000) {
+      multiplier = 1;
+    }
+
+    dispatch({
+      type: UPDATE_CURRENT_MULTIPLIER,
+      currentMultiplier: multiplier,
+    });
+  };
+
   return (
-    <Box sx={UpgradesStyle}>
-      <Box className="circle">
-        <Box className="pill">
-          <Typography>1,000</Typography>
+    <>
+      <Chip label={`x${currentMultiplier}`} onClick={handleMultiChange}></Chip>
+      {/* Upgrades */}
+      <Box sx={UpgradesStyle}>
+        <Box className="itemPic">
+          <Box className="itemLvl">
+            <Typography>1,000</Typography>
+          </Box>
+        </Box>
+        <Box className="itemControls">
+          <LinearProgress variant="determinate" value={34} />
+          <Button variant="contained" disableRipple ref={ref} style={{fontSize, height: "6vh", width: "90%"}}>
+            BUY x{new Intl.NumberFormat().format(currentMultiplier)} SOAP
+          </Button>
         </Box>
       </Box>
-      <Box
-        sx={{
-          padding: "0px !important",
-          width: "80%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}>
-        <LinearProgress
-          variant="determinate"
-          value={34}
-          sx={{
-            width: "90%",
-            height: "1.7em",
-            borderRadius: "20px",
-            bottom: -5,
-            position: "relative",
-            border: "black 3px solid",
-          }}
-        />
-        <Button variant="contained" disableRipple> 
-          BUY x1 SOAP
-        </Button>
-      </Box>
-    </Box>
+    </>
   );
 }
 

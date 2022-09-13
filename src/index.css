@@ -1,7 +1,7 @@
-@import url('http://fonts.cdnfonts.com/css/moon-get');
+@import url("http://fonts.cdnfonts.com/css/moon-get");
 
 * {
-  font-family: 'MOON GET!', sans-serif !important;
+  font-family: "MOON GET!", sans-serif !important;
 }
 
 body,
@@ -13,10 +13,12 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #242b37;
+  user-select: none;
+  
 }
 
 button {
-  -webkit-text-stroke: 2.5px black
+  -webkit-text-stroke: 2.5px black;
 }
 
 /* h3 {
