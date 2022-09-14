@@ -20,8 +20,6 @@ function Upgrades() {
     } else if (currentMultiplier === 10) {
       multiplier = 100;
     } else if (currentMultiplier === 100) {
-      multiplier = 1000;
-    } else if (currentMultiplier === 1000) {
       multiplier = 1;
     }
 
