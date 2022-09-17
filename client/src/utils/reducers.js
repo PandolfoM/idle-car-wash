@@ -10,6 +10,7 @@ const initialState = {
   cash: 0,
   gems: 0,
   soap: {
+    unlocked: true,
     lvl: 1,
     cost: 3,
     profit: 1

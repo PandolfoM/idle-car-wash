@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import coin from "../../assets/coin.png";
 import gem from "../../assets/gem.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { formatNumberAb } from "../../utils/helpers";
 
 const CurrencyStyle = {
@@ -48,7 +48,7 @@ function Currency() {
       </Box>
       <Box>
         <img src={gem} alt="gem"></img>
-        <Typography variant="h3" component={"h3"} color={"#477DE7"}>
+        <Typography variant="h3" component={"h3"} color={"#9D47E7"}>
           {formatNumberAb(gems, 2)}
         </Typography>
       </Box>
