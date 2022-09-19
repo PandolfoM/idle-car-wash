@@ -1,9 +1,11 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import coin from "../../assets/coin.png";
 import gem from "../../assets/gem.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatNumberAb } from "../../utils/helpers";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { TOGGLE_MODAL } from "../../utils/actions";
 
 const CurrencyStyle = {
   bgcolor: "#444",
@@ -12,13 +14,16 @@ const CurrencyStyle = {
   width: "100%",
   display: "flex",
   alignItems: "center",
-  div: {
-    bgcolor: "#333",
+  justifyContent: "space-between",
+  "& .currency": {
     boxShadow: "0 0 4px 2px black inset",
-    width: "max-content",
-    height: "50%",
+    height: "100%",
     padding: "10px 15px",
     margin: "0 5px",
+  },
+  div: {
+    width: "max-content",
+    height: "50%",
     display: "flex",
     alignItems: "center",
     borderRadius: "30px",
@@ -36,22 +41,31 @@ const CurrencyStyle = {
 
 function Currency() {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch()
   const { cash, gems } = state;
 
   return (
     <Box sx={CurrencyStyle}>
       <Box>
-        <img src={coin} alt="coin" />
-        <Typography variant="h3" component={"h3"} color={"#EDC429"}>
-          {formatNumberAb(cash, 2)}
-        </Typography>
+        <Box className="currency">
+          <img src={coin} alt="coin" />
+          <Typography variant="h3" component={"h3"} color={"#EDC429"}>
+            {formatNumberAb(cash, 2)}
+          </Typography>
+        </Box>
+        <Box className="currency">
+          <img src={gem} alt="gem"></img>
+          <Typography variant="h3" component={"h3"} color={"#9D47E7"}>
+            {formatNumberAb(gems, 2)}
+          </Typography>
+        </Box>
       </Box>
-      <Box>
-        <img src={gem} alt="gem"></img>
-        <Typography variant="h3" component={"h3"} color={"#9D47E7"}>
-          {formatNumberAb(gems, 2)}
-        </Typography>
-      </Box>
+      <IconButton
+        onClick={() => {
+          dispatch({ type: TOGGLE_MODAL });
+        }}>
+        <SettingsIcon />
+      </IconButton>
     </Box>
   );
 }

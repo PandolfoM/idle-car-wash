@@ -3,18 +3,22 @@ import {
   CURRENT_GEMS,
   UPDATE_CURRENT_MULTIPLIER,
   UPDATE_SOAP,
+  TOGGLE_MODAL,
+  TOGGLE_SFX,
 } from "./actions";
 
 const initialState = {
   currentMultiplier: 1,
+  modalOpen: false,
+  sfx: true,
   cash: 0,
   gems: 0,
   soap: {
     unlocked: true,
     lvl: 1,
     cost: 3,
-    profit: 1
-  }
+    profit: 1,
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -44,8 +48,20 @@ export const reducer = (state = initialState, action) => {
           lvl: action.soap.lvl,
           cost: action.soap.cost,
           profit: action.soap.profit,
-        }
+        },
       };
+
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        modalOpen: !state.modalOpen,
+      };
+
+    case TOGGLE_SFX:
+      return {
+        ...state,
+        sfx: action.sfx
+      }
 
     default:
       return state;

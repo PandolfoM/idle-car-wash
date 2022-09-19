@@ -2,6 +2,14 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Currency from "./Components/Currency";
 import Upgrades from "./Components/Upgrades";
+import Settings from "./Components/Settings";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 const carWashTheme = createTheme({
   palette: {
@@ -23,6 +31,21 @@ const carWashTheme = createTheme({
       defaultProps: {
         disableRipple: true,
         disableTouchRipple: true,
+        disableFocusRipple: true,
+      },
+    },
+    MuiIconButton: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true,
+        disableFocusRipple: true,
+      },
+    },
+    MuiSwitch: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true,
+        disableFocusRipple: true,
       },
     },
     MuiLinearProgress: {
@@ -53,14 +76,34 @@ const carWashTheme = createTheme({
   },
 });
 
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <div>
+    <ApolloProvider client={client}>
       <ThemeProvider theme={carWashTheme}>
+        <Settings />
         <Currency />
         <Upgrades />
       </ThemeProvider>
-    </div>
+    </ApolloProvider>
   );
 }
 

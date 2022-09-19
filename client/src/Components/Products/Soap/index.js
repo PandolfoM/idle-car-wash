@@ -6,7 +6,7 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumber, formatNumberAb } from "../../../utils/helpers";
+import { formatNumber, formatNumberAb, PlayBtnClick } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, UPDATE_SOAP } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -87,7 +87,7 @@ const UpgradesStyle = {
   },
   "& .profit": {
     width: "0px",
-    zIndex: 9999,
+    zIndex: 1,
     position: "relative",
     top: 13,
     left: "6vw",
@@ -140,6 +140,7 @@ function Soap() {
   }, [running]);
 
   const buySoap = () => {
+    PlayBtnClick(state.sfx)
     dispatch({
       type: CURRENT_CASH,
       cash: state.cash - state.soap.cost * state.currentMultiplier,
