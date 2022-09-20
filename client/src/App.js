@@ -1,13 +1,15 @@
 import React from "react";
+import store from "./utils/store";
+import { Provider } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Currency from "./Components/Currency";
 import Upgrades from "./Components/Upgrades";
 import Settings from "./Components/Settings";
 import {
   ApolloClient,
+  InMemoryCache,
   ApolloProvider,
   createHttpLink,
-  InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
@@ -17,17 +19,6 @@ const carWashTheme = createTheme({
   },
   components: {
     MuiButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#EF233C",
-          "&:hover": {
-            backgroundColor: "#D90429",
-          },
-          "&.Mui-disabled": {
-            backgroundColor: "#444",
-          },
-        },
-      },
       defaultProps: {
         disableRipple: true,
         disableTouchRipple: true,
@@ -77,7 +68,7 @@ const carWashTheme = createTheme({
 });
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -98,11 +89,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={carWashTheme}>
-        <Settings />
-        <Currency />
-        <Upgrades />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={carWashTheme}>
+          <Settings />
+          <Currency />
+          <Upgrades />
+        </ThemeProvider>
+      </Provider>
     </ApolloProvider>
   );
 }

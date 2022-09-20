@@ -81,6 +81,14 @@ const UpgradesStyle = {
     width: "90%",
     display: "flex",
     justifyContent: "space-between",
+    backgroundColor: "#EF233C",
+    WebkitTextStroke: "2px black",
+    "&.Mui-disabled": {
+      backgroundColor: "#444",
+    },
+  },
+  "& .buyBtn:hover": {
+    backgroundColor: "#D90429",
   },
   "& .buyBtn:active": {
     transform: "scale(0.95)",

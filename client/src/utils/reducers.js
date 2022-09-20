@@ -5,11 +5,13 @@ import {
   UPDATE_SOAP,
   TOGGLE_MODAL,
   TOGGLE_SFX,
+  TOGGLE_LOGIN
 } from "./actions";
 
 const initialState = {
   currentMultiplier: 1,
   modalOpen: false,
+  loginOpen: false,
   sfx: true,
   cash: 0,
   gems: 0,
@@ -55,6 +57,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         modalOpen: !state.modalOpen,
+      };
+
+    case TOGGLE_LOGIN:
+      return {
+        ...state,
+        loginOpen: !state.loginOpen,
       };
 
     case TOGGLE_SFX:
