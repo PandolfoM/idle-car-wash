@@ -22,5 +22,8 @@
   "homepage": "https://github.com/PandolfoM/idle-car-wash#readme",
   "devDependencies": {
     "concurrently": "^7.4.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.2"
   }
 }

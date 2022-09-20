@@ -10,8 +10,7 @@ import {
   styled,
   TextField,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { TOGGLE_LOGIN } from "../../utils/actions";
+import { useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
@@ -55,7 +54,6 @@ const LoginBtn = styled(Button)(({ theme }) => ({
 
 function Login() {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
   const [addUser, { error }] = useMutation(ADD_USER);
   const [login] = useMutation(LOGIN);
   const [isLogin, setLogin] = useState(true);
@@ -159,7 +157,7 @@ function Login() {
                 sx={{ WebkitTextStroke: "2px black" }}
               />
             )}
-            <LoginBtn variant="contained" type="submit">
+            <LoginBtn variant="contained" type="submit" onClick={handleFormSubmit}>
               Submit
             </LoginBtn>
             {error && (

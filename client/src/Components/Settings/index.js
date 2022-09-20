@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -113,7 +113,7 @@ const SettingsDialog = styled(Dialog)(({ theme }) => ({
 function Settings() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const {loading, data: userData} = useQuery(QUERY_ME)
+  const { loading, error, data: userData } = useQuery(QUERY_ME);
 
   const handleChange = (e) => {
     dispatch({ type: TOGGLE_SFX, sfx: e.target.checked });
@@ -153,7 +153,27 @@ function Settings() {
                 <AccountBtn variant="contained" onClick={() => Auth.logout()}>
                   Logout
                 </AccountBtn>
-                <Box component={"p"} sx={{fontSize: "10px", WebkitTextStroke: "1.5px black",}}>{loading ? "Loading..." : userData.me._id}</Box>
+                {error ? (
+                  <Box
+                    component={"p"}
+                    sx={{
+                      fontSize: "10px",
+                      WebkitTextStroke: "1.5px black",
+                      textAlign: "center",
+                    }}>
+                    Error
+                  </Box>
+                ) : (
+                  <Box
+                    component={"p"}
+                    sx={{
+                      fontSize: "10px",
+                      WebkitTextStroke: "1.5px black",
+                      textAlign: "center",
+                    }}>
+                    {loading ? "Loading..." : userData.me._id}
+                  </Box>
+                )}
               </>
             ) : (
               <AccountBtn
