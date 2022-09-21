@@ -7,6 +7,7 @@ const typeDefs = gql`
     password: String
     cash: Float
     gems: Float
+    sfx: Boolean
   }
 
   type Auth {
@@ -22,7 +23,13 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(email: String!, password: String!, cash: Float, gems: Float): Auth
-    updateUser(email: String, password: String, cash: Float, gems: Float): User
+    updateUser(
+      email: String
+      password: String
+      cash: Float
+      gems: Float
+      sfx: Boolean
+    ): User
     login(email: String!, password: String!): Auth
   }
 `;

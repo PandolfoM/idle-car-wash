@@ -26,6 +26,10 @@ const userSchema = new Schema({
     required: true,
     default: 0,
   },
+  sfx: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 userSchema.pre("save", async function (next) {

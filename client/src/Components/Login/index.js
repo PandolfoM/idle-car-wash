@@ -54,8 +54,8 @@ const LoginBtn = styled(Button)(({ theme }) => ({
 
 function Login() {
   const state = useSelector((state) => state);
-  const [addUser, { error }] = useMutation(ADD_USER);
-  const [login] = useMutation(LOGIN);
+  const [addUser, { error: addUserErr }] = useMutation(ADD_USER);
+  const [login, { error: loginErr }] = useMutation(LOGIN);
   const [isLogin, setLogin] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [formState, setFormState] = useState({
@@ -65,16 +65,22 @@ function Login() {
   });
 
   useEffect(() => {
-    if (error) {
-      if (error.message.includes("(5)")) {
+    if (addUserErr) {
+      if (addUserErr.message.includes("(5)")) {
         setErrorMsg("Password too short");
-      } else if (error.message.includes("Path `email` is required")) {
+      } else if (addUserErr.message.includes("Path `email` is required.")) {
         setErrorMsg("Email is required");
-      } else if (error.message.includes("Path `password` is required")) {
+      } else if (addUserErr.message.includes("Path `password` is required.")) {
         setErrorMsg("Password is required");
       }
     }
-  }, [error]);
+
+    if (loginErr) {
+      if (loginErr.message.includes("Incorrect credentials")) {
+        setErrorMsg("Incorrect credentials");
+      }
+    }
+  }, [addUserErr, loginErr]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -97,7 +103,6 @@ function Login() {
         const token = mutationResponse.data.login.token;
         Auth.login(token);
       } catch (e) {
-        setErrorMsg("Incorrect credentials")
         console.error(e);
       }
     } else {
@@ -157,10 +162,13 @@ function Login() {
                 sx={{ WebkitTextStroke: "2px black" }}
               />
             )}
-            <LoginBtn variant="contained" type="submit" onClick={handleFormSubmit}>
+            <LoginBtn
+              variant="contained"
+              type="submit"
+              onClick={handleFormSubmit}>
               Submit
             </LoginBtn>
-            {error && (
+            {errorMsg !== '' && (
               <Alert
                 variant="outlined"
                 severity="error"

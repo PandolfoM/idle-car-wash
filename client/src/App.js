@@ -69,7 +69,7 @@ const carWashTheme = createTheme({
 });
 
 const httpLink = createHttpLink({
-  uri: `${ADDRESS}/graphql`,
+  uri: `http://${ADDRESS}/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {

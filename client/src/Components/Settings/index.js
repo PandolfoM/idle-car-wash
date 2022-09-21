@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -17,8 +17,9 @@ import Off from "../../assets/off.png";
 import On from "../../assets/on.png";
 import Login from "../Login";
 import Auth from "../../utils/auth";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
+import { UPDATE_USER } from "../../utils/mutations";
 
 const SettingsSwitch = styled(Switch)(({ theme }) => ({
   opacity: 1,
@@ -114,10 +115,31 @@ function Settings() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { loading, error, data: userData } = useQuery(QUERY_ME);
+  const [updateUser] = useMutation(UPDATE_USER);
+  const [sfx, setSfx] = useState(true);
 
-  const handleChange = (e) => {
-    dispatch({ type: TOGGLE_SFX, sfx: e.target.checked });
+  const handleChange = async (e) => {
+    setSfx(e.target.checked);
+    if (Auth.loggedIn()) {
+      try {
+        await updateUser({
+          variables: {
+            sfx: e.target.checked,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      if (userData) {
+        setSfx(userData.me.sfx);
+      }
+    }
+  }, [userData]);
 
   return (
     <>
@@ -143,7 +165,7 @@ function Settings() {
                   SFX
                 </FormLabel>
                 <SettingsSwitch
-                  checked={state.sfx}
+                  checked={sfx}
                   onChange={handleChange}></SettingsSwitch>
               </FormGroup>
             </Box>

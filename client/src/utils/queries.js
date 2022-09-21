@@ -8,6 +8,7 @@ export const QUERY_ME = gql`
       password
       cash
       gems
+      sfx
     }
   }
 `;
