@@ -6,14 +6,17 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  IconButton,
   Stack,
   styled,
   TextField,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { TOGGLE_LOGIN } from "../../utils/actions";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const LoginDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -21,6 +24,7 @@ const LoginDialog = styled(Dialog)(({ theme }) => ({
     backgroundImage: "none",
     border: "#3C485E 2px solid",
     borderRadius: "15px",
+    overflow: "visible",
     "& .MuiDialogTitle-root": {
       backgroundColor: "#1E242F",
       textAlign: "center",
@@ -54,6 +58,7 @@ const LoginBtn = styled(Button)(({ theme }) => ({
 
 function Login() {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [addUser, { error: addUserErr }] = useMutation(ADD_USER);
   const [login, { error: loginErr }] = useMutation(LOGIN);
   const [isLogin, setLogin] = useState(true);
@@ -126,76 +131,96 @@ function Login() {
   };
 
   return (
-    <LoginDialog maxWidth="sm" open={state.loginOpen}>
-      <DialogTitle>{isLogin ? "Login" : "Create Account"}</DialogTitle>
-      <DialogContent>
-        <Box
-          component={"form"}
-          autoComplete="off"
-          noValidate
-          onSubmit={handleFormSubmit}>
-          <Stack spacing={2}>
-            <TextField
-              autoFocus
-              name="email"
-              label="Email"
-              variant="standard"
-              type={"email"}
-              onChange={handleChange}
-              sx={{ WebkitTextStroke: "2px black" }}
-            />
-            <TextField
-              name="password"
-              label="Password"
-              variant="standard"
-              type={"password"}
-              onChange={handleChange}
-              sx={{ WebkitTextStroke: "2px black" }}
-            />
-            {isLogin === false && (
+    <>
+      <LoginDialog maxWidth="sm" open={state.loginOpen}>
+        <DialogTitle>{isLogin ? "Login" : "Create Account"}</DialogTitle>
+        <DialogContent>
+          <Box
+            component={"form"}
+            autoComplete="off"
+            noValidate
+            onSubmit={handleFormSubmit}>
+            <Stack spacing={2}>
               <TextField
-                name="password2"
-                label="Confirm Password"
+                autoFocus
+                name="email"
+                label="Email"
+                variant="standard"
+                type={"email"}
+                onChange={handleChange}
+                sx={{ WebkitTextStroke: "2px black" }}
+              />
+              <TextField
+                name="password"
+                label="Password"
                 variant="standard"
                 type={"password"}
                 onChange={handleChange}
                 sx={{ WebkitTextStroke: "2px black" }}
               />
-            )}
-            <LoginBtn
-              variant="contained"
-              type="submit"
-              onClick={handleFormSubmit}>
-              Submit
-            </LoginBtn>
-            {errorMsg !== '' && (
-              <Alert
-                variant="outlined"
-                severity="error"
+              {isLogin === false && (
+                <TextField
+                  name="password2"
+                  label="Confirm Password"
+                  variant="standard"
+                  type={"password"}
+                  onChange={handleChange}
+                  sx={{ WebkitTextStroke: "2px black" }}
+                />
+              )}
+              <LoginBtn
+                variant="contained"
+                type="submit"
+                onClick={handleFormSubmit}>
+                Submit
+              </LoginBtn>
+              {errorMsg !== "" && (
+                <Alert
+                  variant="outlined"
+                  severity="error"
+                  sx={{
+                    fontSize: "10px",
+                    padding: "3px 8px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}>
+                  {errorMsg}
+                </Alert>
+              )}
+              <Box
+                component={"a"}
                 sx={{
-                  fontSize: "10px",
-                  padding: "3px 8px",
-                  display: "flex",
-                  alignItems: "center",
-                }}>
-                {errorMsg}
-              </Alert>
-            )}
-            <Box
-              component={"a"}
-              sx={{
-                fontSize: "12px",
-                cursor: "pointer",
-                maxWidth: "fit-content",
-                WebkitTextStroke: "2px black",
-              }}
-              onClick={() => (isLogin ? setLogin(false) : setLogin(true))}>
-              {isLogin ? "Create Account" : "Login"}
-            </Box>
-          </Stack>
-        </Box>
-      </DialogContent>
-    </LoginDialog>
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  maxWidth: "fit-content",
+                  WebkitTextStroke: "2px black",
+                }}
+                onClick={() => (isLogin ? setLogin(false) : setLogin(true))}>
+                {isLogin ? "Create Account" : "Login"}
+              </Box>
+            </Stack>
+          </Box>
+          <IconButton
+            onClick={() => dispatch({ type: TOGGLE_LOGIN })}
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: "50%",
+              transform: "translate(-50%, 50%)",
+              zIndex: 1500,
+              borderRadius: "100px",
+              width: "50px",
+              height: "50px",
+              backgroundColor: '#EF233C',
+              border: "black 2px solid",
+              boxShadow: "0 -5px 0 0.5px rgba(0, 0, 0, 0.5) inset",
+              WebkitTextStroke: "2px black",
+            }}>
+            X
+          </IconButton>
+        </DialogContent>
+      </LoginDialog>
+    </>
   );
 }
 
