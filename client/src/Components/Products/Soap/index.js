@@ -6,10 +6,16 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumber, formatNumberAb, PlayBtnClick } from "../../../utils/helpers";
+import {
+  formatNumber,
+  formatNumberAb,
+  PlayBtnClick,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, UPDATE_SOAP } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USER } from "../../../utils/mutations";
 
 const UpgradesStyle = {
   width: "90%",
@@ -109,25 +115,36 @@ function Soap() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [updateUser] = useMutation(UPDATE_USER);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const { soap, cash, sfx, currentMultiplier } = state;
 
-  useEffect(() => {
+  useEffect( () => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: state.cash + state.soap.profit,
+        cash: cash + soap.profit,
       });
+      try {
+        updateUser({
+          variables: {
+            cash: cash + soap.profit,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [progress, state.soap.profit]);
+  }, [progress]);
 
   useEffect(() => {
-    if (state.cash < state.soap.cost * state.currentMultiplier) {
+    if (cash < soap.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (state.cash >= state.soap.cost * state.currentMultiplier) {
+    } else if (cash >= soap.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [state.cash, state.currentMultiplier, state.soap.cost]);
+  }, [cash, currentMultiplier, soap]);
 
   useEffect(() => {
     if (running) {
@@ -147,20 +164,29 @@ function Soap() {
     }
   }, [running]);
 
-  const buySoap = () => {
-    PlayBtnClick(state.sfx)
+  const buySoap = async () => {
+    PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: state.cash - state.soap.cost * state.currentMultiplier,
+      cash: cash - soap.cost * currentMultiplier,
     });
     dispatch({
       type: UPDATE_SOAP,
       soap: {
-        lvl: state.soap.profit + state.currentMultiplier,
-        cost: state.soap.cost * 1.15,
-        profit: state.soap.profit + state.currentMultiplier,
+        lvl: soap.profit + currentMultiplier,
+        cost: soap.cost * 1.15,
+        profit: soap.profit + currentMultiplier,
       },
     });
+    try {
+      await updateUser({
+        variables: {
+          cash: cash - soap.cost * currentMultiplier,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -172,12 +198,12 @@ function Soap() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(state.soap.lvl, 0)}</Typography>
+          <Typography>{formatNumberAb(soap.lvl, 0)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(state.soap.profit, 0)}
+        {formatNumberAb(soap.profit, 0)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -188,11 +214,9 @@ function Soap() {
           disableRipple
           disabled={disabled}
           onClick={buySoap}>
-          BUY x{formatNumber(state.currentMultiplier, 1)}
+          BUY x{formatNumber(currentMultiplier, 1)}
           {/* cost to upgrade */}
-          <span>
-            ${formatNumberAb(state.soap.cost * state.currentMultiplier, 1)}
-          </span>
+          <span>${formatNumberAb(soap.cost * currentMultiplier, 1)}</span>
         </Button>
       </Box>
     </Box>

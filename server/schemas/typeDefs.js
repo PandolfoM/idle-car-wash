@@ -8,6 +8,12 @@ const typeDefs = gql`
     cash: Float
     gems: Float
     sfx: Boolean
+    wallet: Wallet
+  }
+
+  type Wallet {
+    cash: Float
+    gems: Float
   }
 
   type Auth {
@@ -29,6 +35,10 @@ const typeDefs = gql`
       cash: Float
       gems: Float
       sfx: Boolean
+    ): User
+    updateWallet(
+      cash: Float
+      gems: Float
     ): User
     login(email: String!, password: String!): Auth
   }

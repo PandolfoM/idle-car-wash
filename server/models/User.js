@@ -30,6 +30,18 @@ const userSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  wallet: {
+    cash: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    gems: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  }
 });
 
 userSchema.pre("save", async function (next) {

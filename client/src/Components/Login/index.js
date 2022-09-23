@@ -16,7 +16,6 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { TOGGLE_LOGIN } from "../../utils/actions";
-import ClearIcon from "@mui/icons-material/Clear";
 
 const LoginDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {

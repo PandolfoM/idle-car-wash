@@ -1,3 +1,4 @@
 const User = require('./User');
+const Wallet = require('./Wallet')
 
-module.exports = { User };
+module.exports = { User, Wallet };
