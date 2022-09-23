@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  IconButton,
   Stack,
   styled,
   TextField,
@@ -16,6 +15,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { TOGGLE_LOGIN } from "../../utils/actions";
+import CloseBtn from "../CloseBtn";
 
 const LoginDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -24,12 +24,14 @@ const LoginDialog = styled(Dialog)(({ theme }) => ({
     border: "#3C485E 2px solid",
     borderRadius: "15px",
     overflow: "visible",
+    paddingBottom: "15px",
     "& .MuiDialogTitle-root": {
       backgroundColor: "#1E242F",
       textAlign: "center",
       padding: "5px 0",
       fontSize: "15px",
       WebkitTextStroke: "2px black",
+      borderRadius:" 15px 15px 0 0"
     },
     "& .MuiDialogContent-root": {
       padding: "20px 24px",
@@ -199,24 +201,9 @@ function Login() {
               </Box>
             </Stack>
           </Box>
-          <IconButton
-            onClick={() => dispatch({ type: TOGGLE_LOGIN })}
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              left: "50%",
-              transform: "translate(-50%, 50%)",
-              zIndex: 1500,
-              borderRadius: "100px",
-              width: "50px",
-              height: "50px",
-              backgroundColor: '#EF233C',
-              border: "black 2px solid",
-              boxShadow: "0 -5px 0 0.5px rgba(0, 0, 0, 0.5) inset",
-              WebkitTextStroke: "2px black",
-            }}>
-            X
-          </IconButton>
+          <Box onClick={() => dispatch({ type: TOGGLE_LOGIN })}>
+            <CloseBtn/>
+          </Box>
         </DialogContent>
       </LoginDialog>
     </>

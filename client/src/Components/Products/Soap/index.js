@@ -24,6 +24,7 @@ const UpgradesStyle = {
   bgcolor: "#3c485e",
   margin: "auto",
   marginTop: "15px",
+  marginBottom: "30px",
   display: "flex",
   border: "black 2px solid",
   "& .itemPic": {
@@ -190,7 +191,7 @@ function Soap() {
   };
 
   return (
-    <Box sx={UpgradesStyle}>
+    <Box sx={UpgradesStyle} className="containerLvls">
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>

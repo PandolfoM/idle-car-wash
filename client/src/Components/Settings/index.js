@@ -20,6 +20,7 @@ import Auth from "../../utils/auth";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
 import { UPDATE_USER } from "../../utils/mutations";
+import CloseBtn from "../CloseBtn";
 
 const SettingsSwitch = styled(Switch)(({ theme }) => ({
   opacity: 1,
@@ -98,12 +99,15 @@ const SettingsDialog = styled(Dialog)(({ theme }) => ({
     backgroundImage: "none",
     border: "#3C485E 2px solid",
     borderRadius: "15px",
+    overflow: "visible",
+    paddingBottom: "15px",
     "& .MuiDialogTitle-root": {
       backgroundColor: "#1E242F",
       textAlign: "center",
       padding: "5px 0",
       fontSize: "15px",
       WebkitTextStroke: "2px black",
+      borderRadius:" 15px 15px 0 0"
     },
     "& .MuiDialogContent-root": {
       padding: "20px 24px",
@@ -205,6 +209,9 @@ function Settings() {
               </AccountBtn>
             )}
           </Stack>
+          <Box onClick={() => dispatch({ type: TOGGLE_MODAL })}>
+            <CloseBtn/>
+          </Box>
         </DialogContent>
       </SettingsDialog>
     </>

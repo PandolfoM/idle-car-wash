@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip } from "@mui/material";
+import { Box, Chip} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_CURRENT_MULTIPLIER } from "../../utils/actions";
 import SellIcon from "@mui/icons-material/Sell";
@@ -30,20 +30,24 @@ function Upgrades() {
   };
 
   return (
-    <>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
       {/* Buy multiplier */}
       <Chip
         icon={<SellIcon />}
         label={`x${currentMultiplier}`}
         onClick={handleMultiChange}
         sx={{
-          float: "right",
+          width: "fit-content",
           margin: "5px",
+          float: "right",
         }}></Chip>
 
+      {[...Array(5)].map((x, i) => (
+        <Soap key={i} />
+      ))}
       {/* Upgrades */}
-      <Soap/>
-    </>
+    </Box>
   );
 }
 
