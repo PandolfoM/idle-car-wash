@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, UPDATE_SOAP } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_USER } from "../../../utils/mutations";
+import { UPDATE_WALLET } from "../../../utils/mutations";
 
 const UpgradesStyle = {
   width: "90%",
@@ -115,19 +115,19 @@ function Soap() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [updateUser] = useMutation(UPDATE_USER);
+  const [updateWallet] = useMutation(UPDATE_WALLET);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { soap, cash, sfx, currentMultiplier } = state;
 
-  useEffect( () => {
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
         cash: cash + soap.profit,
       });
       try {
-        updateUser({
+        updateWallet({
           variables: {
             cash: cash + soap.profit,
           },
@@ -179,7 +179,7 @@ function Soap() {
       },
     });
     try {
-      await updateUser({
+      await updateWallet({
         variables: {
           cash: cash - soap.cost * currentMultiplier,
         },

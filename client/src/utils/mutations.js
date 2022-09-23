@@ -46,3 +46,11 @@ export const UPDATE_USER = gql`
     }
   }
 `;
+
+export const UPDATE_WALLET = gql`
+  mutation updateWallet($cash: Float, $gems: Float) {
+    updateWallet(cash: $cash, gems: $gems) {
+      _id
+    }
+  }
+`;

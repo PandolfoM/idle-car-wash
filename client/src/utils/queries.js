@@ -6,9 +6,11 @@ export const QUERY_ME = gql`
       _id
       email
       password
-      cash
-      gems
       sfx
+      wallet {
+        cash
+        gems
+      }
     }
   }
 `;
