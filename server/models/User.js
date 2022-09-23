@@ -16,16 +16,6 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  cash: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  gems: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
   sfx: {
     type: Boolean,
     default: true,

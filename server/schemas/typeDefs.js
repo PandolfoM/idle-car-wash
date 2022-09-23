@@ -5,8 +5,6 @@ const typeDefs = gql`
     _id: ID
     email: String
     password: String
-    cash: Float
-    gems: Float
     sfx: Boolean
     wallet: Wallet
   }
