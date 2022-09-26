@@ -21,9 +21,9 @@ const initialState = {
     profit: 1,
   },
   soap: {
-    lvl: 1,
-    cost: 10,
-    profit: 3,
+    lvl: 0,
+    cost: 7,
+    profit: 5,
   },
 };
 

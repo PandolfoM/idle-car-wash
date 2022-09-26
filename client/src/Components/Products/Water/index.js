@@ -7,7 +7,6 @@ import {
   IconButton,
 } from "@mui/material";
 import {
-  formatNumber,
   formatNumberAb,
   PlayBtnClick,
 } from "../../../utils/helpers";
@@ -156,7 +155,7 @@ function Water() {
             setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + 15, 100);
+          return Math.min(oldProgress + 10, 100);
         });
       }, 100);
 
@@ -207,12 +206,12 @@ function Water() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(water.lvl, 0)}</Typography>
+          <Typography>{formatNumberAb(water.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(water.profit, 0)}
+        {formatNumberAb(water.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -223,9 +222,9 @@ function Water() {
           disableRipple
           disabled={disabled}
           onClick={buyWater}>
-          BUY x{formatNumber(currentMultiplier, 1)}
+          BUY x{formatNumberAb(currentMultiplier, 2)}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(water.cost * currentMultiplier, 1)}</span>
+          <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </Box>

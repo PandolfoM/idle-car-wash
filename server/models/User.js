@@ -53,11 +53,11 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 10,
+      default: 7,
     },
     profit: {
       type: Number,
-      default: 3,
+      default: 5,
     },
   },
 });

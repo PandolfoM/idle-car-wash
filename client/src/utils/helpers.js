@@ -1,10 +1,7 @@
 import btnClick from "../assets/btnClick.wav"
 
-export function formatNumber(num) {
-  return new Intl.NumberFormat('en-US', {maximumSignificantDigits: 2}).format(num);
-}
-
-export function formatNumberAb(num, fixed) {
+export function formatNumberAb(num, fixed, lvl) {
+  if (num < 1e3 && lvl) return  num;
   if (num < 1e3) return num.toFixed(fixed);
   if (num >= 1e3 && num < 1e6) return +(num / 1e3).toFixed(fixed) + "K";
   if (num >= 1e6 && num < 1e9) return +(num / 1e6).toFixed(fixed) + "M";
