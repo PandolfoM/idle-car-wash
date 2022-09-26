@@ -20,12 +20,14 @@ const typeDefs = gql`
     lvl: Int
     cost: Float
     profit: Float
+    speed: Float
   }
 
   type Soap {
     lvl: Int
     cost: Float
     profit: Float
+    speed: Float
   }
 
   type Auth {
@@ -54,11 +56,13 @@ const typeDefs = gql`
       lvl: Int
       cost: Float
       profit: Float
+      speed: Float
     ): User
     updateSoap(
       lvl: Int
       cost: Float
       profit: Float
+      speed: Float
     ): User
     login(email: String!, password: String!): Auth
   }

@@ -174,7 +174,7 @@ function Water() {
     dispatch({
       type: SET_WATER,
       water: {
-        lvl: water.profit + currentMultiplier,
+        lvl: water.lvl + currentMultiplier,
         cost: water.cost * 1.05,
         profit: water.profit + currentMultiplier,
       },
@@ -187,8 +187,8 @@ function Water() {
       });
       await updateWater({
         variables: {
-          lvl: water.profit + currentMultiplier,
-          cost: water.cost * 1.2,
+          lvl: water.lvl + currentMultiplier,
+          cost: water.cost * 1.05,
           profit: water.profit + currentMultiplier,
         },
       });
@@ -222,7 +222,7 @@ function Water() {
           disableRipple
           disabled={disabled}
           onClick={buyWater}>
-          BUY x{formatNumberAb(currentMultiplier, 2)}
+          BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>
         </Button>

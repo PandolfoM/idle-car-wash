@@ -31,6 +31,7 @@ const LockedBox = styled(Box)(() => ({
     justifyContent: "space-between",
     backgroundColor: "#EF233C",
     WebkitTextStroke: "2px black",
+    textTransform: "uppercase",
     "&.Mui-disabled": {
       backgroundColor: "#444",
     },
@@ -102,7 +103,7 @@ function LockedLvl({cost, lvl}) {
           disableRipple
           disabled={disabled}
           onClick={unlockLvl}>
-          UNLOCK SOAP
+          UNLOCK {lvl}
           {/* cost to upgrade */}
           <span>${formatNumberAb(cost, 2)}</span>
         </Button>

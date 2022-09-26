@@ -170,6 +170,8 @@ function Soap() {
 
   const buySoap = async () => {
     PlayBtnClick(sfx);
+    console.log(currentMultiplier);
+    console.log(soap.lvl);
     dispatch({
       type: CURRENT_CASH,
       cash: cash - soap.cost * currentMultiplier,
@@ -177,9 +179,9 @@ function Soap() {
     dispatch({
       type: SET_SOAP,
       soap: {
-        lvl: soap.profit + currentMultiplier,
-        cost: soap.cost * 1.4,
-        profit: soap.profit + currentMultiplier,
+        lvl: soap.lvl + currentMultiplier,
+        cost: soap.cost * 1.1,
+        profit: soap.profit + 3 + currentMultiplier,
       },
     });
     try {
@@ -190,9 +192,9 @@ function Soap() {
       });
       await updateSoap({
         variables: {
-          lvl: soap.profit + currentMultiplier,
-          cost: soap.cost * 1.4,
-          profit: soap.profit + currentMultiplier,
+          lvl: soap.lvl + currentMultiplier,
+          cost: soap.cost * 1.1,
+          profit: soap.profit + 3 + currentMultiplier,
         }
       })
     } catch (error) {
@@ -225,7 +227,7 @@ function Soap() {
           disableRipple
           disabled={disabled}
           onClick={buySoap}>
-          BUY x{formatNumberAb(currentMultiplier, 2)}
+          BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(soap.cost * currentMultiplier, 2)}</span>
         </Button>

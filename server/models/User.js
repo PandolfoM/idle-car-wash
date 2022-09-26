@@ -45,6 +45,10 @@ const userSchema = new Schema({
       type: Number,
       default: 1,
     },
+    speed: {
+      type: Number,
+      default: 10
+    }
   },
   soap: {
     lvl: {
@@ -59,6 +63,10 @@ const userSchema = new Schema({
       type: Number,
       default: 5,
     },
+    speed: {
+      type: Number,
+      default: 5
+    }
   },
 });
 

@@ -56,16 +56,16 @@ export const UPDATE_WALLET = gql`
 `;
 
 export const UPDATE_WATER = gql`
-  mutation Mutation($lvl: Int, $cost: Float, $profit: Float) {
-    updateWater(lvl: $lvl, cost: $cost, profit: $profit) {
+  mutation Mutation($lvl: Int, $cost: Float, $profit: Float, $speed: Float) {
+    updateWater(lvl: $lvl, cost: $cost, profit: $profit, speed: $speed) {
       _id
     }
   }
 `;
 
 export const UPDATE_SOAP = gql`
-  mutation Mutation($lvl: Int, $cost: Float, $profit: Float) {
-    updateSoap(lvl: $lvl, cost: $cost, profit: $profit) {
+  mutation Mutation($lvl: Int, $cost: Float, $profit: Float, $speed: Float) {
+    updateSoap(lvl: $lvl, cost: $cost, profit: $profit, speed: $speed) {
       _id
     }
   }

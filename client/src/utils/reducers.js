@@ -19,11 +19,13 @@ const initialState = {
     lvl: 1,
     cost: 3,
     profit: 1,
+    speed: 10,
   },
   soap: {
     lvl: 0,
     cost: 7,
     profit: 5,
+    speed: 5,
   },
 };
 
@@ -47,16 +49,6 @@ export const reducer = (state = initialState, action) => {
         gems: action.gems,
       };
 
-    case SET_SOAP:
-      return {
-        ...state,
-        soap: {
-          lvl: action.soap.lvl,
-          cost: action.soap.cost,
-          profit: action.soap.profit,
-        },
-      };
-
     case SET_WATER:
       return {
         ...state,
@@ -64,6 +56,18 @@ export const reducer = (state = initialState, action) => {
           lvl: action.water.lvl,
           cost: action.water.cost,
           profit: action.water.profit,
+          speed: action.water.speed,
+        },
+      };
+
+    case SET_SOAP:
+      return {
+        ...state,
+        soap: {
+          lvl: action.soap.lvl,
+          cost: action.soap.cost,
+          profit: action.soap.profit,
+          speed: action.soap.speed,
         },
       };
 
