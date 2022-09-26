@@ -1,13 +1,22 @@
-import React from "react";
-import { Box, Chip} from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Chip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_CURRENT_MULTIPLIER } from "../../utils/actions";
+import {
+  SET_SOAP,
+  SET_WATER,
+  UPDATE_CURRENT_MULTIPLIER,
+} from "../../utils/actions";
 import SellIcon from "@mui/icons-material/Sell";
 import Soap from "../Products/Soap";
+import Water from "../Products/Water";
+import Auth from "../../utils/auth";
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
 
 function Upgrades() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const { data: userData } = useQuery(QUERY_ME);
   const { currentMultiplier } = state;
 
   const handleMultiChange = () => {
@@ -29,9 +38,41 @@ function Upgrades() {
     });
   };
 
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      if (userData) {
+        dispatch({
+          type: SET_WATER,
+          water: {
+            lvl: userData.me.water.lvl,
+            cost: userData.me.water.cost,
+            profit: userData.me.water.profit,
+          },
+        });
+        dispatch({
+          type: SET_SOAP,
+          soap: {
+            lvl: userData.me.soap.lvl,
+            cost: userData.me.soap.cost,
+            profit: userData.me.soap.profit,
+          },
+        });
+      }
+    }
+  }, [userData, dispatch]);
+
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        overflowY: "scroll",
+        height: "100vh",
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
+      }}>
       {/* Buy multiplier */}
       <Chip
         icon={<SellIcon />}
@@ -42,11 +83,8 @@ function Upgrades() {
           margin: "5px",
           float: "right",
         }}></Chip>
-
-      {[...Array(5)].map((x, i) => (
-        <Soap key={i} />
-      ))}
-      {/* Upgrades */}
+      <Water />
+      <Soap />
     </Box>
   );
 }

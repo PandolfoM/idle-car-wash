@@ -7,11 +7,25 @@ const typeDefs = gql`
     password: String
     sfx: Boolean
     wallet: Wallet
+    water: Water
+    soap: Soap
   }
 
   type Wallet {
     cash: Float
     gems: Float
+  }
+
+  type Water {
+    lvl: Int
+    cost: Float
+    profit: Float
+  }
+
+  type Soap {
+    lvl: Int
+    cost: Float
+    profit: Float
   }
 
   type Auth {
@@ -30,13 +44,21 @@ const typeDefs = gql`
     updateUser(
       email: String
       password: String
-      cash: Float
-      gems: Float
       sfx: Boolean
     ): User
     updateWallet(
       cash: Float
       gems: Float
+    ): User
+    updateWater(
+      lvl: Int
+      cost: Float
+      profit: Float
+    ): User
+    updateSoap(
+      lvl: Int
+      cost: Float
+      profit: Float
     ): User
     login(email: String!, password: String!): Auth
   }

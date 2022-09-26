@@ -31,7 +31,35 @@ const userSchema = new Schema({
       required: true,
       default: 0,
     },
-  }
+  },
+  water: {
+    lvl: {
+      type: Number,
+      default: 1,
+    },
+    cost: {
+      type: Number,
+      default: 3,
+    },
+    profit: {
+      type: Number,
+      default: 1,
+    },
+  },
+  soap: {
+    lvl: {
+      type: Number,
+      default: 0,
+    },
+    cost: {
+      type: Number,
+      default: 10,
+    },
+    profit: {
+      type: Number,
+      default: 3,
+    },
+  },
 });
 
 userSchema.pre("save", async function (next) {

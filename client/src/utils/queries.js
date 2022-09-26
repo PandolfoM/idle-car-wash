@@ -11,6 +11,16 @@ export const QUERY_ME = gql`
         cash
         gems
       }
+      water {
+        lvl
+        cost
+        profit
+      }
+      soap {
+        lvl
+        cost
+        profit
+      }
     }
   }
 `;

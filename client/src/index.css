@@ -13,4 +13,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: #242b37;
   user-select: none;
+  max-width: 800px;
+  margin:auto;
+  overflow-y: hidden;
 }

@@ -2,10 +2,11 @@ import {
   CURRENT_CASH,
   CURRENT_GEMS,
   UPDATE_CURRENT_MULTIPLIER,
-  UPDATE_SOAP,
+  SET_WATER,
+  SET_SOAP,
   TOGGLE_MODAL,
   TOGGLE_SFX,
-  TOGGLE_LOGIN
+  TOGGLE_LOGIN,
 } from "./actions";
 
 const initialState = {
@@ -14,11 +15,15 @@ const initialState = {
   loginOpen: false,
   cash: 0,
   gems: 0,
-  soap: {
-    unlocked: true,
+  water: {
     lvl: 1,
     cost: 3,
     profit: 1,
+  },
+  soap: {
+    lvl: 1,
+    cost: 10,
+    profit: 3,
   },
 };
 
@@ -42,13 +47,23 @@ export const reducer = (state = initialState, action) => {
         gems: action.gems,
       };
 
-    case UPDATE_SOAP:
+    case SET_SOAP:
       return {
         ...state,
         soap: {
           lvl: action.soap.lvl,
           cost: action.soap.cost,
           profit: action.soap.profit,
+        },
+      };
+
+    case SET_WATER:
+      return {
+        ...state,
+        water: {
+          lvl: action.water.lvl,
+          cost: action.water.cost,
+          profit: action.water.profit,
         },
       };
 
@@ -67,8 +82,8 @@ export const reducer = (state = initialState, action) => {
     case TOGGLE_SFX:
       return {
         ...state,
-        sfx: action.sfx
-      }
+        sfx: action.sfx,
+      };
 
     default:
       return state;

@@ -12,10 +12,10 @@ import {
   PlayBtnClick,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_SOAP } from "../../../utils/actions";
-import SoapIcon from "@mui/icons-material/Soap";
+import { CURRENT_CASH, SET_WATER } from "../../../utils/actions";
+import ShowerIcon from "@mui/icons-material/Shower";
 import { useMutation } from "@apollo/client";
-import { UPDATE_WALLET, UPDATE_SOAP } from "../../../utils/mutations";
+import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
 
 const UpgradesStyle = {
   width: "90%",
@@ -112,26 +112,26 @@ const UpgradesStyle = {
   },
 };
 
-function Soap() {
+function Water() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateSoap] = useMutation(UPDATE_SOAP)
+  const [updateWater] = useMutation(UPDATE_WATER);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { soap, cash, sfx, currentMultiplier } = state;
+  const { water, cash, sfx, currentMultiplier } = state;
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + soap.profit,
+        cash: cash + water.profit,
       });
       try {
         updateWallet({
           variables: {
-            cash: cash + soap.profit,
+            cash: cash + water.profit,
           },
         });
       } catch (error) {
@@ -141,12 +141,12 @@ function Soap() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < soap.cost * currentMultiplier) {
+    if (cash < water.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= soap.cost * currentMultiplier) {
+    } else if (cash >= water.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, soap]);
+  }, [cash, currentMultiplier, water]);
 
   useEffect(() => {
     if (running) {
@@ -156,7 +156,7 @@ function Soap() {
             setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + 10, 100);
+          return Math.min(oldProgress + 15, 100);
         });
       }, 100);
 
@@ -166,33 +166,33 @@ function Soap() {
     }
   }, [running]);
 
-  const buySoap = async () => {
+  const buyWater = async () => {
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - soap.cost * currentMultiplier,
+      cash: cash - water.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_SOAP,
-      soap: {
-        lvl: soap.profit + currentMultiplier,
-        cost: soap.cost * 1.4,
-        profit: soap.profit + currentMultiplier,
+      type: SET_WATER,
+      water: {
+        lvl: water.profit + currentMultiplier,
+        cost: water.cost * 1.2,
+        profit: water.profit + currentMultiplier,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - soap.cost * currentMultiplier,
+          cash: cash - water.cost * currentMultiplier,
         },
       });
-      await updateSoap({
+      await updateWater({
         variables: {
-          lvl: soap.profit + currentMultiplier,
-          cost: soap.cost * 1.4,
-          profit: soap.profit + currentMultiplier,
-        }
-      })
+          lvl: water.profit + currentMultiplier,
+          cost: water.cost * 1.2,
+          profit: water.profit + currentMultiplier,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -203,16 +203,16 @@ function Soap() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <SoapIcon sx={{ width: "2em", height: "2em" }} />
+          <ShowerIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(soap.lvl, 0)}</Typography>
+          <Typography>{formatNumberAb(water.lvl, 0)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(soap.profit, 0)}
+        {formatNumberAb(water.profit, 0)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -222,14 +222,14 @@ function Soap() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buySoap}>
+          onClick={buyWater}>
           BUY x{formatNumber(currentMultiplier, 1)}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(soap.cost * currentMultiplier, 1)}</span>
+          <span>${formatNumberAb(water.cost * currentMultiplier, 1)}</span>
         </Button>
       </Box>
     </Box>
   );
 }
 
-export default Soap;
+export default Water;
