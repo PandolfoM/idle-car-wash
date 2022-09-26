@@ -6,15 +6,13 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import {
-  formatNumberAb,
-  PlayBtnClick,
-} from "../../../utils/helpers";
+import { formatNumberAb, PlayBtnClick } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_WATER } from "../../../utils/actions";
 import ShowerIcon from "@mui/icons-material/Shower";
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
+import Auth from "../../../utils/auth";
 
 const UpgradesStyle = {
   width: "90%",
@@ -127,14 +125,16 @@ function Water() {
         type: CURRENT_CASH,
         cash: cash + water.profit,
       });
-      try {
-        updateWallet({
-          variables: {
-            cash: cash + water.profit,
-          },
-        });
-      } catch (error) {
-        console.log(error);
+      if (Auth.loggedIn()) {
+        try {
+          updateWallet({
+            variables: {
+              cash: cash + water.profit,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }, [progress]);
@@ -175,7 +175,7 @@ function Water() {
       type: SET_WATER,
       water: {
         lvl: water.profit + currentMultiplier,
-        cost: water.cost * 1.2,
+        cost: water.cost * 1.05,
         profit: water.profit + currentMultiplier,
       },
     });

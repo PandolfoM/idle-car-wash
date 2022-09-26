@@ -15,6 +15,7 @@ import { CURRENT_CASH, SET_SOAP } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_SOAP } from "../../../utils/mutations";
+import Auth from "../../../utils/auth";
 
 const UpgradesStyle = {
   width: "90%",
@@ -127,14 +128,16 @@ function Soap() {
         type: CURRENT_CASH,
         cash: cash + soap.profit,
       });
-      try {
-        updateWallet({
-          variables: {
-            cash: cash + soap.profit,
-          },
-        });
-      } catch (error) {
-        console.log(error);
+      if (Auth.loggedIn()) {
+        try {
+          updateWallet({
+            variables: {
+              cash: cash + soap.profit,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }, [progress]);

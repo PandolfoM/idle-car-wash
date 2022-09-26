@@ -12,12 +12,13 @@ import Water from "../Products/Water";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
+import LockedLvl from "../LockedLvl";
 
 function Upgrades() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { data: userData } = useQuery(QUERY_ME);
-  const { currentMultiplier } = state;
+  const { currentMultiplier, soap } = state;
 
   const handleMultiChange = () => {
     let multiplier;
@@ -84,7 +85,7 @@ function Upgrades() {
           float: "right",
         }}></Chip>
       <Water />
-      <Soap />
+      {soap.lvl === 0 ? <LockedLvl cost="1000" lvl="soap" /> : <Soap />}
     </Box>
   );
 }
