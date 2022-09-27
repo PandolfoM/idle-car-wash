@@ -98,9 +98,16 @@ function Upgrades() {
           margin: "5px",
           float: "right",
         }}></Chip>
+
+      {/* Pressure Washer */}
       <Water />
+
       {/* Wheel Cleaner */}
-      {wheel.lvl === 0 ? <LockedLvl cost="1000" lvl="wheel cleaner" /> : <Wheel />}
+      {wheel.lvl === 0 ? (
+        <LockedLvl cost="1000" lvl="wheel cleaner" />
+      ) : (
+        <Wheel />
+      )}
 
       {/* Foam Cannon */}
       {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon" /> : <Foam />}

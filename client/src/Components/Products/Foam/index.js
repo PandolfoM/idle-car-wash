@@ -166,6 +166,9 @@ function Foam() {
   }, [running]);
 
   const buyFoam = async () => {
+    let lvlUp = foam.lvl + currentMultiplier
+    let costUp = foam.cost * 1.12
+    let profitUp = foam.profit * 1.3 + currentMultiplier
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -174,9 +177,9 @@ function Foam() {
     dispatch({
       type: SET_FOAM,
       foam: {
-        lvl: foam.lvl + currentMultiplier,
-        cost: foam.cost * 1.1,
-        profit: foam.profit + 3 + currentMultiplier,
+        lvl: lvlUp,
+        cost: costUp,
+        profit: profitUp,
       },
     });
     try {
@@ -187,9 +190,9 @@ function Foam() {
       });
       await updateFoam({
         variables: {
-          lvl: foam.lvl + currentMultiplier,
-          cost: foam.cost * 1.1,
-          profit: foam.profit + 3 + currentMultiplier,
+          lvl: lvlUp,
+          cost: costUp,
+          profit: profitUp,
         },
       });
     } catch (error) {

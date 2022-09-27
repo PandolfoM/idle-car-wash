@@ -1,0 +1,12 @@
+{
+  "wheel": {
+    "lvlup": "wheel.lvl + currentMultiplier",
+    "costUp": "wheel.cost * 1.08",
+    "profitUp": "wheel.profit * 1.13 + currentMultiplier"
+  },
+  "foam" : {
+    "lvlup": "foam.lvl + currentMultiplier",
+    "costUp": "foam.cost * 1.12",
+    "profitUp": "foam.profit * 1.3 + currentMultiplier"
+  }
+}

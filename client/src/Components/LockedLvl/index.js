@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Box, Button, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import {
   UPDATE_WALLET,
   UPDATE_FOAM,
 } from "../../utils/mutations";
+import { QUERY_ME } from "../../utils/queries";
 
 const LockedBox = styled(Box)(() => ({
   width: "90%",
@@ -23,7 +24,6 @@ const LockedBox = styled(Box)(() => ({
   display: "flex",
   border: "black 2px solid",
   "& .MuiButton-root": {
-    textTransform: "none",
     color: "white",
     paddingTop: "0px !important",
     paddingBottom: "0px !important",
@@ -35,7 +35,6 @@ const LockedBox = styled(Box)(() => ({
     justifyContent: "space-between",
     backgroundColor: "#EF233C",
     WebkitTextStroke: "2px black",
-    textTransform: "uppercase",
     "&.Mui-disabled": {
       backgroundColor: "#444",
     },
@@ -55,6 +54,7 @@ function LockedLvl({ cost, lvl }) {
   const [updateWallet] = useMutation(UPDATE_WALLET);
   const [updateWheel] = useMutation(UPDATE_WHEEL);
   const [updateFoam] = useMutation(UPDATE_FOAM);
+  const { data: userData } = useQuery(QUERY_ME);
   const { cash, sfx, currentMultiplier } = state;
 
   useEffect(() => {
@@ -76,9 +76,9 @@ function LockedLvl({ cost, lvl }) {
         type: SET_WHEEL,
         wheel: {
           lvl: 1,
-          cost: 7,
-          profit: 5,
-          speed: 5,
+          cost: userData.me.wheel.cost,
+          profit: userData.me.wheel.profit,
+          speed: userData.me.wheel.speed,
         },
       });
     } else if (lvl === "foam cannon") {
@@ -86,9 +86,9 @@ function LockedLvl({ cost, lvl }) {
         type: SET_FOAM,
         foam: {
           lvl: 1,
-          cost: 11,
-          profit: 9,
-          speed: 4,
+          cost: userData.me.foam.cost,
+          profit: userData.me.foam.profit,
+          speed: userData.me.foam.speed,
         },
       });
     }

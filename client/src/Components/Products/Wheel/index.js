@@ -9,7 +9,7 @@ import {
 import { formatNumberAb, PlayBtnClick } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_WHEEL } from "../../../utils/actions";
-import SoapIcon from "@mui/icons-material/Soap";
+import TireRepairIcon from '@mui/icons-material/TireRepair';
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WHEEL } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
@@ -166,6 +166,9 @@ function Wheel() {
   }, [running]);
 
   const buyWheel = async () => {
+    let lvlUp = wheel.lvl + currentMultiplier
+    let costUp = wheel.cost * 1.08
+    let profitUp = wheel.profit * 1.13 + currentMultiplier
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -174,9 +177,9 @@ function Wheel() {
     dispatch({
       type: SET_WHEEL,
       wheel: {
-        lvl: wheel.lvl + currentMultiplier,
-        cost: wheel.cost * 1.1,
-        profit: wheel.profit + 3 + currentMultiplier,
+        lvl: lvlUp,
+        cost: costUp,
+        profit: profitUp,
       },
     });
     try {
@@ -187,9 +190,9 @@ function Wheel() {
       });
       await updateWheel({
         variables: {
-          lvl: wheel.lvl + currentMultiplier,
-          cost: wheel.cost * 1.1,
-          profit: wheel.profit + 3 + currentMultiplier,
+          lvl: lvlUp,
+          cost: costUp,
+          profit: profitUp,
         },
       });
     } catch (error) {
@@ -202,7 +205,7 @@ function Wheel() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <SoapIcon sx={{ width: "2em", height: "2em" }} />
+          <TireRepairIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">

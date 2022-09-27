@@ -24,14 +24,14 @@ const initialState = {
   },
   wheel: {
     lvl: 0,
-    cost: 7,
-    profit: 5,
-    speed: 5,
+    cost: 27,
+    profit: 10,
+    speed: 7,
   },
   foam: {
     lvl: 0,
-    cost: 11,
-    profit: 9,
+    cost: 53,
+    profit: 30,
     speed: 4
   }
 };
