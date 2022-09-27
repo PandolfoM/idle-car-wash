@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client";
-import { Box, Button, styled, Typography } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_SOAP } from "../../utils/actions";
+import { CURRENT_CASH, SET_WHEEL } from "../../utils/actions";
 import { formatNumberAb, PlayBtnClick } from "../../utils/helpers";
-import { UPDATE_SOAP, UPDATE_WALLET } from "../../utils/mutations";
+import { UPDATE_WHEEL, UPDATE_WALLET } from "../../utils/mutations";
 
 const LockedBox = styled(Box)(() => ({
   width: "90%",
@@ -46,11 +46,16 @@ const LockedBox = styled(Box)(() => ({
 
 function LockedLvl({cost, lvl}) {
   const [disabled, setDisabled] = useState(true);
-  const [dispatchType, setType] = useState(SET_SOAP)
+  const [dispatchType, setType] = useState({
+    type: SET_WHEEL,
+    cost: 7,
+    profit: 5,
+    speed: 5,
+  })
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateSoap] = useMutation(UPDATE_SOAP)
+  const [updateWheel] = useMutation(UPDATE_WHEEL)
   const { cash, sfx, currentMultiplier } = state;
 
   useEffect(() => {
@@ -62,8 +67,14 @@ function LockedLvl({cost, lvl}) {
   }, [currentMultiplier, cash, cost]);
 
   useEffect(() => {
-    if (lvl === "soap") {
-      setType(SET_SOAP)
+    if (lvl === "wheel cleaner") {
+      setType({
+        ...setType,
+        type: SET_WHEEL,
+        cost: 7,
+        profit: 5,
+        speed: 5,
+      })
     }
   }, [lvl])
 
@@ -74,9 +85,12 @@ function LockedLvl({cost, lvl}) {
       cash: cash - cost,
     });
     dispatch({
-      type: dispatchType,
-      soap: {
+      type: dispatchType.type,
+      wheel: {
         lvl: 1,
+        cost: dispatchType.cost,
+        profit: dispatchType.profit,
+        speed: dispatchType.speed,
       },
     });
     try {
@@ -85,7 +99,7 @@ function LockedLvl({cost, lvl}) {
           cash: cash - cost,
         },
       });
-      await updateSoap({
+      await updateWheel({
         variables: {
           lvl: 1,
         },

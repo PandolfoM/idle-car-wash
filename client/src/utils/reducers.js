@@ -3,7 +3,7 @@ import {
   CURRENT_GEMS,
   UPDATE_CURRENT_MULTIPLIER,
   SET_WATER,
-  SET_SOAP,
+  SET_WHEEL,
   TOGGLE_MODAL,
   TOGGLE_SFX,
   TOGGLE_LOGIN,
@@ -21,7 +21,7 @@ const initialState = {
     profit: 1,
     speed: 10,
   },
-  soap: {
+  wheel: {
     lvl: 0,
     cost: 7,
     profit: 5,
@@ -60,14 +60,14 @@ export const reducer = (state = initialState, action) => {
         },
       };
 
-    case SET_SOAP:
+    case SET_WHEEL:
       return {
         ...state,
-        soap: {
-          lvl: action.soap.lvl,
-          cost: action.soap.cost,
-          profit: action.soap.profit,
-          speed: action.soap.speed,
+        wheel: {
+          lvl: action.wheel.lvl,
+          cost: action.wheel.cost,
+          profit: action.wheel.profit,
+          speed: action.wheel.speed,
         },
       };
 

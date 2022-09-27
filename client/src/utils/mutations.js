@@ -63,9 +63,9 @@ export const UPDATE_WATER = gql`
   }
 `;
 
-export const UPDATE_SOAP = gql`
+export const UPDATE_WHEEL = gql`
   mutation Mutation($lvl: Int, $cost: Float, $profit: Float, $speed: Float) {
-    updateSoap(lvl: $lvl, cost: $cost, profit: $profit, speed: $speed) {
+    updateWheel(lvl: $lvl, cost: $cost, profit: $profit, speed: $speed) {
       _id
     }
   }

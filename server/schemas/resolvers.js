@@ -60,11 +60,11 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    updateSoap: async (parent, args, context) => {
+    updateWheel: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(
           {_id: context.user._id},
-          {$set: {soap: args}},
+          {$set: {wheel: args}},
           {new: true},
         );
       }

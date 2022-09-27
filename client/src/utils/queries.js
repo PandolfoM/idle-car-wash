@@ -15,11 +15,13 @@ export const QUERY_ME = gql`
         lvl
         cost
         profit
+        speed
       }
-      soap {
+      wheel {
         lvl
         cost
         profit
+        speed
       }
     }
   }

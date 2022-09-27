@@ -109,7 +109,7 @@ const UpgradesStyle = {
   },
 };
 
-function Water() {
+function PressureWasher() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -155,7 +155,7 @@ function Water() {
             setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + 10, 100);
+          return Math.min(oldProgress + water.speed, 100);
         });
       }, 100);
 
@@ -231,4 +231,4 @@ function Water() {
   );
 }
 
-export default Water;
+export default PressureWasher;

@@ -8,7 +8,7 @@ const typeDefs = gql`
     sfx: Boolean
     wallet: Wallet
     water: Water
-    soap: Soap
+    wheel: Wheel
   }
 
   type Wallet {
@@ -23,7 +23,7 @@ const typeDefs = gql`
     speed: Float
   }
 
-  type Soap {
+  type Wheel {
     lvl: Int
     cost: Float
     profit: Float
@@ -58,7 +58,7 @@ const typeDefs = gql`
       profit: Float
       speed: Float
     ): User
-    updateSoap(
+    updateWheel(
       lvl: Int
       cost: Float
       profit: Float

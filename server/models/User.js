@@ -50,7 +50,7 @@ const userSchema = new Schema({
       default: 10
     }
   },
-  soap: {
+  wheel: {
     lvl: {
       type: Number,
       default: 0,
