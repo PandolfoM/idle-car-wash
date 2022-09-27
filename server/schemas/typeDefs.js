@@ -9,6 +9,7 @@ const typeDefs = gql`
     wallet: Wallet
     water: Water
     wheel: Wheel
+    foam: Foam
   }
 
   type Wallet {
@@ -24,6 +25,13 @@ const typeDefs = gql`
   }
 
   type Wheel {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Foam {
     lvl: Int
     cost: Float
     profit: Float
@@ -59,6 +67,12 @@ const typeDefs = gql`
       speed: Float
     ): User
     updateWheel(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateFoam(
       lvl: Int
       cost: Float
       profit: Float

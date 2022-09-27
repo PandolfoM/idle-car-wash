@@ -65,7 +65,25 @@ const userSchema = new Schema({
     },
     speed: {
       type: Number,
-      default: 5
+      default: 7
+    }
+  },
+  foam: {
+    lvl: {
+      type: Number,
+      default: 0,
+    },
+    cost: {
+      type: Number,
+      default: 11,
+    },
+    profit: {
+      type: Number,
+      default: 9,
+    },
+    speed: {
+      type: Number,
+      default: 4
     }
   },
 });

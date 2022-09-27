@@ -71,6 +71,17 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    updateFoam: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findByIdAndUpdate(
+          {_id: context.user._id},
+          {$set: {foam: args}},
+          {new: true},
+        );
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
