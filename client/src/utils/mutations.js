@@ -70,3 +70,11 @@ export const UPDATE_WHEEL = gql`
     }
   }
 `;
+
+export const UPDATE_FOAM = gql`
+  mutation Mutation($lvl: Int, $cost: Float, $profit: Float, $speed: Float) {
+    updateFoam(lvl: $lvl, cost: $cost, profit: $profit, speed: $speed) {
+      _id
+    }
+  }
+`;

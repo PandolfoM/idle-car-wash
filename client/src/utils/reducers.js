@@ -7,6 +7,7 @@ import {
   TOGGLE_MODAL,
   TOGGLE_SFX,
   TOGGLE_LOGIN,
+  SET_FOAM,
 } from "./actions";
 
 const initialState = {
@@ -27,6 +28,12 @@ const initialState = {
     profit: 5,
     speed: 5,
   },
+  foam: {
+    lvl: 0,
+    cost: 11,
+    profit: 9,
+    speed: 4
+  }
 };
 
 export const reducer = (state = initialState, action) => {
@@ -68,6 +75,17 @@ export const reducer = (state = initialState, action) => {
           cost: action.wheel.cost,
           profit: action.wheel.profit,
           speed: action.wheel.speed,
+        },
+      };
+
+    case SET_FOAM:
+      return {
+        ...state,
+        foam: {
+          lvl: action.foam.lvl,
+          cost: action.foam.cost,
+          profit: action.foam.profit,
+          speed: action.foam.speed,
         },
       };
 

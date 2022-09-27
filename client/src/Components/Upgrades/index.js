@@ -5,6 +5,7 @@ import {
   SET_WHEEL,
   SET_WATER,
   UPDATE_CURRENT_MULTIPLIER,
+  SET_FOAM,
 } from "../../utils/actions";
 import SellIcon from "@mui/icons-material/Sell";
 import Auth from "../../utils/auth";
@@ -14,12 +15,13 @@ import LockedLvl from "../LockedLvl";
 
 import Water from "../Products/PressureWasher";
 import Wheel from "../Products/Wheel";
+import Foam from "../Products/Foam";
 
 function Upgrades() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { data: userData } = useQuery(QUERY_ME);
-  const { currentMultiplier, wheel } = state;
+  const { currentMultiplier, wheel, foam } = state;
 
   const handleMultiChange = () => {
     let multiplier;
@@ -61,6 +63,15 @@ function Upgrades() {
             speed: userData.me.wheel.speed,
           },
         });
+        dispatch({
+          type: SET_FOAM,
+          foam: {
+            lvl: userData.me.foam.lvl,
+            cost: userData.me.foam.cost,
+            profit: userData.me.foam.profit,
+            speed: userData.me.foam.speed,
+          },
+        });
       }
     }
   }, [userData, dispatch]);
@@ -92,6 +103,8 @@ function Upgrades() {
       {wheel.lvl === 0 ? <LockedLvl cost="1000" lvl="wheel cleaner" /> : <Wheel />}
 
       {/* Foam Cannon */}
+      {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon" /> : <Foam />}
+
       {/* Wash Mitt */}
       {/* Drying Towel */}
       {/* Vacuum */}

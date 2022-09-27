@@ -23,6 +23,12 @@ export const QUERY_ME = gql`
         profit
         speed
       }
+      foam {
+        lvl
+        cost
+        profit
+        speed
+      }
     }
   }
 `;

@@ -2,9 +2,13 @@ import { useMutation } from "@apollo/client";
 import { Box, Button, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_WHEEL } from "../../utils/actions";
+import { CURRENT_CASH, SET_FOAM, SET_WHEEL } from "../../utils/actions";
 import { formatNumberAb, PlayBtnClick } from "../../utils/helpers";
-import { UPDATE_WHEEL, UPDATE_WALLET } from "../../utils/mutations";
+import {
+  UPDATE_WHEEL,
+  UPDATE_WALLET,
+  UPDATE_FOAM,
+} from "../../utils/mutations";
 
 const LockedBox = styled(Box)(() => ({
   width: "90%",
@@ -44,18 +48,13 @@ const LockedBox = styled(Box)(() => ({
   },
 }));
 
-function LockedLvl({cost, lvl}) {
+function LockedLvl({ cost, lvl }) {
   const [disabled, setDisabled] = useState(true);
-  const [dispatchType, setType] = useState({
-    type: SET_WHEEL,
-    cost: 7,
-    profit: 5,
-    speed: 5,
-  })
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateWheel] = useMutation(UPDATE_WHEEL)
+  const [updateWheel] = useMutation(UPDATE_WHEEL);
+  const [updateFoam] = useMutation(UPDATE_FOAM);
   const { cash, sfx, currentMultiplier } = state;
 
   useEffect(() => {
@@ -66,44 +65,53 @@ function LockedLvl({cost, lvl}) {
     }
   }, [currentMultiplier, cash, cost]);
 
-  useEffect(() => {
-    if (lvl === "wheel cleaner") {
-      setType({
-        ...setType,
-        type: SET_WHEEL,
-        cost: 7,
-        profit: 5,
-        speed: 5,
-      })
-    }
-  }, [lvl])
-
   const unlockLvl = async () => {
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
       cash: cash - cost,
     });
-    dispatch({
-      type: dispatchType.type,
-      wheel: {
-        lvl: 1,
-        cost: dispatchType.cost,
-        profit: dispatchType.profit,
-        speed: dispatchType.speed,
-      },
-    });
+    if (lvl === "wheel cleaner") {
+      dispatch({
+        type: SET_WHEEL,
+        wheel: {
+          lvl: 1,
+          cost: 7,
+          profit: 5,
+          speed: 5,
+        },
+      });
+    } else if (lvl === "foam cannon") {
+      dispatch({
+        type: SET_FOAM,
+        foam: {
+          lvl: 1,
+          cost: 11,
+          profit: 9,
+          speed: 4,
+        },
+      });
+    }
     try {
       await updateWallet({
         variables: {
           cash: cash - cost,
         },
       });
-      await updateWheel({
-        variables: {
-          lvl: 1,
-        },
-      });
+
+      if (lvl === "wheel cleaner") {
+        await updateWheel({
+          variables: {
+            lvl: 1,
+          },
+        });
+      } else if (lvl === "foam cannon") {
+        await updateFoam({
+          variables: {
+            lvl: 1,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -111,16 +119,16 @@ function LockedLvl({cost, lvl}) {
 
   return (
     <LockedBox>
-        <Button
-          className="buyBtn"
-          variant="contained"
-          disableRipple
-          disabled={disabled}
-          onClick={unlockLvl}>
-          UNLOCK {lvl}
-          {/* cost to upgrade */}
-          <span>${formatNumberAb(cost, 2)}</span>
-        </Button>
+      <Button
+        className="buyBtn"
+        variant="contained"
+        disableRipple
+        disabled={disabled}
+        onClick={unlockLvl}>
+        UNLOCK {lvl}
+        {/* cost to upgrade */}
+        <span>${formatNumberAb(cost, 2)}</span>
+      </Button>
     </LockedBox>
   );
 }
