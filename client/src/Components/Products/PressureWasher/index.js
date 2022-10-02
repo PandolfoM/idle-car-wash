@@ -13,6 +13,7 @@ import ShowerIcon from "@mui/icons-material/Shower";
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
+import useFitText from "use-fit-text";
 
 const UpgradesStyle = {
   width: "90%",
@@ -118,6 +119,7 @@ function PressureWasher() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { water, cash, sfx, currentMultiplier } = state;
+  const { fontSize, ref } = useFitText();
 
   useEffect(() => {
     if (progress === 100) {
@@ -221,7 +223,9 @@ function PressureWasher() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buyWater}>
+          onClick={buyWater}
+          ref={ref}
+          style={{fontSize}}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>

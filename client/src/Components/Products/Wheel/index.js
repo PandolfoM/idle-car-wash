@@ -9,10 +9,11 @@ import {
 import { formatNumberAb, PlayBtnClick } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_WHEEL } from "../../../utils/actions";
-import TireRepairIcon from '@mui/icons-material/TireRepair';
+import TireRepairIcon from "@mui/icons-material/TireRepair";
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WHEEL } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
+import useFitText from "use-fit-text";
 
 const UpgradesStyle = {
   width: "90%",
@@ -119,6 +120,8 @@ function Wheel() {
   const dispatch = useDispatch();
   const { wheel, cash, sfx, currentMultiplier } = state;
 
+  const { fontSize, ref } = useFitText();
+
   useEffect(() => {
     if (progress === 100) {
       dispatch({
@@ -166,9 +169,9 @@ function Wheel() {
   }, [running]);
 
   const buyWheel = async () => {
-    let lvlUp = wheel.lvl + currentMultiplier
-    let costUp = wheel.cost * 1.08
-    let profitUp = wheel.profit * 1.13 + currentMultiplier
+    let lvlUp = wheel.lvl + currentMultiplier;
+    let costUp = wheel.cost * 1.08;
+    let profitUp = wheel.profit * 1.13 + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -224,7 +227,9 @@ function Wheel() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buyWheel}>
+          onClick={buyWheel}
+          ref={ref}
+          style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(wheel.cost * currentMultiplier, 2)}</span>

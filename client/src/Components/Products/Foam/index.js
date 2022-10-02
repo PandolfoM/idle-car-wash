@@ -13,6 +13,7 @@ import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
 import { UPDATE_FOAM, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
+import useFitText from "use-fit-text";
 
 const UpgradesStyle = {
   width: "90%",
@@ -118,6 +119,7 @@ function Foam() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { foam, cash, sfx, currentMultiplier } = state;
+  const { fontSize, ref } = useFitText();
 
   useEffect(() => {
     if (progress === 100) {
@@ -166,9 +168,9 @@ function Foam() {
   }, [running]);
 
   const buyFoam = async () => {
-    let lvlUp = foam.lvl + currentMultiplier
-    let costUp = foam.cost * 1.12
-    let profitUp = foam.profit * 1.3 + currentMultiplier
+    let lvlUp = foam.lvl + currentMultiplier;
+    let costUp = foam.cost * 1.12;
+    let profitUp = foam.profit * 1.3 + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -224,7 +226,9 @@ function Foam() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buyFoam}>
+          onClick={buyFoam}
+          ref={ref}
+          style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(foam.cost * currentMultiplier, 2)}</span>
