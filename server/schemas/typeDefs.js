@@ -10,6 +10,18 @@ const typeDefs = gql`
     water: Water
     wheel: Wheel
     foam: Foam
+    mitt: Mitt
+    spray: Spray
+    dry: Dry
+    vac: Vac
+    carpet: Carpet
+    spot: Spot
+    steamer: Steamer
+    clay: Clay
+    sealant: Sealant
+    window: Window
+    waffle: Waffle
+    shine: Shine
   }
 
   type Wallet {
@@ -32,6 +44,97 @@ const typeDefs = gql`
   }
 
   type Foam {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Mitt {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Spray {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+  
+  type Spray {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Dry {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Vac {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Carpet {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Spot {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Steamer {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Clay {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Sealant {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Window {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Waffle {
+    lvl: Int
+    cost: Float
+    profit: Float
+    speed: Float
+  }
+
+  type Shine {
     lvl: Int
     cost: Float
     profit: Float
@@ -73,6 +176,78 @@ const typeDefs = gql`
       speed: Float
     ): User
     updateFoam(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateMitt(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateSpray(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateDry(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateVac(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateCarpet(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateSpot(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateSteamer(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateClay(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateSealant(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateWindow(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateWaffle(
+      lvl: Int
+      cost: Float
+      profit: Float
+      speed: Float
+    ): User
+    updateShine(
       lvl: Int
       cost: Float
       profit: Float

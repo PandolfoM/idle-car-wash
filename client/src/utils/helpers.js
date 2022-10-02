@@ -1,3 +1,4 @@
+import { Box, styled } from "@mui/material";
 import btnClick from "../assets/btnClick.wav"
 
 export function formatNumberAb(num, fixed, lvl) {
@@ -22,3 +23,98 @@ export function PlayBtnClick(enabled){
   }
 
 }
+
+export const ProductBox = styled(Box)(() => ({
+  width: "90%",
+  borderRadius: "50px 10px 10px 50px",
+  height: "4.7em",
+  backgroundColor: "#3c485e",
+  margin: "auto",
+  marginTop: "15px",
+  marginBottom: "30px",
+  display: "flex",
+  border: "black 2px solid",
+  "& .itemPic": {
+    padding: "0px !important",
+    borderRadius: "100%",
+    backgroundColor: "#242b37",
+    width: "5.9em",
+    height: "5.9em",
+    position: "relative",
+    top: -60,
+    right: -40,
+    transform: "translate(-50%, 50%)",
+    display: "flex",
+    border: "black 2px solid",
+    boxShadow: "0 0 0px 3px #3c485e inset",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  "& .itemLvl": {
+    width: "6em",
+    height: "2.3em",
+    borderRadius: "30px",
+    backgroundColor: "#2b2d42",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    bottom: -2,
+    border: "2px solid black",
+    boxShadow: "0 0 0px 3px #3c485e inset",
+  },
+  "& .itemLvl>p": {
+    fontSize: "1.3em",
+    fontWeight: "bold",
+    color: "white",
+    textShadow:
+      "2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black",
+    overflow: "hidden",
+  },
+  "& .itemControls": {
+    padding: "0px !important",
+    width: "80%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  "& .MuiButton-root": {
+    bottom: -15,
+    position: "relative",
+    textTransform: "none",
+    color: "white",
+    paddingTop: "0px !important",
+    paddingBottom: "0px !important",
+    border: "black 2px solid",
+    borderRadius: "10px",
+    transition: "all 0.1s linenpmar",
+    fontSize: "1.1em",
+    width: "90%",
+    display: "flex",
+    justifyContent: "space-between",
+    backgroundColor: "#EF233C",
+    WebkitTextStroke: "2px black",
+    "&.Mui-disabled": {
+      backgroundColor: "#444",
+    },
+  },
+  "& .MuiButton-root:hover": {
+    backgroundColor: "#D90429",
+  },
+  "& .MuiButton-root:active": {
+    transform: "scale(0.95)",
+  },
+  "& .profit": {
+    width: "0px",
+    zIndex: 1,
+    position: "relative",
+    top: 13,
+    left: "6vw",
+    color: "white",
+    textShadow:
+      "2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black",
+  },
+}));

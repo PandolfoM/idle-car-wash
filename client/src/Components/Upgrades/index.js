@@ -113,6 +113,7 @@ function Upgrades() {
       {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon" /> : <Foam />}
 
       {/* Wash Mitt */}
+      {/* Detail Spray */}
       {/* Drying Towel */}
       {/* Vacuum */}
       {/* Carpet Cleaner */}
