@@ -114,7 +114,7 @@ function Shine() {
   };
 
   return (
-    <ProductBox>
+    <ProductBox running={running.toString()}>
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>

@@ -24,7 +24,7 @@ export function PlayBtnClick(enabled){
 
 }
 
-export const ProductBox = styled(Box)(() => ({
+export const ProductBox = styled(Box)(({running}) => ({
   width: "90%",
   borderRadius: "50px 10px 10px 50px",
   height: "4.7em",
@@ -46,10 +46,13 @@ export const ProductBox = styled(Box)(() => ({
     transform: "translate(-50%, 50%)",
     display: "flex",
     border: "black 2px solid",
-    boxShadow: "0 0 0px 3px #3c485e inset",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
+    ...(running === "false" ?
+      {boxShadow: "0 0 10px 2px #EF233C, 0 0 0 3px #3c485e inset"}:
+      {boxShadow: "0 0 0 3px #3c485e inset"}
+    ),
   },
   "& .itemLvl": {
     width: "6em",
@@ -90,7 +93,7 @@ export const ProductBox = styled(Box)(() => ({
     paddingBottom: "0px !important",
     border: "black 2px solid",
     borderRadius: "10px",
-    transition: "all 0.1s linenpmar",
+    transition: "all 0.1s linear",
     fontSize: "1.1em",
     width: "90%",
     display: "flex",

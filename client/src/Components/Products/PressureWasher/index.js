@@ -80,6 +80,14 @@ function PressureWasher() {
     let lvlUp = water.lvl + currentMultiplier;
     let costUp = water.cost * 1.05;
     let profitUp = water.profit + currentMultiplier;
+    let speedUp = water.speed
+
+    if (water.lvl === 99) {
+      speedUp = 30
+    } else if (water === 199) {
+      speedUp = 60
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -91,7 +99,7 @@ function PressureWasher() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
-        speed: water.speed,
+        speed: speedUp,
       },
     });
     try {
@@ -105,7 +113,7 @@ function PressureWasher() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
-          speed: water.speed,
+          speed: speedUp,
         },
       });
     } catch (error) {
@@ -114,7 +122,7 @@ function PressureWasher() {
   };
 
   return (
-    <ProductBox>
+    <ProductBox running={running.toString()}>
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
