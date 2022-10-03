@@ -79,8 +79,8 @@ function Sealant() {
 
   const buyProduct = async () => {
     let lvlUp = sealant.lvl + currentMultiplier;
-    let costUp = sealant.cost * config.sealant.cost;
-    let profitUp = sealant.profit * config.sealant.profit + currentMultiplier;
+    let costUp = sealant.cost + parseInt(config.sealant.cost);
+    let profitUp = sealant.profit * parseInt(config.sealant.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Sealant() {
       type: SET_SEALANT,
       sealant: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: sealant.speed
       },
@@ -104,7 +104,7 @@ function Sealant() {
       await updateSealant({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: sealant.speed
         },

@@ -75,8 +75,8 @@ function Mitt() {
 
   const buyProduct = async () => {
     let lvlUp = mitt.lvl + currentMultiplier;
-    let costUp = mitt.cost * config.mitt.cost;
-    let profitUp = mitt.profit * config.mitt.profit + currentMultiplier;
+    let costUp = mitt.cost + parseInt(config.mitt.cost);
+    let profitUp = mitt.profit + parseInt(config.mitt.profit) * currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,8 +86,8 @@ function Mitt() {
       type: SET_MITT,
       mitt: {
         lvl: lvlUp,
-        cost: costUp,
-        profit: profitUp,
+        cost: parseFloat(costUp.toFixed(2)),
+        profit: parseFloat(profitUp.toFixed(2)),
         speed: mitt.speed
       },
     });
@@ -100,8 +100,8 @@ function Mitt() {
       await updateMitt({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
-          profit: profitUp,
+          cost: parseFloat(costUp.toFixed(2)),
+          profit: parseFloat(profitUp.toFixed(2)),
           speed: mitt.speed
         },
       });

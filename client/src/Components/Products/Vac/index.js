@@ -75,8 +75,8 @@ function Vac() {
 
   const buyProduct = async () => {
     let lvlUp = vac.lvl + currentMultiplier;
-    let costUp = vac.cost * config.vac.cost;
-    let profitUp = vac.profit * config.vac.profit + currentMultiplier;
+    let costUp = vac.cost + parseInt(config.vac.cost);
+    let profitUp = vac.profit * parseInt(config.vac.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,7 +86,7 @@ function Vac() {
       type: SET_VAC,
       vac: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: vac.speed
       },
@@ -100,7 +100,7 @@ function Vac() {
       await updateVac({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: vac.speed
         },

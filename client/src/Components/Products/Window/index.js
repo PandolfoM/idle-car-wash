@@ -79,8 +79,8 @@ function Window() {
 
   const buyProduct = async () => {
     let lvlUp = window.lvl + currentMultiplier;
-    let costUp = window.cost * config.window.cost;
-    let profitUp = window.profit * config.window.profit + currentMultiplier;
+    let costUp = window.cost + parseInt(config.window.cost);
+    let profitUp = window.profit * parseInt(config.window.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Window() {
       type: SET_WINDOW,
       window: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: window.speed,
       },
@@ -104,7 +104,7 @@ function Window() {
       await updateWindow({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: window.speed,
         },

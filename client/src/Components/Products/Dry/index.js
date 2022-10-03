@@ -75,8 +75,8 @@ function Dry() {
 
   const buyProduct = async () => {
     let lvlUp = dry.lvl + currentMultiplier;
-    let costUp = dry.cost * config.dry.cost;
-    let profitUp = dry.profit * config.dry.profit + currentMultiplier;
+    let costUp = dry.cost + parseInt(config.dry.cost);
+    let profitUp = dry.profit * parseInt(config.dry.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,7 +86,7 @@ function Dry() {
       type: SET_DRY,
       dry: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: dry.speed
       },
@@ -100,7 +100,7 @@ function Dry() {
       await updateDry({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: dry.speed
         },

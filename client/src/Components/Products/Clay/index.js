@@ -79,8 +79,8 @@ function Clay() {
 
   const buyProduct = async () => {
     let lvlUp = clay.lvl + currentMultiplier;
-    let costUp = clay.cost * config.clay.cost;
-    let profitUp = clay.profit * config.clay.profit + currentMultiplier;
+    let costUp = clay.cost + parseInt(config.clay.cost);
+    let profitUp = clay.profit * parseInt(config.clay.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Clay() {
       type: SET_CLAY,
       clay: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: clay.speed
       },
@@ -104,7 +104,7 @@ function Clay() {
       await updateClay({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: clay.speed
         },

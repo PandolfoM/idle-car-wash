@@ -79,8 +79,8 @@ function Steamer() {
 
   const buyProduct = async () => {
     let lvlUp = steamer.lvl + currentMultiplier;
-    let costUp = steamer.cost * config.steamer.cost;
-    let profitUp = steamer.profit * config.steamer.profit + currentMultiplier;
+    let costUp = steamer.cost + parseInt(config.steamer.cost);
+    let profitUp = steamer.profit * parseInt(config.steamer.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Steamer() {
       type: SET_STEAMER,
       steamer: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: steamer.speed
       },
@@ -104,7 +104,7 @@ function Steamer() {
       await updateSteamer({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: steamer.speed
         },

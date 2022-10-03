@@ -79,8 +79,8 @@ function Carpet() {
 
   const buyProduct = async () => {
     let lvlUp = carpet.lvl + currentMultiplier;
-    let costUp = carpet.cost * config.carpet.cost;
-    let profitUp = carpet.profit * config.carpet.profit + currentMultiplier;
+    let costUp = carpet.cost + parseInt(config.carpet.cost);
+    let profitUp = carpet.profit * parseInt(config.carpet.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Carpet() {
       type: SET_CARPET,
       carpet: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: carpet.speed
       },
@@ -104,7 +104,7 @@ function Carpet() {
       await updateCarpet({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: carpet.speed
         },

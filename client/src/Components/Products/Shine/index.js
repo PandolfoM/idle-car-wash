@@ -79,8 +79,8 @@ function Shine() {
 
   const buyProduct = async () => {
     let lvlUp = shine.lvl + currentMultiplier;
-    let costUp = shine.cost * config.shine.cost;
-    let profitUp = shine.profit * config.shine.profit + currentMultiplier;
+    let costUp = shine.cost + parseInt(config.shine.cost);
+    let profitUp = shine.profit * parseInt(config.shine.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Shine() {
       type: SET_SHINE,
       shine: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: shine.speed
       },
@@ -104,7 +104,7 @@ function Shine() {
       await updateShine({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: shine.speed
         },

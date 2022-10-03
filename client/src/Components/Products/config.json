@@ -1,18 +1,18 @@
 {
   "water": {
-    "cost": "1.05"
+    "cost": "2"
   },
   "wheel": {
-    "cost": "1.08",
-    "profit": "1.03"
+    "cost": "10",
+    "profit": "7"
   },
   "foam": {
-    "cost": "1.12",
-    "profit": "1.06"
+    "cost": "11",
+    "profit": "10"
   },
   "mitt": {
-    "cost": "1.12",
-    "profit": "1.09"
+    "cost": "17",
+    "profit": "16"
   },
   "spray": {
     "cost": "1.12",

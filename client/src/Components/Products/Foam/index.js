@@ -75,8 +75,8 @@ function Foam() {
 
   const buyProduct = async () => {
     let lvlUp = foam.lvl + currentMultiplier;
-    let costUp = foam.cost * config.foam.cost;
-    let profitUp = foam.profit * config.foam.profit + currentMultiplier;
+    let costUp = foam.cost + parseInt(config.foam.cost);
+    let profitUp = foam.profit + parseInt(config.foam.profit) * currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,8 +86,8 @@ function Foam() {
       type: SET_FOAM,
       foam: {
         lvl: lvlUp,
-        cost: costUp,
-        profit: profitUp,
+        cost: parseFloat(costUp.toFixed(2)),
+        profit: parseFloat(profitUp.toFixed(2)),
         speed: foam.speed
       },
     });
@@ -100,8 +100,8 @@ function Foam() {
       await updateFoam({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
-          profit: profitUp,
+          cost: parseFloat(costUp.toFixed(2)),
+          profit: parseFloat(profitUp.toFixed(2)),
           speed: foam.speed
         },
       });

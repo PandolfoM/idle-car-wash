@@ -75,8 +75,9 @@ function Wheel() {
 
   const buyProduct = async () => {
     let lvlUp = wheel.lvl + currentMultiplier;
-    let costUp = wheel.cost * config.wheel.cost;
-    let profitUp = wheel.profit * config.wheel.profit + currentMultiplier;
+    let costUp = wheel.cost + parseInt(config.wheel.cost);
+    let profitUp = wheel.profit + parseInt(config.wheel.profit) * currentMultiplier;
+    
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,8 +87,8 @@ function Wheel() {
       type: SET_WHEEL,
       wheel: {
         lvl: lvlUp,
-        cost: costUp,
-        profit: profitUp,
+        cost: parseFloat(costUp.toFixed(2)),
+        profit: parseFloat(profitUp.toFixed(2)),
         speed: wheel.speed
       },
     });
@@ -100,8 +101,8 @@ function Wheel() {
       await updateWheel({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
-          profit: profitUp,
+          cost: parseFloat(costUp.toFixed(2)),
+          profit: parseFloat(profitUp.toFixed(2)),
           speed: wheel.speed
         },
       });

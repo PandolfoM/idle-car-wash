@@ -75,8 +75,8 @@ function Spray() {
 
   const buyProduct = async () => {
     let lvlUp = spray.lvl + currentMultiplier;
-    let costUp = spray.cost * config.spray.cost;
-    let profitUp = spray.profit * config.spray.profit + currentMultiplier;
+    let costUp = spray.cost + parseInt(config.spray.cost);
+    let profitUp = spray.profit * parseInt(config.spray.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -86,7 +86,7 @@ function Spray() {
       type: SET_SPRAY,
       spray: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: spray.speed
       },
@@ -100,7 +100,7 @@ function Spray() {
       await updateSpray({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: spray.speed
         },

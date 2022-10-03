@@ -359,7 +359,7 @@ function LockedLvl({ cost, lvl }) {
         onClick={unlockLvl}>
         UNLOCK {lvl}
         {/* cost to upgrade */}
-        <span>${formatNumberAb(cost, 2)}</span>
+        <span>${formatNumberAb(cost, 0)}</span>
       </Button>
     </LockedBox>
   );

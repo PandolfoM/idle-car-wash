@@ -79,8 +79,8 @@ function Waffle() {
 
   const buyProduct = async () => {
     let lvlUp = waffle.lvl + currentMultiplier;
-    let costUp = waffle.cost * config.waffle.cost;
-    let profitUp = waffle.profit * config.waffle.profit + currentMultiplier;
+    let costUp = waffle.cost + parseInt(config.waffle.cost);
+    let profitUp = waffle.profit * parseInt(config.waffle.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Waffle() {
       type: SET_WAFFLE,
       waffle: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: waffle.speed
       },
@@ -104,7 +104,7 @@ function Waffle() {
       await updateWaffle({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: waffle.speed
         },

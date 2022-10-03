@@ -246,13 +246,13 @@ function Upgrades() {
 
       {/* Wheel Cleaner */}
       {wheel.lvl === 0 ? (
-        <LockedLvl cost="1000" lvl="wheel cleaner" />
+        <LockedLvl cost="200" lvl="wheel cleaner" />
       ) : (
         <Wheel />
       )}
 
       {/* Foam Cannon */}
-      {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon"/> : <Foam />}
+      {foam.lvl === 0 ? <LockedLvl cost="5000" lvl="foam cannon"/> : <Foam />}
 
       {/* Wash Mitt */}
       {mitt.lvl === 0 ? <LockedLvl cost="35000" lvl="wash mitt" /> : <Mitt />}

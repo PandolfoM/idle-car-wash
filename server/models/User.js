@@ -57,11 +57,11 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 27,
+      default: 210,
     },
     profit: {
       type: Number,
-      default: 10,
+      default: 30,
     },
     speed: {
       type: Number,
@@ -75,11 +75,11 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 53,
+      default: 5100,
     },
     profit: {
       type: Number,
-      default: 30,
+      default: 73,
     },
     speed: {
       type: Number,

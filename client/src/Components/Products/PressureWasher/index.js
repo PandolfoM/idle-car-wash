@@ -79,7 +79,7 @@ function PressureWasher() {
 
   const buyProduct = async () => {
     let lvlUp = water.lvl + currentMultiplier;
-    let costUp = water.cost * config.water.cost;
+    let costUp = water.cost + parseInt(config.water.cost);
     let profitUp = water.profit + currentMultiplier;
     let speedUp = water.speed;
 
@@ -98,7 +98,7 @@ function PressureWasher() {
       type: SET_WATER,
       water: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
       },
@@ -112,7 +112,7 @@ function PressureWasher() {
       await updateWater({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
         },

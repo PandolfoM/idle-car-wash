@@ -79,8 +79,8 @@ function Spot() {
 
   const buyProduct = async () => {
     let lvlUp = spot.lvl + currentMultiplier;
-    let costUp = spot.cost * config.spot.cost;
-    let profitUp = spot.profit * config.spot.profit + currentMultiplier;
+    let costUp = spot.cost + parseInt(config.spot.cost);
+    let profitUp = spot.profit * parseInt(config.spot.profit) + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -90,7 +90,7 @@ function Spot() {
       type: SET_SPOT,
       spot: {
         lvl: lvlUp,
-        cost: costUp,
+        cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: spot.speed
       },
@@ -104,7 +104,7 @@ function Spot() {
       await updateSpot({
         variables: {
           lvl: lvlUp,
-          cost: costUp,
+          cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: spot.speed
         },
