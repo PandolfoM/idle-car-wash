@@ -72,7 +72,7 @@ function Wheel() {
     }
   }, [running]);
 
-  const buyWheel = async () => {
+  const buyProduct = async () => {
     let lvlUp = wheel.lvl + currentMultiplier;
     let costUp = wheel.cost * 1.08;
     let profitUp = wheel.profit * 1.13 + currentMultiplier;
@@ -131,7 +131,7 @@ function Wheel() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buyWheel}
+          onClick={buyProduct}
           ref={ref}
           style={{ fontSize }}>
           BUY x{currentMultiplier}

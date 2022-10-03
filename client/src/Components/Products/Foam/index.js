@@ -5,7 +5,6 @@ import {
   LinearProgress,
   Typography,
   IconButton,
-  styled,
 } from "@mui/material";
 import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +72,7 @@ function Foam() {
     }
   }, [running]);
 
-  const buyFoam = async () => {
+  const buyProduct = async () => {
     let lvlUp = foam.lvl + currentMultiplier;
     let costUp = foam.cost * 1.12;
     let profitUp = foam.profit * 1.3 + currentMultiplier;
@@ -132,7 +131,7 @@ function Foam() {
           variant="contained"
           disableRipple
           disabled={disabled}
-          onClick={buyFoam}
+          onClick={buyProduct}
           ref={ref}
           style={{ fontSize }}>
           BUY x{currentMultiplier}

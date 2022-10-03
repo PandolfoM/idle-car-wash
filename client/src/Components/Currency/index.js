@@ -12,12 +12,14 @@ import Auth from "../../utils/auth";
 
 const CurrencyStyle = {
   bgcolor: "#444",
-  height: "6.5vh",
+  height: "44px",
   borderBottom: "#333 4px solid",
   width: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  position: "fixed",
+  zIndex: 9999,
   "& .currency": {
     boxShadow: "0 0 4px 2px black inset",
     height: "100%",
@@ -26,7 +28,7 @@ const CurrencyStyle = {
   },
   div: {
     width: "max-content",
-    height: "50%",
+    height: "40%",
     display: "flex",
     alignItems: "center",
     borderRadius: "30px",
@@ -36,7 +38,7 @@ const CurrencyStyle = {
     height: "1.5em",
   },
   h3: {
-    fontSize: "1.2em",
+    fontSize: "1.1em",
     marginLeft: "5px",
     fontWeight: "bold",
   },

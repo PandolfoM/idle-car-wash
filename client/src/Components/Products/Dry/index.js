@@ -8,35 +8,35 @@ import {
 } from "@mui/material";
 import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_WATER } from "../../../utils/actions";
-import ShowerIcon from "@mui/icons-material/Shower";
+import { CURRENT_CASH, SET_DRY } from "../../../utils/actions";
+import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
+import { UPDATE_DRY, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
-import useFitText from "use-fit-text"
+import useFitText from "use-fit-text";
 
-function PressureWasher() {
+function Dry() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateWater] = useMutation(UPDATE_WATER);
+  const [updateDry] = useMutation(UPDATE_DRY);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { water, cash, sfx, currentMultiplier } = state;
+  const { dry, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + water.profit,
+        cash: cash + dry.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + water.profit,
+              cash: cash + dry.profit,
             },
           });
         } catch (error) {
@@ -47,12 +47,12 @@ function PressureWasher() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < water.cost * currentMultiplier) {
+    if (cash < dry.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= water.cost * currentMultiplier) {
+    } else if (cash >= dry.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, water]);
+  }, [cash, currentMultiplier, dry]);
 
   useEffect(() => {
     if (running) {
@@ -62,7 +62,7 @@ function PressureWasher() {
             setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + water.speed, 100);
+          return Math.min(oldProgress + dry.speed, 100);
         });
       }, 100);
 
@@ -73,30 +73,33 @@ function PressureWasher() {
   }, [running]);
 
   const buyProduct = async () => {
+    let lvlUp = dry.lvl + currentMultiplier;
+    let costUp = dry.cost * 1.12;
+    let profitUp = dry.profit * 1.3 + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - water.cost * currentMultiplier,
+      cash: cash - dry.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_WATER,
-      water: {
-        lvl: water.lvl + currentMultiplier,
-        cost: water.cost * 1.05,
-        profit: water.profit + currentMultiplier,
+      type: SET_DRY,
+      dry: {
+        lvl: lvlUp,
+        cost: costUp,
+        profit: profitUp,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - water.cost * currentMultiplier,
+          cash: cash - dry.cost * currentMultiplier,
         },
       });
-      await updateWater({
+      await updateDry({
         variables: {
-          lvl: water.lvl + currentMultiplier,
-          cost: water.cost * 1.05,
-          profit: water.profit + currentMultiplier,
+          lvl: lvlUp,
+          cost: costUp,
+          profit: profitUp,
         },
       });
     } catch (error) {
@@ -109,16 +112,16 @@ function PressureWasher() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <ShowerIcon sx={{ width: "2em", height: "2em" }} />
+          <SoapIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(water.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(dry.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(water.profit, 2)}
+        {formatNumberAb(dry.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -130,14 +133,14 @@ function PressureWasher() {
           disabled={disabled}
           onClick={buyProduct}
           ref={ref}
-          style={{fontSize}}>
+          style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(dry.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default PressureWasher;
+export default Dry;
