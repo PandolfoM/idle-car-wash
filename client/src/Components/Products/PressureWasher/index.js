@@ -6,14 +6,18 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_WATER } from "../../../utils/actions";
 import ShowerIcon from "@mui/icons-material/Shower";
 import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
-import useFitText from "use-fit-text"
+import useFitText from "use-fit-text";
 
 function PressureWasher() {
   const [progress, setProgress] = useState(0);
@@ -73,6 +77,9 @@ function PressureWasher() {
   }, [running]);
 
   const buyProduct = async () => {
+    let lvlUp = water.lvl + currentMultiplier;
+    let costUp = water.cost * 1.05;
+    let profitUp = water.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -81,9 +88,10 @@ function PressureWasher() {
     dispatch({
       type: SET_WATER,
       water: {
-        lvl: water.lvl + currentMultiplier,
-        cost: water.cost * 1.05,
-        profit: water.profit + currentMultiplier,
+        lvl: lvlUp,
+        cost: costUp,
+        profit: profitUp,
+        speed: water.speed,
       },
     });
     try {
@@ -94,9 +102,10 @@ function PressureWasher() {
       });
       await updateWater({
         variables: {
-          lvl: water.lvl + currentMultiplier,
-          cost: water.cost * 1.05,
-          profit: water.profit + currentMultiplier,
+          lvl: lvlUp,
+          cost: costUp,
+          profit: profitUp,
+          speed: water.speed,
         },
       });
     } catch (error) {
@@ -130,7 +139,7 @@ function PressureWasher() {
           disabled={disabled}
           onClick={buyProduct}
           ref={ref}
-          style={{fontSize}}>
+          style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
           <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>

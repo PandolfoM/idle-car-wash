@@ -87,6 +87,7 @@ function Foam() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: foam.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Foam() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: foam.speed
         },
       });
     } catch (error) {

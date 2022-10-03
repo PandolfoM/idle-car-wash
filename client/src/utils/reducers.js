@@ -26,6 +26,7 @@ const initialState = {
   currentMultiplier: 1,
   modalOpen: false,
   loginOpen: false,
+  sfx: true,
   cash: 0,
   gems: 0,
   water: {

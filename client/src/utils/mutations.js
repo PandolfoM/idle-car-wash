@@ -26,23 +26,14 @@ export const UPDATE_USER = gql`
   mutation Mutation(
     $email: String
     $password: String
-    $cash: Float
-    $gems: Float
     $sfx: Boolean
   ) {
     updateUser(
       email: $email
       password: $password
-      cash: $cash
-      gems: $gems
       sfx: $sfx
     ) {
       _id
-      email
-      password
-      cash
-      gems
-      sfx
     }
   }
 `;

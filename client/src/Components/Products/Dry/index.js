@@ -87,6 +87,7 @@ function Dry() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: dry.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Dry() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: dry.speed
         },
       });
     } catch (error) {

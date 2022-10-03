@@ -91,6 +91,7 @@ function Carpet() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: carpet.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Carpet() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: carpet.speed
         },
       });
     } catch (error) {

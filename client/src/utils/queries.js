@@ -15,6 +15,7 @@ query Me {
       lvl
       cost
       profit
+      speed
     }
     wheel {
       lvl

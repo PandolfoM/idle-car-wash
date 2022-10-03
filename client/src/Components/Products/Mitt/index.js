@@ -87,6 +87,7 @@ function Mitt() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: mitt.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Mitt() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: mitt.speed
         },
       });
     } catch (error) {

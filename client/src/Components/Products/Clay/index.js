@@ -91,6 +91,7 @@ function Clay() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: clay.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Clay() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: clay.speed
         },
       });
     } catch (error) {

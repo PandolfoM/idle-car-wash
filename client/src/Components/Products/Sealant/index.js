@@ -91,6 +91,7 @@ function Sealant() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: sealant.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Sealant() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: sealant.speed
         },
       });
     } catch (error) {

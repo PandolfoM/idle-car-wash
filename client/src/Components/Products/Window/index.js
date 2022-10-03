@@ -91,6 +91,7 @@ function Window() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: window.speed,
       },
     });
     try {
@@ -104,6 +105,7 @@ function Window() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: window.speed,
         },
       });
     } catch (error) {

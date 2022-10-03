@@ -91,6 +91,7 @@ function Steamer() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: steamer.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Steamer() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: steamer.speed
         },
       });
     } catch (error) {

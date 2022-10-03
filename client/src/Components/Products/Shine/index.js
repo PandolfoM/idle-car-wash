@@ -91,6 +91,7 @@ function Shine() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: shine.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Shine() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: shine.speed
         },
       });
     } catch (error) {

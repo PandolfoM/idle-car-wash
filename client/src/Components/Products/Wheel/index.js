@@ -87,6 +87,7 @@ function Wheel() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: wheel.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Wheel() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: wheel.speed
         },
       });
     } catch (error) {

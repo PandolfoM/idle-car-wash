@@ -91,6 +91,7 @@ function Spot() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: spot.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Spot() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: spot.speed
         },
       });
     } catch (error) {

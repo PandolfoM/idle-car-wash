@@ -230,6 +230,7 @@ function Upgrades() {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
+        paddingTop: "55px"
       }}>
       {/* Buy multiplier */}
       <Chip

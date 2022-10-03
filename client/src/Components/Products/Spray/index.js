@@ -87,6 +87,7 @@ function Spray() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: spray.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Spray() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: spray.speed
         },
       });
     } catch (error) {

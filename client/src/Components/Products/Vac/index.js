@@ -87,6 +87,7 @@ function Vac() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: vac.speed
       },
     });
     try {
@@ -100,6 +101,7 @@ function Vac() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: vac.speed
         },
       });
     } catch (error) {

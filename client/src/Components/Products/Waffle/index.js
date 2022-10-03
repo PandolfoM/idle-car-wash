@@ -91,6 +91,7 @@ function Waffle() {
         lvl: lvlUp,
         cost: costUp,
         profit: profitUp,
+        speed: waffle.speed
       },
     });
     try {
@@ -104,6 +105,7 @@ function Waffle() {
           lvl: lvlUp,
           cost: costUp,
           profit: profitUp,
+          speed: waffle.speed
         },
       });
     } catch (error) {
