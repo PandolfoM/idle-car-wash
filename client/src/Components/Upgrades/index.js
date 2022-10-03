@@ -230,9 +230,6 @@ function Upgrades() {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        "&::-webkit-scrollbar": {
-          display: "none",
-        },
       }}>
       {/* Buy multiplier */}
       <Chip
@@ -254,7 +251,7 @@ function Upgrades() {
       )}
 
       {/* Foam Cannon */}
-      {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon" /> : <Foam />}
+      {foam.lvl === 0 ? <LockedLvl cost="15000" lvl="foam cannon"/> : <Foam />}
 
       {/* Wash Mitt */}
       {mitt.lvl === 0 ? <LockedLvl cost="35000" lvl="wash mitt" /> : <Mitt />}

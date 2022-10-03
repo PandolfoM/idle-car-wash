@@ -16,3 +16,8 @@ html {
   max-width: 800px;
   margin: auto;
 }
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none;
+}
