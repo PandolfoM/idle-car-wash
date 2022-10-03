@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_SEALANT, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Sealant() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Sealant() {
 
   const buyProduct = async () => {
     let lvlUp = sealant.lvl + currentMultiplier;
-    let costUp = sealant.cost * 1.12;
-    let profitUp = sealant.profit * 1.3 + currentMultiplier;
+    let costUp = sealant.cost * config.sealant.cost;
+    let profitUp = sealant.profit * config.sealant.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

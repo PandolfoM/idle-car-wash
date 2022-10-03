@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function PressureWasher() {
   const [progress, setProgress] = useState(0);
@@ -78,14 +79,14 @@ function PressureWasher() {
 
   const buyProduct = async () => {
     let lvlUp = water.lvl + currentMultiplier;
-    let costUp = water.cost * 1.05;
+    let costUp = water.cost * config.water.cost;
     let profitUp = water.profit + currentMultiplier;
-    let speedUp = water.speed
+    let speedUp = water.speed;
 
     if (water.lvl === 99) {
-      speedUp = 30
+      speedUp = 30;
     } else if (water === 199) {
-      speedUp = 60
+      speedUp = 60;
     }
 
     PlayBtnClick(sfx);

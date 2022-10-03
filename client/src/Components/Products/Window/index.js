@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_WINDOW, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Window() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Window() {
 
   const buyProduct = async () => {
     let lvlUp = window.lvl + currentMultiplier;
-    let costUp = window.cost * 1.12;
-    let profitUp = window.profit * 1.3 + currentMultiplier;
+    let costUp = window.cost * config.window.cost;
+    let profitUp = window.profit * config.window.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

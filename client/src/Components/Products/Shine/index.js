@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_SHINE, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Shine() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Shine() {
 
   const buyProduct = async () => {
     let lvlUp = shine.lvl + currentMultiplier;
-    let costUp = shine.cost * 1.12;
-    let profitUp = shine.profit * 1.3 + currentMultiplier;
+    let costUp = shine.cost * config.shine.cost;
+    let profitUp = shine.profit * config.shine.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_WAFFLE, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Waffle() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Waffle() {
 
   const buyProduct = async () => {
     let lvlUp = waffle.lvl + currentMultiplier;
-    let costUp = waffle.cost * 1.12;
-    let profitUp = waffle.profit * 1.3 + currentMultiplier;
+    let costUp = waffle.cost * config.waffle.cost;
+    let profitUp = waffle.profit * config.waffle.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

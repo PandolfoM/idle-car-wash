@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_DRY, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Dry() {
   const [progress, setProgress] = useState(0);
@@ -74,8 +75,8 @@ function Dry() {
 
   const buyProduct = async () => {
     let lvlUp = dry.lvl + currentMultiplier;
-    let costUp = dry.cost * 1.12;
-    let profitUp = dry.profit * 1.3 + currentMultiplier;
+    let costUp = dry.cost * config.dry.cost;
+    let profitUp = dry.profit * config.dry.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

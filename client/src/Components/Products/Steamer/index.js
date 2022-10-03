@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_STEAMER, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Steamer() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Steamer() {
 
   const buyProduct = async () => {
     let lvlUp = steamer.lvl + currentMultiplier;
-    let costUp = steamer.cost * 1.12;
-    let profitUp = steamer.profit * 1.3 + currentMultiplier;
+    let costUp = steamer.cost * config.steamer.cost;
+    let profitUp = steamer.profit * config.steamer.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

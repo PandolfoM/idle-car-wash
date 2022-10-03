@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_WALLET, UPDATE_WHEEL } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Wheel() {
   const [progress, setProgress] = useState(0);
@@ -74,8 +75,8 @@ function Wheel() {
 
   const buyProduct = async () => {
     let lvlUp = wheel.lvl + currentMultiplier;
-    let costUp = wheel.cost * 1.08;
-    let profitUp = wheel.profit * 1.13 + currentMultiplier;
+    let costUp = wheel.cost * config.wheel.cost;
+    let profitUp = wheel.profit * config.wheel.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_CLAY, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Clay() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Clay() {
 
   const buyProduct = async () => {
     let lvlUp = clay.lvl + currentMultiplier;
-    let costUp = clay.cost * 1.12;
-    let profitUp = clay.profit * 1.3 + currentMultiplier;
+    let costUp = clay.cost * config.clay.cost;
+    let profitUp = clay.profit * config.clay.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_MITT, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Mitt() {
   const [progress, setProgress] = useState(0);
@@ -74,8 +75,8 @@ function Mitt() {
 
   const buyProduct = async () => {
     let lvlUp = mitt.lvl + currentMultiplier;
-    let costUp = mitt.cost * 1.12;
-    let profitUp = mitt.profit * 1.3 + currentMultiplier;
+    let costUp = mitt.cost * config.mitt.cost;
+    let profitUp = mitt.profit * config.mitt.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

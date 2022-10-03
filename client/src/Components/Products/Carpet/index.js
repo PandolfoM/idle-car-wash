@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_CARPET, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Carpet() {
   const [progress, setProgress] = useState(0);
@@ -78,8 +79,8 @@ function Carpet() {
 
   const buyProduct = async () => {
     let lvlUp = carpet.lvl + currentMultiplier;
-    let costUp = carpet.cost * 1.12;
-    let profitUp = carpet.profit * 1.3 + currentMultiplier;
+    let costUp = carpet.cost * config.carpet.cost;
+    let profitUp = carpet.profit * config.carpet.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_VAC, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Vac() {
   const [progress, setProgress] = useState(0);
@@ -74,8 +75,8 @@ function Vac() {
 
   const buyProduct = async () => {
     let lvlUp = vac.lvl + currentMultiplier;
-    let costUp = vac.cost * 1.12;
-    let profitUp = vac.profit * 1.3 + currentMultiplier;
+    let costUp = vac.cost * config.vac.cost;
+    let profitUp = vac.profit * config.vac.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

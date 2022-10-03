@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_FOAM, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
+import config from "../config.json";
 
 function Foam() {
   const [progress, setProgress] = useState(0);
@@ -74,8 +75,8 @@ function Foam() {
 
   const buyProduct = async () => {
     let lvlUp = foam.lvl + currentMultiplier;
-    let costUp = foam.cost * 1.12;
-    let profitUp = foam.profit * 1.3 + currentMultiplier;
+    let costUp = foam.cost * config.foam.cost;
+    let profitUp = foam.profit * config.foam.profit + currentMultiplier;
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,

@@ -1,0 +1,61 @@
+{
+  "water": {
+    "cost": "1.05"
+  },
+  "wheel": {
+    "cost": "1.08",
+    "profit": "1.03"
+  },
+  "foam": {
+    "cost": "1.12",
+    "profit": "1.06"
+  },
+  "mitt": {
+    "cost": "1.12",
+    "profit": "1.09"
+  },
+  "spray": {
+    "cost": "1.12",
+    "profit": "1.12"
+  },
+  "dry": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "vac": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "carpet": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "spot": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "steamer": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "clay": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "sealant": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "window": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "waffle": {
+    "cost": "1.12",
+    "profit": "1.3"
+  },
+  "shine": {
+    "cost": "1.12",
+    "profit": "1.3"
+  }
+}
