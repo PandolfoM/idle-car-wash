@@ -270,7 +270,7 @@ function Upgrades() {
       {dry.lvl === 0 ? <LockedLvl cost="95000" lvl="drying towel" /> : <Dry />}
 
       {/* Vacuum */}
-      {vac.lvl === 0 ? <LockedLvl cost="150000" lvl="drying towel" /> : <Vac />}
+      {vac.lvl === 0 ? <LockedLvl cost="150000" lvl="vacuum" /> : <Vac />}
 
       {/* Carpet Cleaner */}
       {carpet.lvl === 0 ? (
@@ -319,7 +319,7 @@ function Upgrades() {
 
       {/* Tire Shine */}
       {shine.lvl === 0 ? (
-        <LockedLvl cost="1000000" lvl="waffle weave towel" />
+        <LockedLvl cost="1000000" lvl="tire shine" />
       ) : (
         <Shine />
       )}
