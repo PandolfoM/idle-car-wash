@@ -12,6 +12,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import Managers from "./Components/Managers";
 const ADDRESS = process.env.REACT_APP_ADDRESS;
 
 const carWashTheme = createTheme({
@@ -92,6 +93,7 @@ function App() {
     <ApolloProvider client={client}>
       <Provider store={store}>
         <ThemeProvider theme={carWashTheme}>
+          <Managers />
           <Settings />
           <Currency />
           <Upgrades />

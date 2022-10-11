@@ -18,8 +18,10 @@ import {
   SET_WINDOW,
   SET_WAFFLE,
   SET_SHINE,
+  TOGGLE_MANAGERS,
 } from "../../utils/actions";
 import SellIcon from "@mui/icons-material/Sell";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
@@ -230,16 +232,29 @@ function Upgrades() {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        paddingTop: "55px"
+        paddingTop: "55px",
       }}>
       {/* Buy multiplier */}
-      <Chip
-        icon={<SellIcon />}
-        label={`x${currentMultiplier}`}
-        onClick={handleMultiChange}
-        sx={{
-          margin: "5px",
-        }}></Chip>
+      <Box>
+        <Chip
+          icon={<SellIcon />}
+          label={`x${currentMultiplier}`}
+          onClick={handleMultiChange}
+          sx={{
+            margin: "5px",
+          }}
+        />
+        <Chip
+          icon={<PersonAddIcon />}
+          label="Manager"
+          onClick={() => {
+            dispatch({ type: TOGGLE_MANAGERS });
+          }}
+          sx={{
+            margin: "5px",
+          }}
+        />
+      </Box>
 
       {/* Pressure Washer */}
       <Water />
@@ -252,7 +267,7 @@ function Upgrades() {
       )}
 
       {/* Foam Cannon */}
-      {foam.lvl === 0 ? <LockedLvl cost="5000" lvl="foam cannon"/> : <Foam />}
+      {foam.lvl === 0 ? <LockedLvl cost="5000" lvl="foam cannon" /> : <Foam />}
 
       {/* Wash Mitt */}
       {mitt.lvl === 0 ? <LockedLvl cost="35000" lvl="wash mitt" /> : <Mitt />}

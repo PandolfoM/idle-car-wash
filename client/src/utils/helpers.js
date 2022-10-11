@@ -115,7 +115,7 @@ export const ProductBox = styled(Box)(({running}) => ({
     width: "0px",
     zIndex: 1,
     position: "relative",
-    top: 13,
+    top: "0.9rem",
     left: "6vw",
     color: "white",
     textShadow:

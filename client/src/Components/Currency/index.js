@@ -20,7 +20,6 @@ const CurrencyStyle = {
   justifyContent: "space-between",
   position: "fixed",
   zIndex: 9999,
-  maxWidth: "800px",
   "& .currency": {
     boxShadow: "0 0 4px 2px black inset",
     height: "100%",

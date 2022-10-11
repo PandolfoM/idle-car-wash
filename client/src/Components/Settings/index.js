@@ -12,7 +12,7 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { TOGGLE_LOGIN, TOGGLE_MODAL, TOGGLE_SFX } from "../../utils/actions";
+import { TOGGLE_LOGIN, TOGGLE_MODAL } from "../../utils/actions";
 import Off from "../../assets/off.png";
 import On from "../../assets/on.png";
 import Login from "../Login";

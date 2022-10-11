@@ -20,12 +20,14 @@ import {
   SET_WINDOW,
   SET_WAFFLE,
   SET_SHINE,
+  TOGGLE_MANAGERS,
 } from "./actions";
 
 const initialState = {
   currentMultiplier: 1,
   modalOpen: false,
   loginOpen: false,
+  managersOpen: false,
   sfx: true,
   cash: 0,
   gems: 0,
@@ -310,6 +312,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         modalOpen: !state.modalOpen,
+      };
+
+    case TOGGLE_MANAGERS:
+      return {
+        ...state,
+        managersOpen: !state.managersOpen,
       };
 
     case TOGGLE_LOGIN:

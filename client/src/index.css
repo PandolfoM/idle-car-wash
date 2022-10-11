@@ -13,7 +13,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: #242b37;
   user-select: none;
-  max-width: 800px;
+  /* max-width: 800px; */
+  width: 100vw;
   margin: auto;
 }
 
