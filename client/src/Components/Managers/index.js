@@ -10,8 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { TOGGLE_MANAGERS } from "../../utils/actions";
+import { SET_WATER, TOGGLE_MANAGERS } from "../../utils/actions";
 import CloseBtn from "../CloseBtn";
+import { UPDATE_WALLET, UPDATE_WATER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
+import { useMutation } from "@apollo/client";
 
 const SettingsDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -62,16 +65,16 @@ const BuyBtn = styled(Button)(({ theme }) => ({
 }));
 
 const lvlArr = {
-  Water: 1000,
+  "Water": 1000,
   "Wheel Cleaner": 25000,
   "Foam Cannon": 25000,
   "Wash Mitt": 25000,
   "Detail Spray": 25000,
   "Drying Towel": 25000,
-  Vacuum: 25000,
+  "Vacuum": 25000,
   "Carpet Cleaner": 25000,
   "Spot Cleaner": 25000,
-  Steamer: 25000,
+  "Steamer": 25000,
   "Clay Bar": 25000,
   "Paint Sealant": 25000,
   "Window Cleaner": 25000,
@@ -82,18 +85,20 @@ const lvlArr = {
 function Managers() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [updateWallet] = useMutation(UPDATE_WALLET);
+  const [updateWater] = useMutation(UPDATE_WATER);
   const { cash } = state;
   const [disabled, setDisabled] = useState({
-    Water: true,
+    "Water": true,
     "Wheel Cleaner": true,
     "Foam Cannon": true,
     "Wash Mitt": true,
     "Detail Spray": true,
     "Drying Towel": true,
-    Vacuum: true,
+    "Vacuum": true,
     "Carpet Cleaner": true,
     "Spot Cleaner": true,
-    Steamer: true,
+    "Steamer": true,
     "Clay Bar": true,
     "Paint Sealant": true,
     "Window Cleaner": true,
@@ -102,10 +107,35 @@ function Managers() {
   });
 
   const buyManager = (item, cost) => {
-    if (cash < cost) {
-      console.log("cannot afford");
-    } else {
-      console.log("bought");
+    if (cash > cost) {
+      if (item === "Water") {
+        dispatch({
+          type: SET_WATER,
+          water: {
+            lvl: state.water.lvl,
+            cost: state.water.cost,
+            profit: state.water.profit,
+            speed: state.water.speed,
+            manager: true,
+          },
+        })
+        if (Auth.loggedIn()) {
+          try {
+            updateWallet({
+              variables: {
+                cash: cash + state.water.profit,
+              },
+            });
+            updateWater({
+              variables: {
+                manager: true,
+              },
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
     }
   };
 

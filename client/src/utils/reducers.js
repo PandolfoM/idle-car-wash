@@ -36,90 +36,105 @@ const initialState = {
     cost: 3,
     profit: 1,
     speed: 10,
+    manager: false
   },
   wheel: {
     lvl: 0,
     cost: 210,
     profit: 30,
     speed: 7,
+    manager: false
   },
   foam: {
     lvl: 0,
     cost: 5100,
     profit: 73,
-    speed: 4
+    speed: 4,
+    manager: false
   },
   mitt: {
     lvl: 0,
     cost: 79,
     profit: 40,
-    speed: 2
+    speed: 2,
+    manager: false
   },
   spray: {
     lvl: 0,
     cost: 105,
     profit: 55,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   dry: {
     lvl: 0,
     cost: 131,
     profit: 70,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   vac: {
     lvl: 0,
     cost: 157,
     profit: 85,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   carpet: {
     lvl: 0,
     cost: 183,
     profit: 100,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   spot: {
     lvl: 0,
     cost: 209,
     profit: 115,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   steamer: {
     lvl: 0,
     cost: 224,
     profit: 130,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   clay: {
     lvl: 0,
     cost: 239,
     profit: 145,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   sealant: {
     lvl: 0,
     cost: 265,
     profit: 160,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   window: {
     lvl: 0,
     cost: 291,
     profit: 175,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   waffle: {
     lvl: 0,
     cost: 317,
     profit: 190,
-    speed: 1
+    speed: 1,
+    manager: false
   },
   shine: {
     lvl: 0,
     cost: 343,
     profit: 205,
-    speed: 1
+    speed: 1,
+    manager: false
   },
 };
 
@@ -151,6 +166,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.water.cost,
           profit: action.water.profit,
           speed: action.water.speed,
+          manager: action.water.manager
         },
       };
 
@@ -162,6 +178,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.wheel.cost,
           profit: action.wheel.profit,
           speed: action.wheel.speed,
+          manager: action.wheel.manager
         },
       };
 
@@ -173,6 +190,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.foam.cost,
           profit: action.foam.profit,
           speed: action.foam.speed,
+          manager: action.foam.manager
         },
       };
 
@@ -184,6 +202,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.mitt.cost,
           profit: action.mitt.profit,
           speed: action.mitt.speed,
+          manager: action.mitt.manager
         },
       };
 
@@ -195,6 +214,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.spray.cost,
           profit: action.spray.profit,
           speed: action.spray.speed,
+          manager: action.spray.manager
         },
       };
 
@@ -206,6 +226,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.dry.cost,
           profit: action.dry.profit,
           speed: action.dry.speed,
+          manager: action.dry.manager
         },
       };
 
@@ -217,6 +238,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.vac.cost,
           profit: action.vac.profit,
           speed: action.vac.speed,
+          manager: action.vac.manager
         },
       };
 
@@ -228,6 +250,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.carpet.cost,
           profit: action.carpet.profit,
           speed: action.carpet.speed,
+          manager: action.carpet.manager
         },
       };
 
@@ -239,6 +262,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.spot.cost,
           profit: action.spot.profit,
           speed: action.spot.speed,
+          manager: action.spot.manager
         },
       };
 
@@ -250,6 +274,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.steamer.cost,
           profit: action.steamer.profit,
           speed: action.steamer.speed,
+          manager: action.steamer.manager
         },
       };
 
@@ -261,6 +286,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.clay.cost,
           profit: action.clay.profit,
           speed: action.clay.speed,
+          manager: action.clay.manager
         },
       };
 
@@ -272,6 +298,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.sealant.cost,
           profit: action.sealant.profit,
           speed: action.sealant.speed,
+          manager: action.sealant.manager
         },
       };
 
@@ -283,6 +310,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.window.cost,
           profit: action.window.profit,
           speed: action.window.speed,
+          manager: action.window.manager
         },
       };
 
@@ -294,6 +322,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.waffle.cost,
           profit: action.waffle.profit,
           speed: action.waffle.speed,
+          manager: action.waffle.manager
         },
       };
 
@@ -305,6 +334,7 @@ export const reducer = (state = initialState, action) => {
           cost: action.shine.cost,
           profit: action.shine.profit,
           speed: action.shine.speed,
+          manager: action.shine.manager
         },
       };
 

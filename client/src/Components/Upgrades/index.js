@@ -94,6 +94,7 @@ function Upgrades() {
             cost: userData.me.water.cost,
             profit: userData.me.water.profit,
             speed: userData.me.water.speed,
+            manager: userData.me.water.manager,
           },
         });
         dispatch({
@@ -103,6 +104,7 @@ function Upgrades() {
             cost: userData.me.wheel.cost,
             profit: userData.me.wheel.profit,
             speed: userData.me.wheel.speed,
+            manager: userData.me.wheel.manager,
           },
         });
         dispatch({
@@ -112,6 +114,7 @@ function Upgrades() {
             cost: userData.me.foam.cost,
             profit: userData.me.foam.profit,
             speed: userData.me.foam.speed,
+            manager: userData.me.foam.manager,
           },
         });
         dispatch({
@@ -121,6 +124,7 @@ function Upgrades() {
             cost: userData.me.mitt.cost,
             profit: userData.me.mitt.profit,
             speed: userData.me.mitt.speed,
+            manager: userData.me.mitt.manager,
           },
         });
         dispatch({
@@ -130,6 +134,7 @@ function Upgrades() {
             cost: userData.me.spray.cost,
             profit: userData.me.spray.profit,
             speed: userData.me.spray.speed,
+            manager: userData.me.spray.manager,
           },
         });
         dispatch({
@@ -139,6 +144,7 @@ function Upgrades() {
             cost: userData.me.dry.cost,
             profit: userData.me.dry.profit,
             speed: userData.me.dry.speed,
+            manager: userData.me.dry.manager,
           },
         });
         dispatch({
@@ -148,6 +154,7 @@ function Upgrades() {
             cost: userData.me.vac.cost,
             profit: userData.me.vac.profit,
             speed: userData.me.vac.speed,
+            manager: userData.me.vac.manager,
           },
         });
         dispatch({
@@ -157,6 +164,7 @@ function Upgrades() {
             cost: userData.me.carpet.cost,
             profit: userData.me.carpet.profit,
             speed: userData.me.carpet.speed,
+            manager: userData.me.carpet.manager,
           },
         });
         dispatch({
@@ -166,6 +174,7 @@ function Upgrades() {
             cost: userData.me.spot.cost,
             profit: userData.me.spot.profit,
             speed: userData.me.spot.speed,
+            manager: userData.me.spot.manager,
           },
         });
         dispatch({
@@ -175,6 +184,7 @@ function Upgrades() {
             cost: userData.me.steamer.cost,
             profit: userData.me.steamer.profit,
             speed: userData.me.steamer.speed,
+            manager: userData.me.steamer.manager,
           },
         });
         dispatch({
@@ -184,6 +194,7 @@ function Upgrades() {
             cost: userData.me.clay.cost,
             profit: userData.me.clay.profit,
             speed: userData.me.clay.speed,
+            manager: userData.me.clay.manager,
           },
         });
         dispatch({
@@ -193,6 +204,7 @@ function Upgrades() {
             cost: userData.me.sealant.cost,
             profit: userData.me.sealant.profit,
             speed: userData.me.sealant.speed,
+            manager: userData.me.sealant.manager,
           },
         });
         dispatch({
@@ -202,6 +214,7 @@ function Upgrades() {
             cost: userData.me.window.cost,
             profit: userData.me.window.profit,
             speed: userData.me.window.speed,
+            manager: userData.me.window.manager,
           },
         });
         dispatch({
@@ -211,6 +224,7 @@ function Upgrades() {
             cost: userData.me.waffle.cost,
             profit: userData.me.waffle.profit,
             speed: userData.me.waffle.speed,
+            manager: userData.me.waffle.manager,
           },
         });
         dispatch({
@@ -220,6 +234,7 @@ function Upgrades() {
             cost: userData.me.shine.cost,
             profit: userData.me.shine.profit,
             speed: userData.me.shine.speed,
+            manager: userData.me.shine.manager,
           },
         });
       }

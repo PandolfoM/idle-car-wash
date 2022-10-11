@@ -48,6 +48,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 10
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   wheel: {
@@ -66,6 +70,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 7
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   foam: {
@@ -84,6 +92,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 4
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   mitt: {
@@ -102,6 +114,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 2
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   spray: {
@@ -120,6 +136,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   dry: {
@@ -138,6 +158,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   vac: {
@@ -156,6 +180,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   carpet: {
@@ -174,6 +202,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   spot: {
@@ -192,6 +224,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   steamer: {
@@ -210,6 +246,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   clay: {
@@ -228,6 +268,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   sealant: {
@@ -246,6 +290,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   window: {
@@ -264,6 +312,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   waffle: {
@@ -282,6 +334,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
   shine: {
@@ -300,6 +356,10 @@ const userSchema = new Schema({
     speed: {
       type: Number,
       default: 1
+    },
+    manager: {
+      type: Boolean,
+      default: false
     }
   },
 });

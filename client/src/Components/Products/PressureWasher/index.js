@@ -32,6 +32,12 @@ function PressureWasher() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (water.manager) {
+      setRunning(true)
+    }
+  }, [water.manager])
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,9 @@ function PressureWasher() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!water.manager) {
+              setRunning(false);
+            }
             return 0;
           }
           return Math.min(oldProgress + water.speed, 100);
@@ -101,6 +109,7 @@ function PressureWasher() {
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
+        manager: water.manager
       },
     });
     try {

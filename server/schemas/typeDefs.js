@@ -34,6 +34,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Wheel {
@@ -41,6 +42,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Foam {
@@ -48,6 +50,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Mitt {
@@ -55,6 +58,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Spray {
@@ -62,6 +66,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
   
   type Spray {
@@ -69,6 +74,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Dry {
@@ -76,6 +82,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Vac {
@@ -83,6 +90,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Carpet {
@@ -90,6 +98,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Spot {
@@ -97,6 +106,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Steamer {
@@ -104,6 +114,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Clay {
@@ -111,6 +122,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Sealant {
@@ -118,6 +130,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Window {
@@ -125,6 +138,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Waffle {
@@ -132,6 +146,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Shine {
@@ -139,6 +154,7 @@ const typeDefs = gql`
     cost: Float
     profit: Float
     speed: Float
+    manager: Boolean
   }
 
   type Auth {
@@ -168,90 +184,105 @@ const typeDefs = gql`
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateWheel(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateFoam(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateMitt(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateSpray(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateDry(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateVac(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateCarpet(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateSpot(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateSteamer(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateClay(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateSealant(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateWindow(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateWaffle(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     updateShine(
       lvl: Int
       cost: Float
       profit: Float
       speed: Float
+      manager: Boolean
     ): User
     login(email: String!, password: String!): Auth
   }
