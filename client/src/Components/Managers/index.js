@@ -32,6 +32,7 @@ import CloseBtn from "../CloseBtn";
 import { UPDATE_CARPET, UPDATE_CLAY, UPDATE_DRY, UPDATE_FOAM, UPDATE_MITT, UPDATE_SEALANT, UPDATE_SHINE, UPDATE_SPOT, UPDATE_SPRAY, UPDATE_STEAMER, UPDATE_VAC, UPDATE_WAFFLE, UPDATE_WALLET, UPDATE_WATER, UPDATE_WHEEL, UPDATE_WINDOW } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
+import { formatNumberAb } from "../../utils/helpers";
 
 const SettingsDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -82,21 +83,21 @@ const BuyBtn = styled(Button)(({ theme }) => ({
 }));
 
 const lvlArr = {
-  Water: 1000,
-  "Wheel Cleaner": 25000,
-  "Foam Cannon": 25000,
-  "Wash Mitt": 25000,
-  "Detail Spray": 25000,
-  "Drying Towel": 25000,
-  Vacuum: 25000,
-  "Carpet Cleaner": 25000,
-  "Spot Cleaner": 25000,
-  Steamer: 25000,
-  "Clay Bar": 25000,
-  "Paint Sealant": 25000,
-  "Window Cleaner": 25000,
-  "Waffle Weave Towel": 25000,
-  "Tire Shine": 25000,
+  Water: 500,
+  "Wheel Cleaner": 10000,
+  "Foam Cannon": 70000,
+  "Wash Mitt": 150000,
+  "Detail Spray": 810000,
+  "Drying Towel": 1950000,
+  Vacuum: 12550000,
+  "Carpet Cleaner": 1300000000,
+  "Spot Cleaner": 13460000000,
+  Steamer: 510500000000,
+  "Clay Bar": 1100000000000,
+  "Paint Sealant": 58900000000000,
+  "Window Cleaner": 17800000000000000,
+  "Waffle Weave Towel": 533900000000000000000,
+  "Tire Shine": 185900000000000000000000,
 };
 
 function Managers() {
@@ -428,7 +429,7 @@ function Managers() {
                 sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography>{item}</Typography>
                 <BuyBtn onClick={() => buyManager(item, lvlArr[item])}>
-                  ${lvlArr[item]}
+                  ${formatNumberAb(lvlArr[item])}
                 </BuyBtn>
               </Box>
             ))}

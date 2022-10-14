@@ -11,7 +11,7 @@ export function formatNumberAb(num, fixed, lvl) {
   if (num >= 1e12 && num < 1e15) return +(num / 1e12).toFixed(2) + "T";
   if (num >= 1e15 && num < 1e18) return +(num / 1e15).toFixed(2) + "AA";
   if (num >= 1e18 && num < 1e21) return +(num / 1e18).toFixed(2) + "BB";
-  if (num >= 1e21) return +(num / 1e21).toFixed(fixed) + "CC";
+  if (num >= 1e21) return +(num / 1e21).toFixed(2) + "CC";
 }
 
 export function PlayBtnClick(enabled){
