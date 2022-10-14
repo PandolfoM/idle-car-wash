@@ -32,6 +32,12 @@ function Spot() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (spot.manager) {
+      setRunning(true);
+    }
+  }, [spot.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Spot() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!spot.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + spot.speed, 100);
@@ -75,12 +81,27 @@ function Spot() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, spot.speed, spot.manager]);
 
   const buyProduct = async () => {
     let lvlUp = spot.lvl + currentMultiplier;
     let costUp = spot.cost + parseInt(config.spot.cost);
-    let profitUp = spot.profit * parseInt(config.spot.profit) + currentMultiplier;
+    let profitUp =
+      spot.profit * parseInt(config.spot.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (spot.lvl < 99) {
+      speedUp = spot.speed;
+    } else if (spot.lvl >= 99) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 199) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 299) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 399) {
+      speedUp = spot.speed + 24.375;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Spot() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: spot.speed
+        speed: speedUp,
+        manager: spot.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Spot() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: spot.speed
+          speed: speedUp,
+          manager: spot.manager,
         },
       });
     } catch (error) {

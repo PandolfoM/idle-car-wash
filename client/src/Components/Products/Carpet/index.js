@@ -32,6 +32,12 @@ function Carpet() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (carpet.manager) {
+      setRunning(true);
+    }
+  }, [carpet.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Carpet() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!carpet.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + carpet.speed, 100);
@@ -75,12 +81,27 @@ function Carpet() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, carpet.speed, carpet.manager]);
 
   const buyProduct = async () => {
     let lvlUp = carpet.lvl + currentMultiplier;
     let costUp = carpet.cost + parseInt(config.carpet.cost);
-    let profitUp = carpet.profit * parseInt(config.carpet.profit) + currentMultiplier;
+    let profitUp =
+      carpet.profit * parseInt(config.carpet.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (carpet.lvl < 99) {
+      speedUp = carpet.speed;
+    } else if (carpet.lvl >= 99) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 199) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 299) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 399) {
+      speedUp = carpet.speed + 24.25;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Carpet() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: carpet.speed
+        speed: speedUp,
+        manager: carpet.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Carpet() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: carpet.speed
+          speed: speedUp,
+          manager: carpet.manager,
         },
       });
     } catch (error) {

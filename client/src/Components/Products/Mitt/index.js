@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_MITT } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -26,6 +30,12 @@ function Mitt() {
   const dispatch = useDispatch();
   const { mitt, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (mitt.manager) {
+      setRunning(true);
+    }
+  }, [mitt.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Mitt() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!mitt.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + mitt.speed, 100);
@@ -71,12 +81,27 @@ function Mitt() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, mitt.manager, mitt.speed]);
 
   const buyProduct = async () => {
     let lvlUp = mitt.lvl + currentMultiplier;
     let costUp = mitt.cost + parseInt(config.mitt.cost);
-    let profitUp = mitt.profit + parseInt(config.mitt.profit) * currentMultiplier;
+    let profitUp =
+      mitt.profit + parseInt(config.mitt.profit) * currentMultiplier;
+    let speedUp = 0;
+
+    if (mitt.lvl < 99) {
+      speedUp = mitt.speed;
+    } else if (mitt.lvl >= 99) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 199) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 299) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 399) {
+      speedUp = mitt.speed + 23;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -88,7 +113,8 @@ function Mitt() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: parseFloat(profitUp.toFixed(2)),
-        speed: mitt.speed
+        speed: speedUp,
+        manager: mitt.manager,
       },
     });
     try {
@@ -102,7 +128,8 @@ function Mitt() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: parseFloat(profitUp.toFixed(2)),
-          speed: mitt.speed
+          speed: speedUp,
+          manager: mitt.manager,
         },
       });
     } catch (error) {

@@ -47,7 +47,7 @@ const userSchema = new Schema({
     },
     speed: {
       type: Number,
-      default: 10
+      default: 14
     },
     manager: {
       type: Boolean,
@@ -61,7 +61,7 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 210,
+      default: 200,
     },
     profit: {
       type: Number,
@@ -69,7 +69,7 @@ const userSchema = new Schema({
     },
     speed: {
       type: Number,
-      default: 7
+      default: 12
     },
     manager: {
       type: Boolean,
@@ -83,7 +83,7 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 5100,
+      default: 5000,
     },
     profit: {
       type: Number,
@@ -91,7 +91,7 @@ const userSchema = new Schema({
     },
     speed: {
       type: Number,
-      default: 4
+      default: 10
     },
     manager: {
       type: Boolean,
@@ -105,15 +105,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 79,
+      default: 100000,
     },
     profit: {
       type: Number,
-      default: 40,
+      default: 454,
     },
     speed: {
       type: Number,
-      default: 2
+      default: 8
     },
     manager: {
       type: Boolean,
@@ -127,15 +127,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 105,
+      default: 750000,
     },
     profit: {
       type: Number,
-      default: 55,
+      default: 1000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 6
     },
     manager: {
       type: Boolean,
@@ -149,15 +149,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 131,
+      default: 1500000,
     },
     profit: {
       type: Number,
-      default: 70,
+      default: 10000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 4
     },
     manager: {
       type: Boolean,
@@ -171,15 +171,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 157,
+      default: 10000000,
     },
     profit: {
       type: Number,
-      default: 85,
+      default: 20000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 3.5
     },
     manager: {
       type: Boolean,
@@ -193,15 +193,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 183,
+      default: 1000000000,
     },
     profit: {
       type: Number,
-      default: 100,
+      default: 50000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 3
     },
     manager: {
       type: Boolean,
@@ -215,15 +215,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 209,
+      default: 10000000000,
     },
     profit: {
       type: Number,
-      default: 115,
+      default: 100000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 2.5
     },
     manager: {
       type: Boolean,
@@ -237,15 +237,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 224,
+      default: 500000000000,
     },
     profit: {
       type: Number,
-      default: 130,
+      default: 500000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 2
     },
     manager: {
       type: Boolean,
@@ -259,15 +259,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 239,
+      default: 1000000000000,
     },
     profit: {
       type: Number,
-      default: 145,
+      default: 1000000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 1.5
     },
     manager: {
       type: Boolean,
@@ -281,11 +281,11 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 265,
+      default: 50000000000000,
     },
     profit: {
       type: Number,
-      default: 160,
+      default: 10000000,
     },
     speed: {
       type: Number,
@@ -303,15 +303,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 291,
+      default: 10000000000000000,
     },
     profit: {
       type: Number,
-      default: 175,
+      default: 50000000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 0.5
     },
     manager: {
       type: Boolean,
@@ -325,15 +325,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 317,
+      default: 50000000000000000000,
     },
     profit: {
       type: Number,
-      default: 190,
+      default: 1000000000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 0.1
     },
     manager: {
       type: Boolean,
@@ -347,15 +347,15 @@ const userSchema = new Schema({
     },
     cost: {
       type: Number,
-      default: 343,
+      default: 100000000000000000000000,
     },
     profit: {
       type: Number,
-      default: 205,
+      default: 50000000000,
     },
     speed: {
       type: Number,
-      default: 1
+      default: 0.05
     },
     manager: {
       type: Boolean,

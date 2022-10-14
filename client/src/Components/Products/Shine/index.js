@@ -32,6 +32,12 @@ function Shine() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (shine.manager) {
+      setRunning(true);
+    }
+  }, [shine.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Shine() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!shine.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + shine.speed, 100);
@@ -75,12 +81,27 @@ function Shine() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, shine.speed, shine.manager]);
 
   const buyProduct = async () => {
     let lvlUp = shine.lvl + currentMultiplier;
     let costUp = shine.cost + parseInt(config.shine.cost);
-    let profitUp = shine.profit * parseInt(config.shine.profit) + currentMultiplier;
+    let profitUp =
+      shine.profit * parseInt(config.shine.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (shine.lvl < 99) {
+      speedUp = shine.speed;
+    } else if (shine.lvl >= 99) {
+      speedUp = shine.speed + 24.9875;
+    } else if (shine.lvl >= 199) {
+      speedUp = shine.speed + 24.9875;
+    } else if (shine.lvl >= 299) {
+      speedUp = shine.speed + 24.9875;
+    } else if (shine.lvl >= 399) {
+      speedUp = shine.speed + 24.9875;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Shine() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: shine.speed
+        speed: speedUp,
+        manager: shine.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Shine() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: shine.speed
+          speed: speedUp,
+          manager: shine.manager,
         },
       });
     } catch (error) {

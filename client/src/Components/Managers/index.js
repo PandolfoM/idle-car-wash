@@ -10,9 +10,26 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_WATER, TOGGLE_MANAGERS } from "../../utils/actions";
+import {
+  SET_CARPET,
+  SET_CLAY,
+  SET_DRY,
+  SET_FOAM,
+  SET_MITT,
+  SET_SEALANT,
+  SET_SHINE,
+  SET_SPOT,
+  SET_SPRAY,
+  SET_STEAMER,
+  SET_VAC,
+  SET_WAFFLE,
+  SET_WATER,
+  SET_WHEEL,
+  SET_WINDOW,
+  TOGGLE_MANAGERS,
+} from "../../utils/actions";
 import CloseBtn from "../CloseBtn";
-import { UPDATE_WALLET, UPDATE_WATER } from "../../utils/mutations";
+import { UPDATE_CARPET, UPDATE_CLAY, UPDATE_DRY, UPDATE_FOAM, UPDATE_MITT, UPDATE_SEALANT, UPDATE_SHINE, UPDATE_SPOT, UPDATE_SPRAY, UPDATE_STEAMER, UPDATE_VAC, UPDATE_WAFFLE, UPDATE_WALLET, UPDATE_WATER, UPDATE_WHEEL, UPDATE_WINDOW } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
 
@@ -65,16 +82,16 @@ const BuyBtn = styled(Button)(({ theme }) => ({
 }));
 
 const lvlArr = {
-  "Water": 1000,
+  Water: 1000,
   "Wheel Cleaner": 25000,
   "Foam Cannon": 25000,
   "Wash Mitt": 25000,
   "Detail Spray": 25000,
   "Drying Towel": 25000,
-  "Vacuum": 25000,
+  Vacuum: 25000,
   "Carpet Cleaner": 25000,
   "Spot Cleaner": 25000,
-  "Steamer": 25000,
+  Steamer: 25000,
   "Clay Bar": 25000,
   "Paint Sealant": 25000,
   "Window Cleaner": 25000,
@@ -87,68 +104,312 @@ function Managers() {
   const dispatch = useDispatch();
   const [updateWallet] = useMutation(UPDATE_WALLET);
   const [updateWater] = useMutation(UPDATE_WATER);
-  const { cash } = state;
-  const [disabled, setDisabled] = useState({
-    "Water": true,
-    "Wheel Cleaner": true,
-    "Foam Cannon": true,
-    "Wash Mitt": true,
-    "Detail Spray": true,
-    "Drying Towel": true,
-    "Vacuum": true,
-    "Carpet Cleaner": true,
-    "Spot Cleaner": true,
-    "Steamer": true,
-    "Clay Bar": true,
-    "Paint Sealant": true,
-    "Window Cleaner": true,
-    "Waffle Weave Towel": true,
-    "Tire Shine": true,
-  });
+  const [updateWheel] = useMutation(UPDATE_WHEEL);
+  const [updateFoam] = useMutation(UPDATE_FOAM);
+  const [updateMitt] = useMutation(UPDATE_MITT);
+  const [updateSpray] = useMutation(UPDATE_SPRAY);
+  const [updateDry] = useMutation(UPDATE_DRY);
+  const [updateVac] = useMutation(UPDATE_VAC);
+  const [updateCarpet] = useMutation(UPDATE_CARPET);
+  const [updateSpot] = useMutation(UPDATE_SPOT);
+  const [updateSteamer] = useMutation(UPDATE_STEAMER);
+  const [updateClay] = useMutation(UPDATE_CLAY);
+  const [updateSealant] = useMutation(UPDATE_SEALANT);
+  const [updateWindow] = useMutation(UPDATE_WINDOW);
+  const [updateWaffle] = useMutation(UPDATE_WAFFLE);
+  const [updateShine] = useMutation(UPDATE_SHINE);
+  const {
+    cash,
+    water,
+    wheel,
+    foam,
+    mitt,
+    spray,
+    dry,
+    vac,
+    carpet,
+    spot,
+    steamer,
+    clay,
+    sealant,
+    window,
+    waffle,
+    shine,
+  } = state;
 
-  const buyManager = (item, cost) => {
-    if (cash > cost) {
-      if (item === "Water") {
-        dispatch({
-          type: SET_WATER,
-          water: {
-            lvl: state.water.lvl,
-            cost: state.water.cost,
-            profit: state.water.profit,
-            speed: state.water.speed,
-            manager: true,
-          },
-        })
-        if (Auth.loggedIn()) {
-          try {
-            updateWallet({
-              variables: {
-                cash: cash + state.water.profit,
-              },
-            });
-            updateWater({
-              variables: {
-                manager: true,
-              },
-            });
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      }
+  const dispatchEvt = (type, item, manager) => {
+    if (type === "water") {
+      dispatch({
+        type: SET_WATER,
+        water: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "wheel") {
+      dispatch({
+        type: SET_WHEEL,
+        wheel: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "foam") {
+      dispatch({
+        type: SET_FOAM,
+        foam: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "mitt") {
+      dispatch({
+        type: SET_MITT,
+        mitt: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "spray") {
+      dispatch({
+        type: SET_SPRAY,
+        spray: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "dry") {
+      dispatch({
+        type: SET_DRY,
+        dry: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "vac") {
+      dispatch({
+        type: SET_VAC,
+        vac: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "carpet") {
+      dispatch({
+        type: SET_CARPET,
+        carpet: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "spot") {
+      dispatch({
+        type: SET_SPOT,
+        spot: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "steamer") {
+      dispatch({
+        type: SET_STEAMER,
+        steamer: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "clay") {
+      dispatch({
+        type: SET_CLAY,
+        clay: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "sealant") {
+      dispatch({
+        type: SET_SEALANT,
+        sealant: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "window") {
+      dispatch({
+        type: SET_WINDOW,
+        window: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "waffle") {
+      dispatch({
+        type: SET_WAFFLE,
+        waffle: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
+    } else if (type === "shine") {
+      dispatch({
+        type: SET_SHINE,
+        shine: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: manager,
+        },
+      });
     }
   };
 
-  useEffect(() => {
-    Object.keys(lvlArr).map((item, i) => {
-      if (cash > lvlArr[item]) {
-        return setDisabled({
-          ...disabled,
-          [item]: false,
-        });
+  const updateDB = (type, item) => {
+    try {
+      updateWallet({
+        variables: {
+          cash: cash + item.profit,
+        },
+      });
+      type({
+        variables: {
+          lvl: item.lvl,
+          cost: item.cost,
+          profit: item.profit,
+          speed: item.speed,
+          manager: true,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const buyManager = (item, cost) => {
+    const newItem = item.toLowerCase();
+    if (cash >= cost) {
+      if (newItem === "water") {
+        dispatchEvt("water", water, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateWater, water);
+        }
+      } else if (newItem === "wheel cleaner") {
+        dispatchEvt("wheel", wheel, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateWheel, wheel);
+        }
+      } else if (newItem === "foam cannon") {
+        dispatchEvt("foam", foam, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateFoam, foam);
+        }
+      } else if (newItem === "wash mitt") {
+        dispatchEvt("mitt", mitt, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateMitt, mitt);
+        }
+      } else if (newItem === "detail spray") {
+        dispatchEvt("spray", spray, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateSpray, spray);
+        }
+      } else if (newItem === "drying towel") {
+        dispatchEvt("dry", dry, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateDry, dry);
+        }
+      } else if (newItem === "vacuum") {
+        dispatchEvt("vac", vac, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateVac, vac);
+        }
+      } else if (newItem === "carpet cleaner") {
+        dispatchEvt("carpet", carpet, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateCarpet, carpet);
+        }
+      } else if (newItem === "spot cleaner") {
+        dispatchEvt("spot", spot, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateSpot, spot);
+        }
+      } else if (newItem === "steamer") {
+        dispatchEvt("steamer", steamer, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateSteamer, steamer);
+        }
+      } else if (newItem === "clay bar") {
+        dispatchEvt("clay", clay, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateClay, clay);
+        }
+      } else if (newItem === "paint sealant") {
+        dispatchEvt("sealant", sealant, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateSealant, sealant);
+        }
+      } else if (newItem === "window cleaner") {
+        dispatchEvt("window", window, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateWindow, window);
+        }
+      } else if (newItem === "waffle weave towel") {
+        dispatchEvt("waffle", waffle, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateWaffle, waffle);
+        }
+      } else if (newItem === "tire shine") {
+        dispatchEvt("shine", shine, true);
+        if (Auth.loggedIn()) {
+          updateDB(updateShine, shine);
+        }
       }
-    });
-  }, [cash]);
+    } else {
+      console.log("not enough");
+    }
+  };
 
   return (
     <>
@@ -166,9 +427,7 @@ function Managers() {
                 key={i}
                 sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography>{item}</Typography>
-                <BuyBtn
-                  disabled={disabled[item]}
-                  onClick={() => buyManager(item, lvlArr[item])}>
+                <BuyBtn onClick={() => buyManager(item, lvlArr[item])}>
                   ${lvlArr[item]}
                 </BuyBtn>
               </Box>

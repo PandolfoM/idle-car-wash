@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_DRY } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -26,6 +30,12 @@ function Dry() {
   const dispatch = useDispatch();
   const { dry, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (dry.manager) {
+      setRunning(true);
+    }
+  }, [dry.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Dry() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!dry.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + dry.speed, 100);
@@ -71,12 +81,26 @@ function Dry() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, dry.speed, dry.manager]);
 
   const buyProduct = async () => {
     let lvlUp = dry.lvl + currentMultiplier;
     let costUp = dry.cost + parseInt(config.dry.cost);
     let profitUp = dry.profit * parseInt(config.dry.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (dry.lvl < 99) {
+      speedUp = dry.speed;
+    } else if (dry.lvl >= 99) {
+      speedUp = dry.speed + 24;
+    } else if (dry.lvl >= 199) {
+      speedUp = dry.speed + 24;
+    } else if (dry.lvl >= 299) {
+      speedUp = dry.speed + 24;
+    } else if (dry.lvl >= 399) {
+      speedUp = dry.speed + 24;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -88,7 +112,8 @@ function Dry() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: dry.speed
+        speed: speedUp,
+        manager: dry.manager,
       },
     });
     try {
@@ -102,7 +127,8 @@ function Dry() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: dry.speed
+          speed: speedUp,
+          manager: dry.manager,
         },
       });
     } catch (error) {

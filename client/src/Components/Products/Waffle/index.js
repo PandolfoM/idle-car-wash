@@ -32,6 +32,12 @@ function Waffle() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (waffle.manager) {
+      setRunning(true);
+    }
+  }, [waffle.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Waffle() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!waffle.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + waffle.speed, 100);
@@ -75,12 +81,27 @@ function Waffle() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, waffle.speed, waffle.manager]);
 
   const buyProduct = async () => {
     let lvlUp = waffle.lvl + currentMultiplier;
     let costUp = waffle.cost + parseInt(config.waffle.cost);
-    let profitUp = waffle.profit * parseInt(config.waffle.profit) + currentMultiplier;
+    let profitUp =
+      waffle.profit * parseInt(config.waffle.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (waffle.lvl < 99) {
+      speedUp = waffle.speed;
+    } else if (waffle.lvl >= 99) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 199) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 299) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 399) {
+      speedUp = waffle.speed + 24.975;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Waffle() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: waffle.speed
+        speed: speedUp,
+        manager: waffle.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Waffle() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: waffle.speed
+          speed: speedUp,
+          manager: waffle.manager,
         },
       });
     } catch (error) {

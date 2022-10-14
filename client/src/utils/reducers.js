@@ -35,105 +35,105 @@ const initialState = {
     lvl: 1,
     cost: 3,
     profit: 1,
-    speed: 10,
+    speed: 14,
     manager: false
   },
   wheel: {
     lvl: 0,
-    cost: 210,
+    cost: 200,
     profit: 30,
-    speed: 7,
+    speed: 12,
     manager: false
   },
   foam: {
     lvl: 0,
-    cost: 5100,
+    cost: 5000,
     profit: 73,
-    speed: 4,
+    speed: 10,
     manager: false
   },
   mitt: {
     lvl: 0,
-    cost: 79,
-    profit: 40,
-    speed: 2,
+    cost: 100000,
+    profit: 454,
+    speed: 8,
     manager: false
   },
   spray: {
     lvl: 0,
-    cost: 105,
-    profit: 55,
-    speed: 1,
+    cost: 750000,
+    profit: 1000,
+    speed: 6,
     manager: false
   },
   dry: {
     lvl: 0,
-    cost: 131,
-    profit: 70,
-    speed: 1,
+    cost: 1500000,
+    profit: 10000,
+    speed: 4,
     manager: false
   },
   vac: {
     lvl: 0,
-    cost: 157,
-    profit: 85,
-    speed: 1,
+    cost: 10000000,
+    profit: 20000,
+    speed: 3.5,
     manager: false
   },
   carpet: {
     lvl: 0,
-    cost: 183,
-    profit: 100,
-    speed: 1,
+    cost: 1000000000,
+    profit: 50000,
+    speed: 3,
     manager: false
   },
   spot: {
     lvl: 0,
-    cost: 209,
-    profit: 115,
-    speed: 1,
+    cost: 10000000000,
+    profit: 100000,
+    speed: 2.5,
     manager: false
   },
   steamer: {
     lvl: 0,
-    cost: 224,
-    profit: 130,
-    speed: 1,
+    cost: 500000000000,
+    profit: 500000,
+    speed: 2,
     manager: false
   },
   clay: {
     lvl: 0,
-    cost: 239,
-    profit: 145,
-    speed: 1,
+    cost: 1000000000000,
+    profit: 1000000,
+    speed: 1.5,
     manager: false
   },
   sealant: {
     lvl: 0,
-    cost: 265,
-    profit: 160,
+    cost: 50000000000000,
+    profit: 10000000,
     speed: 1,
     manager: false
   },
   window: {
     lvl: 0,
-    cost: 291,
-    profit: 175,
-    speed: 1,
+    cost: 10000000000000000,
+    profit: 50000000,
+    speed: 0.5,
     manager: false
   },
   waffle: {
     lvl: 0,
-    cost: 317,
-    profit: 190,
-    speed: 1,
+    cost: 50000000000000000000,
+    profit: 1000000000,
+    speed: 0.1,
     manager: false
   },
   shine: {
     lvl: 0,
-    cost: 343,
-    profit: 205,
-    speed: 1,
+    cost: 100000000000000000000000,
+    profit: 50000000000,
+    speed: 0.05,
     manager: false
   },
 };
@@ -269,7 +269,7 @@ export const reducer = (state = initialState, action) => {
     case SET_STEAMER:
       return {
         ...state,
-        spot: {
+        steamer: {
           lvl: action.steamer.lvl,
           cost: action.steamer.cost,
           profit: action.steamer.profit,

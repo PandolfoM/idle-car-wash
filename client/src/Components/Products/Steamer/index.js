@@ -32,6 +32,12 @@ function Steamer() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (steamer.manager) {
+      setRunning(true);
+    }
+  }, [steamer.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Steamer() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!steamer.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + steamer.speed, 100);
@@ -75,12 +81,27 @@ function Steamer() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, steamer.speed, steamer.manager]);
 
   const buyProduct = async () => {
     let lvlUp = steamer.lvl + currentMultiplier;
     let costUp = steamer.cost + parseInt(config.steamer.cost);
-    let profitUp = steamer.profit * parseInt(config.steamer.profit) + currentMultiplier;
+    let profitUp =
+      steamer.profit * parseInt(config.steamer.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (steamer.lvl < 99) {
+      speedUp = steamer.speed;
+    } else if (steamer.lvl >= 99) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 199) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 299) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 399) {
+      speedUp = steamer.speed + 24.5;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Steamer() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: steamer.speed
+        speed: speedUp,
+        manager: steamer.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Steamer() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: steamer.speed
+          speed: speedUp,
+          manager: steamer.manager,
         },
       });
     } catch (error) {

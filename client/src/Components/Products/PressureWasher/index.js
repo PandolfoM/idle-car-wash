@@ -33,9 +33,9 @@ function PressureWasher() {
 
   useEffect(() => {
     if (water.manager) {
-      setRunning(true)
+      setRunning(true);
     }
-  }, [water.manager])
+  }, [water.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -70,9 +70,7 @@ function PressureWasher() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!water.manager) {
-              setRunning(false);
-            }
+            if (!water.manager) setRunning(false)
             return 0;
           }
           return Math.min(oldProgress + water.speed, 100);
@@ -83,18 +81,24 @@ function PressureWasher() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, water.speed, water.manager]);
 
   const buyProduct = async () => {
     let lvlUp = water.lvl + currentMultiplier;
     let costUp = water.cost + parseInt(config.water.cost);
     let profitUp = water.profit + currentMultiplier;
-    let speedUp = water.speed;
+    let speedUp = 0;
 
-    if (water.lvl === 99) {
-      speedUp = 30;
-    } else if (water === 199) {
-      speedUp = 60;
+    if (water.lvl < 99) {
+      speedUp = water.speed;
+    } else if (water.lvl >= 99) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 199) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 299) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 399) {
+      speedUp = water.speed + 21.5;
     }
 
     PlayBtnClick(sfx);
@@ -109,7 +113,7 @@ function PressureWasher() {
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
-        manager: water.manager
+        manager: water.manager,
       },
     });
     try {
@@ -124,6 +128,7 @@ function PressureWasher() {
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
+          manager: water.manager,
         },
       });
     } catch (error) {

@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_FOAM } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -26,6 +30,12 @@ function Foam() {
   const dispatch = useDispatch();
   const { foam, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (foam.manager) {
+      setRunning(true);
+    }
+  }, [foam.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Foam() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!foam.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + foam.speed, 100);
@@ -71,12 +81,27 @@ function Foam() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, foam.manager, foam.speed]);
 
   const buyProduct = async () => {
     let lvlUp = foam.lvl + currentMultiplier;
     let costUp = foam.cost + parseInt(config.foam.cost);
-    let profitUp = foam.profit + parseInt(config.foam.profit) * currentMultiplier;
+    let profitUp =
+      foam.profit + parseInt(config.foam.profit) * currentMultiplier;
+    let speedUp = 0;
+
+    if (foam.lvl < 99) {
+      speedUp = foam.speed;
+    } else if (foam.lvl >= 99) {
+      speedUp = foam.speed + 22.5;
+    } else if (foam.lvl >= 199) {
+      speedUp = foam.speed + 22.5;
+    } else if (foam.lvl >= 299) {
+      speedUp = foam.speed + 22.5;
+    } else if (foam.lvl >= 399) {
+      speedUp = foam.speed + 22.5;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -88,7 +113,8 @@ function Foam() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: parseFloat(profitUp.toFixed(2)),
-        speed: foam.speed
+        speed: speedUp,
+        manager: foam.manager,
       },
     });
     try {
@@ -102,7 +128,8 @@ function Foam() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: parseFloat(profitUp.toFixed(2)),
-          speed: foam.speed
+          speed: speedUp,
+          manager: foam.manager,
         },
       });
     } catch (error) {

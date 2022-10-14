@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_SPRAY } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -26,6 +30,12 @@ function Spray() {
   const dispatch = useDispatch();
   const { spray, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (spray.manager) {
+      setRunning(true);
+    }
+  }, [spray.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Spray() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!spray.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + spray.speed, 100);
@@ -71,12 +81,27 @@ function Spray() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, spray.speed, spray.manager]);
 
   const buyProduct = async () => {
     let lvlUp = spray.lvl + currentMultiplier;
     let costUp = spray.cost + parseInt(config.spray.cost);
-    let profitUp = spray.profit * parseInt(config.spray.profit) + currentMultiplier;
+    let profitUp =
+      spray.profit * parseInt(config.spray.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (spray.lvl < 99) {
+      speedUp = spray.speed;
+    } else if (spray.lvl >= 99) {
+      speedUp = spray.speed + 24;
+    } else if (spray.lvl >= 199) {
+      speedUp = spray.speed + 24;
+    } else if (spray.lvl >= 299) {
+      speedUp = spray.speed + 24;
+    } else if (spray.lvl >= 399) {
+      speedUp = spray.speed + 24;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -88,7 +113,8 @@ function Spray() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: spray.speed
+        speed: speedUp,
+        manager: spray.manager,
       },
     });
     try {
@@ -102,7 +128,8 @@ function Spray() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: spray.speed
+          speed: speedUp,
+          manager: spray.manager,
         },
       });
     } catch (error) {

@@ -32,6 +32,12 @@ function Sealant() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (sealant.manager) {
+      setRunning(true);
+    }
+  }, [sealant.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Sealant() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!sealant.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + sealant.speed, 100);
@@ -75,12 +81,27 @@ function Sealant() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, sealant.speed, sealant.manager]);
 
   const buyProduct = async () => {
     let lvlUp = sealant.lvl + currentMultiplier;
     let costUp = sealant.cost + parseInt(config.sealant.cost);
-    let profitUp = sealant.profit * parseInt(config.sealant.profit) + currentMultiplier;
+    let profitUp =
+      sealant.profit * parseInt(config.sealant.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (sealant.lvl < 99) {
+      speedUp = sealant.speed;
+    } else if (sealant.lvl >= 99) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 199) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 299) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 399) {
+      speedUp = sealant.speed + 24.75;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Sealant() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: sealant.speed
+        speed: speedUp,
+        manager: sealant.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Sealant() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: sealant.speed
+          speed: speedUp,
+          manager: sealant.manager,
         },
       });
     } catch (error) {

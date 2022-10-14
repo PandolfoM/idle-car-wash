@@ -285,69 +285,69 @@ function Upgrades() {
       {foam.lvl === 0 ? <LockedLvl cost="5000" lvl="foam cannon" /> : <Foam />}
 
       {/* Wash Mitt */}
-      {mitt.lvl === 0 ? <LockedLvl cost="35000" lvl="wash mitt" /> : <Mitt />}
+      {mitt.lvl === 0 ? <LockedLvl cost="100000" lvl="wash mitt" /> : <Mitt />}
 
       {/* Detail Spray */}
       {spray.lvl === 0 ? (
-        <LockedLvl cost="60000" lvl="detail spray" />
+        <LockedLvl cost="750000" lvl="detail spray" />
       ) : (
         <Spray />
       )}
 
       {/* Drying Towel */}
-      {dry.lvl === 0 ? <LockedLvl cost="95000" lvl="drying towel" /> : <Dry />}
+      {dry.lvl === 0 ? <LockedLvl cost="1500000" lvl="drying towel" /> : <Dry />}
 
       {/* Vacuum */}
-      {vac.lvl === 0 ? <LockedLvl cost="150000" lvl="vacuum" /> : <Vac />}
+      {vac.lvl === 0 ? <LockedLvl cost="10000000" lvl="vacuum" /> : <Vac />}
 
       {/* Carpet Cleaner */}
       {carpet.lvl === 0 ? (
-        <LockedLvl cost="230000" lvl="carpet cleaner" />
+        <LockedLvl cost="1000000000" lvl="carpet cleaner" />
       ) : (
         <Carpet />
       )}
 
       {/* Spot Cleaner */}
       {spot.lvl === 0 ? (
-        <LockedLvl cost="300000" lvl="spot cleaner" />
+        <LockedLvl cost="10000000000" lvl="spot cleaner" />
       ) : (
         <Spot />
       )}
 
       {/* Steamer */}
       {steamer.lvl === 0 ? (
-        <LockedLvl cost="375000" lvl="steamer" />
+        <LockedLvl cost="500000000000" lvl="steamer" />
       ) : (
         <Steamer />
       )}
 
       {/* Clay Bar */}
-      {clay.lvl === 0 ? <LockedLvl cost="375000" lvl="clay bar" /> : <Clay />}
+      {clay.lvl === 0 ? <LockedLvl cost="1000000000000" lvl="clay bar" /> : <Clay />}
 
       {/* Paint Sealant */}
       {sealant.lvl === 0 ? (
-        <LockedLvl cost="500000" lvl="paint sealant" />
+        <LockedLvl cost="50000000000000" lvl="paint sealant" />
       ) : (
         <Sealant />
       )}
 
       {/* Window Cleaner */}
       {window.lvl === 0 ? (
-        <LockedLvl cost="700000" lvl="window cleaner" />
+        <LockedLvl cost="10000000000000000" lvl="window cleaner" />
       ) : (
         <Window />
       )}
 
       {/* Waffle Weave Towel */}
       {waffle.lvl === 0 ? (
-        <LockedLvl cost="900000" lvl="waffle weave towel" />
+        <LockedLvl cost="50000000000000000000" lvl="waffle weave towel" />
       ) : (
         <Waffle />
       )}
 
       {/* Tire Shine */}
       {shine.lvl === 0 ? (
-        <LockedLvl cost="1000000" lvl="tire shine" />
+        <LockedLvl cost="100000000000000000000000" lvl="tire shine" />
       ) : (
         <Shine />
       )}

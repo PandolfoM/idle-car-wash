@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_VAC } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
@@ -26,6 +30,12 @@ function Vac() {
   const dispatch = useDispatch();
   const { vac, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (vac.manager) {
+      setRunning(true);
+    }
+  }, [vac.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Vac() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!vac.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + vac.speed, 100);
@@ -71,12 +81,27 @@ function Vac() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, vac.speed, vac.manager]);
 
   const buyProduct = async () => {
     let lvlUp = vac.lvl + currentMultiplier;
     let costUp = vac.cost + parseInt(config.vac.cost);
     let profitUp = vac.profit * parseInt(config.vac.profit) + currentMultiplier;
+
+    let speedUp = 0;
+
+    if (vac.lvl < 99) {
+      speedUp = vac.speed;
+    } else if (vac.lvl >= 99) {
+      speedUp = vac.speed + 24.125;
+    } else if (vac.lvl >= 199) {
+      speedUp = vac.speed + 24.125;
+    } else if (vac.lvl >= 299) {
+      speedUp = vac.speed + 24.125;
+    } else if (vac.lvl >= 399) {
+      speedUp = vac.speed + 24.125;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -88,7 +113,8 @@ function Vac() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: vac.speed
+        speed: speedUp,
+        manager: vac.manager,
       },
     });
     try {
@@ -102,7 +128,8 @@ function Vac() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: vac.speed
+          speed: speedUp,
+          manager: vac.manager,
         },
       });
     } catch (error) {

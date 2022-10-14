@@ -32,6 +32,12 @@ function Clay() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (clay.manager) {
+      setRunning(true);
+    }
+  }, [clay.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Clay() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!clay.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + clay.speed, 100);
@@ -75,12 +81,27 @@ function Clay() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, clay.speed, clay.manager]);
 
   const buyProduct = async () => {
     let lvlUp = clay.lvl + currentMultiplier;
     let costUp = clay.cost + parseInt(config.clay.cost);
-    let profitUp = clay.profit * parseInt(config.clay.profit) + currentMultiplier;
+    let profitUp =
+      clay.profit * parseInt(config.clay.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (clay.lvl < 99) {
+      speedUp = clay.speed;
+    } else if (clay.lvl >= 99) {
+      speedUp = clay.speed + 24.625;
+    } else if (clay.lvl >= 199) {
+      speedUp = clay.speed + 24.625;
+    } else if (clay.lvl >= 299) {
+      speedUp = clay.speed + 24.625;
+    } else if (clay.lvl >= 399) {
+      speedUp = clay.speed + 24.625;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Clay() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: clay.speed
+        speed: speedUp,
+        manager: clay.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Clay() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: clay.speed
+          speed: speedUp,
+          manager: clay.manager,
         },
       });
     } catch (error) {

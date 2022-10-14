@@ -32,6 +32,12 @@ function Window() {
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
+    if (window.manager) {
+      setRunning(true);
+    }
+  }, [window.manager]);
+
+  useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
@@ -64,7 +70,7 @@ function Window() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!window.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + window.speed, 100);
@@ -75,12 +81,27 @@ function Window() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, window.speed, window.manager]);
 
   const buyProduct = async () => {
     let lvlUp = window.lvl + currentMultiplier;
     let costUp = window.cost + parseInt(config.window.cost);
-    let profitUp = window.profit * parseInt(config.window.profit) + currentMultiplier;
+    let profitUp =
+      window.profit * parseInt(config.window.profit) + currentMultiplier;
+    let speedUp = 0;
+
+    if (window.lvl < 99) {
+      speedUp = window.speed;
+    } else if (window.lvl >= 99) {
+      speedUp = window.speed + 24.875;
+    } else if (window.lvl >= 199) {
+      speedUp = window.speed + 24.875;
+    } else if (window.lvl >= 299) {
+      speedUp = window.speed + 24.875;
+    } else if (window.lvl >= 399) {
+      speedUp = window.speed + 24.875;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -92,7 +113,8 @@ function Window() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
-        speed: window.speed,
+        speed: speedUp,
+        manager: window.manager,
       },
     });
     try {
@@ -106,7 +128,8 @@ function Window() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
-          speed: window.speed,
+          speed: speedUp,
+          manager: window.manager,
         },
       });
     } catch (error) {

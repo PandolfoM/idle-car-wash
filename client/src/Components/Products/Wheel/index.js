@@ -6,7 +6,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { formatNumberAb, PlayBtnClick, ProductBox } from "../../../utils/helpers";
+import {
+  formatNumberAb,
+  PlayBtnClick,
+  ProductBox,
+} from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENT_CASH, SET_WHEEL } from "../../../utils/actions";
 import TireRepairIcon from "@mui/icons-material/TireRepair";
@@ -26,6 +30,12 @@ function Wheel() {
   const dispatch = useDispatch();
   const { wheel, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
+
+  useEffect(() => {
+    if (wheel.manager) {
+      setRunning(true);
+    }
+  }, [wheel.manager]);
 
   useEffect(() => {
     if (progress === 100) {
@@ -60,7 +70,7 @@ function Wheel() {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            setRunning(false);
+            if (!wheel.manager) setRunning(false);
             return 0;
           }
           return Math.min(oldProgress + wheel.speed, 100);
@@ -71,13 +81,27 @@ function Wheel() {
         clearInterval(timer);
       };
     }
-  }, [running]);
+  }, [running, wheel.speed, wheel.manager]);
 
   const buyProduct = async () => {
     let lvlUp = wheel.lvl + currentMultiplier;
     let costUp = wheel.cost + parseInt(config.wheel.cost);
-    let profitUp = wheel.profit + parseInt(config.wheel.profit) * currentMultiplier;
-    
+    let profitUp =
+      wheel.profit + parseInt(config.wheel.profit) * currentMultiplier;
+    let speedUp = 0;
+
+    if (wheel.lvl < 99) {
+      speedUp = wheel.speed;
+    } else if (wheel.lvl >= 99) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 199) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 299) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 399) {
+      speedUp = wheel.speed + 22;
+    }
+
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
@@ -89,7 +113,8 @@ function Wheel() {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: parseFloat(profitUp.toFixed(2)),
-        speed: wheel.speed
+        speed: speedUp,
+        manager: wheel.manager,
       },
     });
     try {
@@ -103,7 +128,8 @@ function Wheel() {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: parseFloat(profitUp.toFixed(2)),
-          speed: wheel.speed
+          speed: wheel.speed,
+          manager: wheel.manager,
         },
       });
     } catch (error) {
