@@ -13,7 +13,6 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Managers from "./Components/Managers";
-const ADDRESS = process.env.REACT_APP_ADDRESS;
 
 const carWashTheme = createTheme({
   palette: {
@@ -70,7 +69,7 @@ const carWashTheme = createTheme({
 });
 
 const httpLink = createHttpLink({
-  uri: `http://${ADDRESS}/graphql`,
+  uri: `/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
