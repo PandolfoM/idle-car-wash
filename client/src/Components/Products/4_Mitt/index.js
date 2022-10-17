@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_CLAY } from "../../../utils/actions";
+import { CURRENT_CASH, SET_MITT } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_CLAY, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_MITT, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Clay() {
+function Mitt() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateClay] = useMutation(UPDATE_CLAY);
+  const [updateMitt] = useMutation(UPDATE_MITT);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { clay, cash, sfx, currentMultiplier } = state;
+  const { mitt, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (clay.manager) {
+    if (mitt.manager) {
       setRunning(true);
     }
-  }, [clay.manager]);
+  }, [mitt.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + clay.profit,
+        cash: cash + mitt.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + clay.profit,
+              cash: cash + mitt.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Clay() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < clay.cost * currentMultiplier) {
+    if (cash < mitt.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= clay.cost * currentMultiplier) {
+    } else if (cash >= mitt.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, clay]);
+  }, [cash, currentMultiplier, mitt]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!clay.manager) setRunning(false);
+            if (!mitt.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + clay.speed, 100);
+          return Math.min(oldProgress + mitt.speed, 100);
         });
       }, 100);
 
@@ -81,55 +81,55 @@ function Clay() {
         clearInterval(timer);
       };
     }
-  }, [running, clay.speed, clay.manager]);
+  }, [running, mitt.manager, mitt.speed]);
 
   const buyProduct = async () => {
-    let lvlUp = clay.lvl + currentMultiplier;
-    let costUp = clay.cost + parseInt(config.clay.cost);
+    let lvlUp = mitt.lvl + currentMultiplier;
+    let costUp = mitt.cost * 1.06;
     let profitUp =
-      clay.profit * parseInt(config.clay.profit) + currentMultiplier;
+      mitt.profit + 42.1 * currentMultiplier;
     let speedUp = 0;
 
-    if (clay.lvl < 99) {
-      speedUp = clay.speed;
-    } else if (clay.lvl >= 99) {
-      speedUp = clay.speed + 24.625;
-    } else if (clay.lvl >= 199) {
-      speedUp = clay.speed + 24.625;
-    } else if (clay.lvl >= 299) {
-      speedUp = clay.speed + 24.625;
-    } else if (clay.lvl >= 399) {
-      speedUp = clay.speed + 24.625;
+    if (mitt.lvl < 99) {
+      speedUp = mitt.speed;
+    } else if (mitt.lvl >= 99) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 199) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 299) {
+      speedUp = mitt.speed + 23;
+    } else if (mitt.lvl >= 399) {
+      speedUp = mitt.speed + 23;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - clay.cost * currentMultiplier,
+      cash: cash - mitt.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_CLAY,
-      clay: {
+      type: SET_MITT,
+      mitt: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
-        profit: profitUp,
+        profit: parseFloat(profitUp.toFixed(2)),
         speed: speedUp,
-        manager: clay.manager,
+        manager: mitt.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - clay.cost * currentMultiplier,
+          cash: cash - mitt.cost * currentMultiplier,
         },
       });
-      await updateClay({
+      await updateMitt({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
-          profit: profitUp,
+          profit: parseFloat(profitUp.toFixed(2)),
           speed: speedUp,
-          manager: clay.manager,
+          manager: mitt.manager,
         },
       });
     } catch (error) {
@@ -146,12 +146,12 @@ function Clay() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(clay.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(mitt.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(clay.profit, 2)}
+        {formatNumberAb(mitt.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +166,11 @@ function Clay() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(clay.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(mitt.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Clay;
+export default Mitt;

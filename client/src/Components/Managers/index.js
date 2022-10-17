@@ -85,8 +85,8 @@ const BuyBtn = styled(Button)(({ theme }) => ({
 const lvlArr = {
   Water: 500,
   "Wheel Cleaner": 10000,
-  "Foam Cannon": 70000,
-  "Wash Mitt": 150000,
+  "Foam Cannon": 130000,
+  "Wash Mitt": 320000,
   "Detail Spray": 810000,
   "Drying Towel": 1950000,
   Vacuum: 12550000,

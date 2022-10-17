@@ -12,42 +12,41 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_SPRAY } from "../../../utils/actions";
-import SoapIcon from "@mui/icons-material/Soap";
+import { CURRENT_CASH, SET_WHEEL } from "../../../utils/actions";
+import TireRepairIcon from "@mui/icons-material/TireRepair";
 import { useMutation } from "@apollo/client";
-import { UPDATE_SPRAY, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_WALLET, UPDATE_WHEEL } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
-import config from "../config.json";
 
-function Spray() {
+function Wheel() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateSpray] = useMutation(UPDATE_SPRAY);
+  const [updateWheel] = useMutation(UPDATE_WHEEL);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { spray, cash, sfx, currentMultiplier } = state;
+  const { wheel, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (spray.manager) {
+    if (wheel.manager) {
       setRunning(true);
     }
-  }, [spray.manager]);
+  }, [wheel.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + spray.profit,
+        cash: cash + wheel.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + spray.profit,
+              cash: cash + wheel.profit,
             },
           });
         } catch (error) {
@@ -58,22 +57,22 @@ function Spray() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < spray.cost * currentMultiplier) {
+    if (cash < wheel.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= spray.cost * currentMultiplier) {
+    } else if (cash >= wheel.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, spray]);
+  }, [cash, currentMultiplier, wheel]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!spray.manager) setRunning(false);
+            if (!wheel.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + spray.speed, 100);
+          return Math.min(oldProgress + wheel.speed, 100);
         });
       }, 100);
 
@@ -81,55 +80,55 @@ function Spray() {
         clearInterval(timer);
       };
     }
-  }, [running, spray.speed, spray.manager]);
+  }, [running, wheel.speed, wheel.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = spray.lvl + currentMultiplier;
-    let costUp = spray.cost + parseInt(config.spray.cost);
+    let lvlUp = wheel.lvl + currentMultiplier;
+    let costUp = wheel.cost * 1.04;
     let profitUp =
-      spray.profit * parseInt(config.spray.profit) + currentMultiplier;
+      wheel.profit + 7 * currentMultiplier;
     let speedUp = 0;
 
-    if (spray.lvl < 99) {
-      speedUp = spray.speed;
-    } else if (spray.lvl >= 99) {
-      speedUp = spray.speed + 24;
-    } else if (spray.lvl >= 199) {
-      speedUp = spray.speed + 24;
-    } else if (spray.lvl >= 299) {
-      speedUp = spray.speed + 24;
-    } else if (spray.lvl >= 399) {
-      speedUp = spray.speed + 24;
+    if (wheel.lvl < 99) {
+      speedUp = wheel.speed;
+    } else if (wheel.lvl >= 99) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 199) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 299) {
+      speedUp = wheel.speed + 22;
+    } else if (wheel.lvl >= 399) {
+      speedUp = wheel.speed + 22;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - spray.cost * currentMultiplier,
+      cash: cash - wheel.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_SPRAY,
-      spray: {
+      type: SET_WHEEL,
+      wheel: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
-        profit: profitUp,
+        profit: parseFloat(profitUp.toFixed(2)),
         speed: speedUp,
-        manager: spray.manager,
+        manager: wheel.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - spray.cost * currentMultiplier,
+          cash: cash - wheel.cost * currentMultiplier,
         },
       });
-      await updateSpray({
+      await updateWheel({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
-          profit: profitUp,
-          speed: speedUp,
-          manager: spray.manager,
+          profit: parseFloat(profitUp.toFixed(2)),
+          speed: wheel.speed,
+          manager: wheel.manager,
         },
       });
     } catch (error) {
@@ -142,16 +141,16 @@ function Spray() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <SoapIcon sx={{ width: "2em", height: "2em" }} />
+          <TireRepairIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(spray.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(wheel.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(spray.profit, 2)}
+        {formatNumberAb(wheel.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +165,11 @@ function Spray() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(spray.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(wheel.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Spray;
+export default Wheel;

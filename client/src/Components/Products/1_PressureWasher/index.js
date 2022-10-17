@@ -12,42 +12,41 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_WAFFLE } from "../../../utils/actions";
-import SoapIcon from "@mui/icons-material/Soap";
+import { CURRENT_CASH, SET_WATER } from "../../../utils/actions";
+import ShowerIcon from "@mui/icons-material/Shower";
 import { useMutation } from "@apollo/client";
-import { UPDATE_WAFFLE, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_WALLET, UPDATE_WATER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
-import config from "../config.json";
 
-function Waffle() {
+function PressureWasher() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateWaffle] = useMutation(UPDATE_WAFFLE);
+  const [updateWater] = useMutation(UPDATE_WATER);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { waffle, cash, sfx, currentMultiplier } = state;
+  const { water, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (waffle.manager) {
+    if (water.manager) {
       setRunning(true);
     }
-  }, [waffle.manager]);
+  }, [water.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + waffle.profit,
+        cash: cash + water.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + waffle.profit,
+              cash: cash + water.profit,
             },
           });
         } catch (error) {
@@ -58,22 +57,22 @@ function Waffle() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < waffle.cost * currentMultiplier) {
+    if (cash < water.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= waffle.cost * currentMultiplier) {
+    } else if (cash >= water.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, waffle]);
+  }, [cash, currentMultiplier, water]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!waffle.manager) setRunning(false);
+            if (!water.manager) setRunning(false)
             return 0;
           }
-          return Math.min(oldProgress + waffle.speed, 100);
+          return Math.min(oldProgress + water.speed, 100);
         });
       }, 100);
 
@@ -81,55 +80,54 @@ function Waffle() {
         clearInterval(timer);
       };
     }
-  }, [running, waffle.speed, waffle.manager]);
+  }, [running, water.speed, water.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = waffle.lvl + currentMultiplier;
-    let costUp = waffle.cost + parseInt(config.waffle.cost);
-    let profitUp =
-      waffle.profit * parseInt(config.waffle.profit) + currentMultiplier;
+    let lvlUp = water.lvl + currentMultiplier;
+    let costUp = water.cost + 2;
+    let profitUp = water.profit + currentMultiplier;
     let speedUp = 0;
 
-    if (waffle.lvl < 99) {
-      speedUp = waffle.speed;
-    } else if (waffle.lvl >= 99) {
-      speedUp = waffle.speed + 24.975;
-    } else if (waffle.lvl >= 199) {
-      speedUp = waffle.speed + 24.975;
-    } else if (waffle.lvl >= 299) {
-      speedUp = waffle.speed + 24.975;
-    } else if (waffle.lvl >= 399) {
-      speedUp = waffle.speed + 24.975;
+    if (water.lvl < 99) {
+      speedUp = water.speed;
+    } else if (water.lvl >= 99) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 199) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 299) {
+      speedUp = water.speed + 21.5;
+    } else if (water.lvl >= 399) {
+      speedUp = water.speed + 21.5;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - waffle.cost * currentMultiplier,
+      cash: cash - water.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_WAFFLE,
-      waffle: {
+      type: SET_WATER,
+      water: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
-        manager: waffle.manager,
+        manager: water.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - waffle.cost * currentMultiplier,
+          cash: cash - water.cost * currentMultiplier,
         },
       });
-      await updateWaffle({
+      await updateWater({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
-          manager: waffle.manager,
+          manager: water.manager,
         },
       });
     } catch (error) {
@@ -142,16 +140,16 @@ function Waffle() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <SoapIcon sx={{ width: "2em", height: "2em" }} />
+          <ShowerIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(waffle.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(water.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(waffle.profit, 2)}
+        {formatNumberAb(water.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +164,11 @@ function Waffle() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(waffle.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(water.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Waffle;
+export default PressureWasher;

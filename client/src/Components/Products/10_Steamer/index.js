@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_WHEEL } from "../../../utils/actions";
-import TireRepairIcon from "@mui/icons-material/TireRepair";
+import { CURRENT_CASH, SET_STEAMER } from "../../../utils/actions";
+import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_WALLET, UPDATE_WHEEL } from "../../../utils/mutations";
+import { UPDATE_STEAMER, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Wheel() {
+function Steamer() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateWheel] = useMutation(UPDATE_WHEEL);
+  const [updateSteamer] = useMutation(UPDATE_STEAMER);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { wheel, cash, sfx, currentMultiplier } = state;
+  const { steamer, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (wheel.manager) {
+    if (steamer.manager) {
       setRunning(true);
     }
-  }, [wheel.manager]);
+  }, [steamer.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + wheel.profit,
+        cash: cash + steamer.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + wheel.profit,
+              cash: cash + steamer.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Wheel() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < wheel.cost * currentMultiplier) {
+    if (cash < steamer.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= wheel.cost * currentMultiplier) {
+    } else if (cash >= steamer.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, wheel]);
+  }, [cash, currentMultiplier, steamer]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!wheel.manager) setRunning(false);
+            if (!steamer.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + wheel.speed, 100);
+          return Math.min(oldProgress + steamer.speed, 100);
         });
       }, 100);
 
@@ -81,55 +81,55 @@ function Wheel() {
         clearInterval(timer);
       };
     }
-  }, [running, wheel.speed, wheel.manager]);
+  }, [running, steamer.speed, steamer.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = wheel.lvl + currentMultiplier;
-    let costUp = wheel.cost + parseInt(config.wheel.cost);
+    let lvlUp = steamer.lvl + currentMultiplier;
+    let costUp = steamer.cost * 1.12;
     let profitUp =
-      wheel.profit + parseInt(config.wheel.profit) * currentMultiplier;
+      steamer.profit + 162.13 * currentMultiplier;
     let speedUp = 0;
 
-    if (wheel.lvl < 99) {
-      speedUp = wheel.speed;
-    } else if (wheel.lvl >= 99) {
-      speedUp = wheel.speed + 22;
-    } else if (wheel.lvl >= 199) {
-      speedUp = wheel.speed + 22;
-    } else if (wheel.lvl >= 299) {
-      speedUp = wheel.speed + 22;
-    } else if (wheel.lvl >= 399) {
-      speedUp = wheel.speed + 22;
+    if (steamer.lvl < 99) {
+      speedUp = steamer.speed;
+    } else if (steamer.lvl >= 99) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 199) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 299) {
+      speedUp = steamer.speed + 24.5;
+    } else if (steamer.lvl >= 399) {
+      speedUp = steamer.speed + 24.5;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - wheel.cost * currentMultiplier,
+      cash: cash - steamer.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_WHEEL,
-      wheel: {
+      type: SET_STEAMER,
+      steamer: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
-        profit: parseFloat(profitUp.toFixed(2)),
+        profit: profitUp,
         speed: speedUp,
-        manager: wheel.manager,
+        manager: steamer.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - wheel.cost * currentMultiplier,
+          cash: cash - steamer.cost * currentMultiplier,
         },
       });
-      await updateWheel({
+      await updateSteamer({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
-          profit: parseFloat(profitUp.toFixed(2)),
-          speed: wheel.speed,
-          manager: wheel.manager,
+          profit: profitUp,
+          speed: speedUp,
+          manager: steamer.manager,
         },
       });
     } catch (error) {
@@ -142,16 +142,16 @@ function Wheel() {
       <Box className="itemPic">
         {/* icon */}
         <IconButton size="large" disableRipple onClick={() => setRunning(true)}>
-          <TireRepairIcon sx={{ width: "2em", height: "2em" }} />
+          <SoapIcon sx={{ width: "2em", height: "2em" }} />
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(wheel.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(steamer.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(wheel.profit, 2)}
+        {formatNumberAb(steamer.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +166,11 @@ function Wheel() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(wheel.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(steamer.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Wheel;
+export default Steamer;

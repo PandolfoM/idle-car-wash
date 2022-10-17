@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_VAC } from "../../../utils/actions";
+import { CURRENT_CASH, SET_WAFFLE } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_VAC, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_WAFFLE, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Vac() {
+function Waffle() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateVac] = useMutation(UPDATE_VAC);
+  const [updateWaffle] = useMutation(UPDATE_WAFFLE);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { vac, cash, sfx, currentMultiplier } = state;
+  const { waffle, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (vac.manager) {
+    if (waffle.manager) {
       setRunning(true);
     }
-  }, [vac.manager]);
+  }, [waffle.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + vac.profit,
+        cash: cash + waffle.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + vac.profit,
+              cash: cash + waffle.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Vac() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < vac.cost * currentMultiplier) {
+    if (cash < waffle.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= vac.cost * currentMultiplier) {
+    } else if (cash >= waffle.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, vac]);
+  }, [cash, currentMultiplier, waffle]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!vac.manager) setRunning(false);
+            if (!waffle.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + vac.speed, 100);
+          return Math.min(oldProgress + waffle.speed, 100);
         });
       }, 100);
 
@@ -81,55 +81,55 @@ function Vac() {
         clearInterval(timer);
       };
     }
-  }, [running, vac.speed, vac.manager]);
+  }, [running, waffle.speed, waffle.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = vac.lvl + currentMultiplier;
-    let costUp = vac.cost + parseInt(config.vac.cost);
-    let profitUp = vac.profit * parseInt(config.vac.profit) + currentMultiplier;
-
+    let lvlUp = waffle.lvl + currentMultiplier;
+    let costUp = waffle.cost * 1.16;
+    let profitUp =
+      waffle.profit + 261 * currentMultiplier;
     let speedUp = 0;
 
-    if (vac.lvl < 99) {
-      speedUp = vac.speed;
-    } else if (vac.lvl >= 99) {
-      speedUp = vac.speed + 24.125;
-    } else if (vac.lvl >= 199) {
-      speedUp = vac.speed + 24.125;
-    } else if (vac.lvl >= 299) {
-      speedUp = vac.speed + 24.125;
-    } else if (vac.lvl >= 399) {
-      speedUp = vac.speed + 24.125;
+    if (waffle.lvl < 99) {
+      speedUp = waffle.speed;
+    } else if (waffle.lvl >= 99) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 199) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 299) {
+      speedUp = waffle.speed + 24.975;
+    } else if (waffle.lvl >= 399) {
+      speedUp = waffle.speed + 24.975;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - vac.cost * currentMultiplier,
+      cash: cash - waffle.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_VAC,
-      vac: {
+      type: SET_WAFFLE,
+      waffle: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
-        manager: vac.manager,
+        manager: waffle.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - vac.cost * currentMultiplier,
+          cash: cash - waffle.cost * currentMultiplier,
         },
       });
-      await updateVac({
+      await updateWaffle({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
-          manager: vac.manager,
+          manager: waffle.manager,
         },
       });
     } catch (error) {
@@ -146,12 +146,12 @@ function Vac() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(vac.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(waffle.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(vac.profit, 2)}
+        {formatNumberAb(waffle.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +166,11 @@ function Vac() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(vac.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(waffle.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Vac;
+export default Waffle;

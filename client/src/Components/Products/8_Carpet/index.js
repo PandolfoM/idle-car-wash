@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_MITT } from "../../../utils/actions";
+import { CURRENT_CASH, SET_CARPET } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_MITT, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_CARPET, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Mitt() {
+function Carpet() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateMitt] = useMutation(UPDATE_MITT);
+  const [updateCarpet] = useMutation(UPDATE_CARPET);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { mitt, cash, sfx, currentMultiplier } = state;
+  const { carpet, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (mitt.manager) {
+    if (carpet.manager) {
       setRunning(true);
     }
-  }, [mitt.manager]);
+  }, [carpet.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + mitt.profit,
+        cash: cash + carpet.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + mitt.profit,
+              cash: cash + carpet.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Mitt() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < mitt.cost * currentMultiplier) {
+    if (cash < carpet.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= mitt.cost * currentMultiplier) {
+    } else if (cash >= carpet.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, mitt]);
+  }, [cash, currentMultiplier, carpet]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!mitt.manager) setRunning(false);
+            if (!carpet.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + mitt.speed, 100);
+          return Math.min(oldProgress + carpet.speed, 100);
         });
       }, 100);
 
@@ -81,55 +81,55 @@ function Mitt() {
         clearInterval(timer);
       };
     }
-  }, [running, mitt.manager, mitt.speed]);
+  }, [running, carpet.speed, carpet.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = mitt.lvl + currentMultiplier;
-    let costUp = mitt.cost + parseInt(config.mitt.cost);
+    let lvlUp = carpet.lvl + currentMultiplier;
+    let costUp = carpet.cost * 1.10;
     let profitUp =
-      mitt.profit + parseInt(config.mitt.profit) * currentMultiplier;
+      carpet.profit + 121 * currentMultiplier;
     let speedUp = 0;
 
-    if (mitt.lvl < 99) {
-      speedUp = mitt.speed;
-    } else if (mitt.lvl >= 99) {
-      speedUp = mitt.speed + 23;
-    } else if (mitt.lvl >= 199) {
-      speedUp = mitt.speed + 23;
-    } else if (mitt.lvl >= 299) {
-      speedUp = mitt.speed + 23;
-    } else if (mitt.lvl >= 399) {
-      speedUp = mitt.speed + 23;
+    if (carpet.lvl < 99) {
+      speedUp = carpet.speed;
+    } else if (carpet.lvl >= 99) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 199) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 299) {
+      speedUp = carpet.speed + 24.25;
+    } else if (carpet.lvl >= 399) {
+      speedUp = carpet.speed + 24.25;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - mitt.cost * currentMultiplier,
+      cash: cash - carpet.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_MITT,
-      mitt: {
+      type: SET_CARPET,
+      carpet: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
-        profit: parseFloat(profitUp.toFixed(2)),
+        profit: profitUp,
         speed: speedUp,
-        manager: mitt.manager,
+        manager: carpet.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - mitt.cost * currentMultiplier,
+          cash: cash - carpet.cost * currentMultiplier,
         },
       });
-      await updateMitt({
+      await updateCarpet({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
-          profit: parseFloat(profitUp.toFixed(2)),
+          profit: profitUp,
           speed: speedUp,
-          manager: mitt.manager,
+          manager: carpet.manager,
         },
       });
     } catch (error) {
@@ -146,12 +146,12 @@ function Mitt() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(mitt.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(carpet.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(mitt.profit, 2)}
+        {formatNumberAb(carpet.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +166,11 @@ function Mitt() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(mitt.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(carpet.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Mitt;
+export default Carpet;

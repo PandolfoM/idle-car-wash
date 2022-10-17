@@ -19,6 +19,7 @@ import {
   SET_WAFFLE,
   SET_SHINE,
   TOGGLE_MANAGERS,
+  TOGGLE_SFX,
 } from "../../utils/actions";
 import SellIcon from "@mui/icons-material/Sell";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -27,21 +28,21 @@ import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
 import LockedLvl from "../LockedLvl";
 
-import Water from "../Products/PressureWasher";
-import Wheel from "../Products/Wheel";
-import Foam from "../Products/Foam";
-import Mitt from "../Products/Mitt";
-import Spray from "../Products/Spray";
-import Dry from "../Products/Dry";
-import Vac from "../Products/Vac";
-import Carpet from "../Products/Carpet";
-import Spot from "../Products/Spot";
-import Steamer from "../Products/Steamer";
-import Clay from "../Products/Clay";
-import Sealant from "../Products/Sealant";
-import Window from "../Products/Window";
-import Waffle from "../Products/Waffle";
-import Shine from "../Products/Shine";
+import Water from "../Products/1_PressureWasher";
+import Wheel from "../Products/2_Wheel";
+import Foam from "../Products/3_Foam";
+import Mitt from "../Products/4_Mitt";
+import Spray from "../Products/5_Spray";
+import Dry from "../Products/6_Dry";
+import Vac from "../Products/7_Vac";
+import Carpet from "../Products/8_Carpet";
+import Spot from "../Products/9_Spot";
+import Steamer from "../Products/10_Steamer";
+import Clay from "../Products/11_Clay";
+import Sealant from "../Products/12_Sealant";
+import Window from "../Products/13_Window";
+import Waffle from "../Products/14_Waffle";
+import Shine from "../Products/15_Shine";
 
 function Upgrades() {
   const state = useSelector((state) => state);
@@ -87,6 +88,10 @@ function Upgrades() {
   useEffect(() => {
     if (Auth.loggedIn()) {
       if (userData) {
+        dispatch({
+          type: TOGGLE_SFX,
+          sfx: userData.me.sfx
+        })
         dispatch({
           type: SET_WATER,
           water: {

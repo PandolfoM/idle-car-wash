@@ -12,7 +12,7 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { TOGGLE_LOGIN, TOGGLE_MODAL } from "../../utils/actions";
+import { TOGGLE_LOGIN, TOGGLE_MODAL, TOGGLE_SFX } from "../../utils/actions";
 import Off from "../../assets/off.png";
 import On from "../../assets/on.png";
 import Login from "../Login";
@@ -107,7 +107,7 @@ const SettingsDialog = styled(Dialog)(({ theme }) => ({
       padding: "5px 0",
       fontSize: "15px",
       WebkitTextStroke: "2px black",
-      borderRadius:" 15px 15px 0 0"
+      borderRadius: " 15px 15px 0 0",
     },
     "& .MuiDialogContent-root": {
       padding: "20px 24px",
@@ -124,6 +124,10 @@ function Settings() {
 
   const handleChange = async (e) => {
     setSfx(e.target.checked);
+    dispatch({
+      type: TOGGLE_SFX,
+      sfx: e.target.checked,
+    });
     if (Auth.loggedIn()) {
       try {
         await updateUser({
@@ -210,7 +214,7 @@ function Settings() {
             )}
           </Stack>
           <Box onClick={() => dispatch({ type: TOGGLE_MODAL })}>
-            <CloseBtn/>
+            <CloseBtn />
           </Box>
         </DialogContent>
       </SettingsDialog>

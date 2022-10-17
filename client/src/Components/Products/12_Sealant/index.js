@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_DRY } from "../../../utils/actions";
+import { CURRENT_CASH, SET_SEALANT } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_DRY, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_SEALANT, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Dry() {
+function Sealant() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateDry] = useMutation(UPDATE_DRY);
+  const [updateSealant] = useMutation(UPDATE_SEALANT);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { dry, cash, sfx, currentMultiplier } = state;
+  const { sealant, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (dry.manager) {
+    if (sealant.manager) {
       setRunning(true);
     }
-  }, [dry.manager]);
+  }, [sealant.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + dry.profit,
+        cash: cash + sealant.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + dry.profit,
+              cash: cash + sealant.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Dry() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < dry.cost * currentMultiplier) {
+    if (cash < sealant.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= dry.cost * currentMultiplier) {
+    } else if (cash >= sealant.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, dry]);
+  }, [cash, currentMultiplier, sealant]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!dry.manager) setRunning(false);
+            if (!sealant.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + dry.speed, 100);
+          return Math.min(oldProgress + sealant.speed, 100);
         });
       }, 100);
 
@@ -81,54 +81,55 @@ function Dry() {
         clearInterval(timer);
       };
     }
-  }, [running, dry.speed, dry.manager]);
+  }, [running, sealant.speed, sealant.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = dry.lvl + currentMultiplier;
-    let costUp = dry.cost + parseInt(config.dry.cost);
-    let profitUp = dry.profit * parseInt(config.dry.profit) + currentMultiplier;
+    let lvlUp = sealant.lvl + currentMultiplier;
+    let costUp = sealant.cost * 1.14;
+    let profitUp =
+      sealant.profit + 217.69 * currentMultiplier;
     let speedUp = 0;
 
-    if (dry.lvl < 99) {
-      speedUp = dry.speed;
-    } else if (dry.lvl >= 99) {
-      speedUp = dry.speed + 24;
-    } else if (dry.lvl >= 199) {
-      speedUp = dry.speed + 24;
-    } else if (dry.lvl >= 299) {
-      speedUp = dry.speed + 24;
-    } else if (dry.lvl >= 399) {
-      speedUp = dry.speed + 24;
+    if (sealant.lvl < 99) {
+      speedUp = sealant.speed;
+    } else if (sealant.lvl >= 99) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 199) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 299) {
+      speedUp = sealant.speed + 24.75;
+    } else if (sealant.lvl >= 399) {
+      speedUp = sealant.speed + 24.75;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - dry.cost * currentMultiplier,
+      cash: cash - sealant.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_DRY,
-      dry: {
+      type: SET_SEALANT,
+      sealant: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
-        manager: dry.manager,
+        manager: sealant.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - dry.cost * currentMultiplier,
+          cash: cash - sealant.cost * currentMultiplier,
         },
       });
-      await updateDry({
+      await updateSealant({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
-          manager: dry.manager,
+          manager: sealant.manager,
         },
       });
     } catch (error) {
@@ -145,12 +146,12 @@ function Dry() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(dry.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(sealant.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(dry.profit, 2)}
+        {formatNumberAb(sealant.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -165,11 +166,11 @@ function Dry() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(dry.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(sealant.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Dry;
+export default Sealant;

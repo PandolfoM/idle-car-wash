@@ -12,42 +12,42 @@ import {
   ProductBox,
 } from "../../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { CURRENT_CASH, SET_STEAMER } from "../../../utils/actions";
+import { CURRENT_CASH, SET_SPOT } from "../../../utils/actions";
 import SoapIcon from "@mui/icons-material/Soap";
 import { useMutation } from "@apollo/client";
-import { UPDATE_STEAMER, UPDATE_WALLET } from "../../../utils/mutations";
+import { UPDATE_SPOT, UPDATE_WALLET } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import useFitText from "use-fit-text";
 import config from "../config.json";
 
-function Steamer() {
+function Spot() {
   const [progress, setProgress] = useState(0);
   const [running, setRunning] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [updateWallet] = useMutation(UPDATE_WALLET);
-  const [updateSteamer] = useMutation(UPDATE_STEAMER);
+  const [updateSpot] = useMutation(UPDATE_SPOT);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { steamer, cash, sfx, currentMultiplier } = state;
+  const { spot, cash, sfx, currentMultiplier } = state;
   const { fontSize, ref } = useFitText();
 
   useEffect(() => {
-    if (steamer.manager) {
+    if (spot.manager) {
       setRunning(true);
     }
-  }, [steamer.manager]);
+  }, [spot.manager]);
 
   useEffect(() => {
     if (progress === 100) {
       dispatch({
         type: CURRENT_CASH,
-        cash: cash + steamer.profit,
+        cash: cash + spot.profit,
       });
       if (Auth.loggedIn()) {
         try {
           updateWallet({
             variables: {
-              cash: cash + steamer.profit,
+              cash: cash + spot.profit,
             },
           });
         } catch (error) {
@@ -58,22 +58,22 @@ function Steamer() {
   }, [progress]);
 
   useEffect(() => {
-    if (cash < steamer.cost * currentMultiplier) {
+    if (cash < spot.cost * currentMultiplier) {
       setDisabled(true);
-    } else if (cash >= steamer.cost * currentMultiplier) {
+    } else if (cash >= spot.cost * currentMultiplier) {
       setDisabled(false);
     }
-  }, [cash, currentMultiplier, steamer]);
+  }, [cash, currentMultiplier, spot]);
 
   useEffect(() => {
     if (running) {
       const timer = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress === 100) {
-            if (!steamer.manager) setRunning(false);
+            if (!spot.manager) setRunning(false);
             return 0;
           }
-          return Math.min(oldProgress + steamer.speed, 100);
+          return Math.min(oldProgress + spot.speed, 100);
         });
       }, 100);
 
@@ -81,55 +81,55 @@ function Steamer() {
         clearInterval(timer);
       };
     }
-  }, [running, steamer.speed, steamer.manager]);
+  }, [running, spot.speed, spot.manager]);
 
   const buyProduct = async () => {
-    let lvlUp = steamer.lvl + currentMultiplier;
-    let costUp = steamer.cost + parseInt(config.steamer.cost);
+    let lvlUp = spot.lvl + currentMultiplier;
+    let costUp = spot.cost * 1.11;
     let profitUp =
-      steamer.profit * parseInt(config.steamer.profit) + currentMultiplier;
+      spot.profit + 148.7 * currentMultiplier;
     let speedUp = 0;
 
-    if (steamer.lvl < 99) {
-      speedUp = steamer.speed;
-    } else if (steamer.lvl >= 99) {
-      speedUp = steamer.speed + 24.5;
-    } else if (steamer.lvl >= 199) {
-      speedUp = steamer.speed + 24.5;
-    } else if (steamer.lvl >= 299) {
-      speedUp = steamer.speed + 24.5;
-    } else if (steamer.lvl >= 399) {
-      speedUp = steamer.speed + 24.5;
+    if (spot.lvl < 99) {
+      speedUp = spot.speed;
+    } else if (spot.lvl >= 99) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 199) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 299) {
+      speedUp = spot.speed + 24.375;
+    } else if (spot.lvl >= 399) {
+      speedUp = spot.speed + 24.375;
     }
 
     PlayBtnClick(sfx);
     dispatch({
       type: CURRENT_CASH,
-      cash: cash - steamer.cost * currentMultiplier,
+      cash: cash - spot.cost * currentMultiplier,
     });
     dispatch({
-      type: SET_STEAMER,
-      steamer: {
+      type: SET_SPOT,
+      spot: {
         lvl: lvlUp,
         cost: parseFloat(costUp.toFixed(2)),
         profit: profitUp,
         speed: speedUp,
-        manager: steamer.manager,
+        manager: spot.manager,
       },
     });
     try {
       await updateWallet({
         variables: {
-          cash: cash - steamer.cost * currentMultiplier,
+          cash: cash - spot.cost * currentMultiplier,
         },
       });
-      await updateSteamer({
+      await updateSpot({
         variables: {
           lvl: lvlUp,
           cost: parseFloat(costUp.toFixed(2)),
           profit: profitUp,
           speed: speedUp,
-          manager: steamer.manager,
+          manager: spot.manager,
         },
       });
     } catch (error) {
@@ -146,12 +146,12 @@ function Steamer() {
         </IconButton>
         {/* level of component */}
         <Box className="itemLvl">
-          <Typography>{formatNumberAb(steamer.lvl, 2, true)}</Typography>
+          <Typography>{formatNumberAb(spot.lvl, 2, true)}</Typography>
         </Box>
       </Box>
       {/* how much each component makes */}
       <Typography className="profit">
-        {formatNumberAb(steamer.profit, 2)}
+        {formatNumberAb(spot.profit, 2)}
       </Typography>
       <Box className="itemControls">
         <LinearProgress variant="determinate" value={progress} />
@@ -166,11 +166,11 @@ function Steamer() {
           style={{ fontSize }}>
           BUY x{currentMultiplier}
           {/* cost to upgrade */}
-          <span>${formatNumberAb(steamer.cost * currentMultiplier, 2)}</span>
+          <span>${formatNumberAb(spot.cost * currentMultiplier, 2)}</span>
         </Button>
       </Box>
     </ProductBox>
   );
 }
 
-export default Steamer;
+export default Spot;
